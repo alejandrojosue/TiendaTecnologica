@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cupons",
+  "info": {
+    "singularName": "cupon",
+    "pluralName": "cupons",
+    "displayName": "Cupon",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "producto": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::producto.producto"
+    },
+    "descripcion": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50
+    },
+    "descuento": {
+      "type": "integer",
+      "required": true,
+      "default": 100,
+      "min": 10
+    },
+    "codigo": {
+      "type": "uid",
+      "required": true,
+      "maxLength": 12,
+      "minLength": 3
+    },
+    "fechaLimite": {
+      "type": "date",
+      "required": true
+    }
+  }
+}

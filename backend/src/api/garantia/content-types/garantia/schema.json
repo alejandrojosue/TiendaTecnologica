@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "garantias",
+  "info": {
+    "singularName": "garantia",
+    "pluralName": "garantias",
+    "displayName": "Garantia"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "categoria": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::categoria.categoria"
+    },
+    "fechaCompra": {
+      "type": "datetime",
+      "required": true
+    },
+    "fechaVencimiento": {
+      "type": "datetime",
+      "required": true
+    },
+    "Estado": {
+      "type": "enumeration",
+      "enum": [
+        "Activa",
+        "Vencida",
+        "Reclamada"
+      ],
+      "required": true,
+      "default": "Activa"
+    }
+  }
+}

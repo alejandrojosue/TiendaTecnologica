@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "interaccions",
+  "info": {
+    "singularName": "interaccion",
+    "pluralName": "interaccions",
+    "displayName": "Interaccion"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "producto": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::producto.producto"
+    },
+    "fecha": {
+      "type": "datetime",
+      "required": true
+    }
+  }
+}

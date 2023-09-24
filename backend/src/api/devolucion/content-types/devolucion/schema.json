@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "devolucions",
+  "info": {
+    "singularName": "devolucion",
+    "pluralName": "devolucions",
+    "displayName": "Devolucion"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "fecha": {
+      "type": "datetime"
+    },
+    "motivo": {
+      "type": "string",
+      "required": true,
+      "maxLength": 25
+    },
+    "estado": {
+      "type": "enumeration",
+      "enum": [
+        "Entregada",
+        "En proceso",
+        "Cancelada"
+      ],
+      "default": "En proceso",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "kind": "collectionType",
+  "collectionName": "productos",
+  "info": {
+    "singularName": "producto",
+    "pluralName": "productos",
+    "displayName": "Producto",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "pluginOptions": {},
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 70,
+      "minLength": 5
+    },
+    "codigo": {
+      "pluginOptions": {},
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 13,
+      "minLength": 13
+    },
+    "descripcion": {
+      "pluginOptions": {},
+      "type": "text",
+      "required": false
+    },
+    "marca": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::marca.marca"
+    },
+    "isv": {
+      "pluginOptions": {},
+      "type": "decimal",
+      "required": true,
+      "max": 0.15,
+      "min": 0,
+      "default": 0.15
+    },
+    "precio_venta": {
+      "pluginOptions": {},
+      "type": "float",
+      "required": true,
+      "min": 0
+    },
+    "precio_compra": {
+      "pluginOptions": {},
+      "type": "float",
+      "required": true,
+      "min": 0
+    },
+    "existencia": {
+      "pluginOptions": {},
+      "type": "integer",
+      "default": 1,
+      "required": true,
+      "min": 0
+    },
+    "descuento": {
+      "pluginOptions": {},
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "img": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ],
+      "pluginOptions": {}
+    },
+    "modelo": {
+      "pluginOptions": {},
+      "type": "string",
+      "required": true,
+      "maxLength": 30,
+      "unique": true
+    },
+    "subcategorias": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::subcategoria.subcategoria"
+    },
+    "activo": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}

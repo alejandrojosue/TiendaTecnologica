@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "compras",
+  "info": {
+    "singularName": "compra",
+    "pluralName": "compras",
+    "displayName": "Compra",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "proveedor": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::proveedor.proveedor"
+    },
+    "noFactura": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "metodoPago": {
+      "type": "enumeration",
+      "enum": [
+        "Efectivo",
+        "Tarjeta de Crédito",
+        "Transferencia Bancaria",
+        "Cheque"
+      ],
+      "default": "Transferencia Bancaria",
+      "required": true
+    },
+    "detalleCompras": {
+      "type": "component",
+      "repeatable": true,
+      "component": "detalles.detalles",
+      "required": true
+    }
+  }
+}

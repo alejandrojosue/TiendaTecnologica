@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ventas",
+  "info": {
+    "singularName": "venta",
+    "pluralName": "ventas",
+    "displayName": "Venta",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "noFactura": {
+      "type": "integer",
+      "min": 0,
+      "required": true,
+      "unique": true
+    },
+    "metodoPago": {
+      "type": "enumeration",
+      "enum": [
+        "Efectivo",
+        "Tarjeta de Crédito",
+        "Transferencia Bancaria",
+        "Cheque"
+      ],
+      "default": "Efectivo",
+      "required": true
+    },
+    "cliente_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "detalleVentas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "detalles.detalles",
+      "required": true
+    }
+  }
+}
