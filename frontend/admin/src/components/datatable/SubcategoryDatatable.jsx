@@ -1,7 +1,7 @@
 import "./datatable.scss"
 import { DataGrid } from "@mui/x-data-grid"
 import { Link } from "react-router-dom"
-import { categoryColumns } from "../../datatablesource"
+import { subCategoryColumns } from "../../datatablesource"
 import { useFetchSubcategories } from '../../hooks/useFetchSubcategories'
 
 const Datatable = () => {
@@ -14,7 +14,7 @@ const Datatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to={`/categories/${params.row.id}`} style={{ textDecoration: "none" }}>
+            <Link to={`/subcategories/${params.row.id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton" style={{ padding: "5px" }}>Ver</div>
             </Link>
             <div
@@ -34,14 +34,14 @@ const Datatable = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Agregar nuevo
-        <Link to="/category/new" className="link">
+        <Link to="/subcategory/new" className="link">
           Agregar
         </Link>
       </div>
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={categoryColumns.concat(actionColumn)}
+        columns={subCategoryColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection

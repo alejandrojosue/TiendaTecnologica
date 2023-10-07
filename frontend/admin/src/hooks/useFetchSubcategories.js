@@ -12,8 +12,10 @@ export const useFetchSubcategories = () => {
         (new SubcategoriesRepository()).getAll()
             .then((result) => setData(result))
             .catch((error) => {
-                (error.name === 'AbortError')
-                    ? console.log('Request Cancelled') : setError(error)
+                alert(error)
+                if (error.name === 'AbortError')
+                    console.log('Request Cancelled')
+                else setError(error)
             })
             .finally(() => setLoading(false));
         return () => abortController.abort()

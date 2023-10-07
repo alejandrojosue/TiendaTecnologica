@@ -15,6 +15,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
+import { SessionValidate } from "../../middlewares/SessionValidate";
 
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
@@ -22,7 +23,8 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <Link to="/dashboard" style={{ textDecoration: "none" }}>
-          <span className="logo">Panel de Control</span>
+          <span onClick={() => { SessionValidate() }}
+            className="logo">Panel de Control</span>
         </Link>
       </div>
       <hr />
@@ -32,7 +34,7 @@ const Sidebar = () => {
           <Link to="/dashboard" style={{ textDecoration: "none" }}>
             <li>
               <DashboardIcon className="icon" />
-              <span>Dashboard</span>
+              <span onClick={() => { SessionValidate() }}>Dashboard</span>
             </li>
           </Link>
           <p className="title">LISTAS</p>
@@ -40,19 +42,20 @@ const Sidebar = () => {
           <Link to="/products" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
-              <span>Productos</span>
+              <span
+                onClick={() => { SessionValidate() }}>Productos</span>
             </li>
           </Link>
           <Link to="/categories" style={{ textDecoration: "none" }}>
             <li>
               <BrandingIcon className="icon" />
-              <span>Categorías</span>
+              <span onClick={() => { SessionValidate() }}>Categorías</span>
             </li>
           </Link>
           <Link to="/subcategories" style={{ textDecoration: "none" }}>
             <li>
               <BrandingOutlineIcon className="icon" />
-              <span>Subcategorías</span>
+              <span onClick={() => { SessionValidate() }}>Subcategorías</span>
             </li>
           </Link>
           <li>
@@ -99,14 +102,14 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className="bottom">
-        <div
+        {/* <div
           className="colorOption"
           onClick={() => dispatch({ type: "LIGHT" })}
-        ></div>
-        <div
+        ></div> */}
+        {/* <div
           className="colorOption"
           onClick={() => dispatch({ type: "DARK" })}
-        ></div>
+        ></div> */}
       </div>
     </div>
   );

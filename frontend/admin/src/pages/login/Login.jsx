@@ -1,26 +1,27 @@
 import './login.scss'
 import React, { useState } from 'react';
 import { fetchDataFromAPI } from '../../services/api/context';
-import { Navigate } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('')
-  const authenticate = async () => {
+  const navigate = useNavigate()
+  const handleLogin = async () => {
     try {
-      const response = await fetchDataFromAPI('/auth/local', 'POST', null, { identifier, password });
-      console.log(response.jwt)
-      sessionStorage.setItem('daiswadod', response.jwt)
+      if (identifier && password) {
+        const response = await fetchDataFromAPI('/auth/local', 'POST', null, { identifier, password })
+          .catch(alert)
+        sessionStorage.setItem('daiswadod', response.jwt)
+        sessionStorage.setItem('SESSION_TIME', new Date().getTime())
+        navigate('/dashboard')
+      } else alert("Debe llenar los campos!")
     } catch (error) {
-      setError(error);
+      setError(error)
     }
   }
-  const handleLogin = () => {
-    authenticate()
-    return <Navigate to="/dashboard" />
-  }
+
 
   return (
     <div className="login-container">
@@ -30,7 +31,7 @@ const Login = () => {
           type="text"
           placeholder='Usuario'
           value={identifier}
-          onChange={(target) => setIdentifier(target.value)}
+          onChange={(e) => setIdentifier(e.target.value)}
           required
         />
         <label>Usuario</label>
@@ -40,7 +41,7 @@ const Login = () => {
           type="password"
           placeholder='contraseña'
           value={password}
-          onChange={(target) => setPassword(target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <label>Contraseña</label>

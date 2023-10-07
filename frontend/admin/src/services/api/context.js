@@ -23,9 +23,11 @@ export const fetchDataFromAPI = async (url, method = 'GET', token = null, data =
 
         const response = await fetch(API_BASE_URL + url, requestOptions)
 
-        if (!response.ok) throw new Error('Error en la solicitud: ' + response.statusText)
+        if (response.status === 500) throw new Error('Usuario no autorizado')
+
+        if (!response.ok) throw new Error(response.statusText)
 
         const responseData = await response.json()
         return responseData
-    } catch (error) { throw new Error('Error al obtener/enviar datos a la API: ' + error.message) }
+    } catch (error) { throw new Error(error.message) }
 }

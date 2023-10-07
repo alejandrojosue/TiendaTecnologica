@@ -37,7 +37,20 @@ const categoryColumns = [
     width: 430
   }
 ]
+const subCategoryColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Nombe",
+    width: 200,
+  },
+  {
+    field: "description",
+    headerName: "Descripción",
+    width: 430
+  }
+]
 
 export {
-  productColumns, categoryColumns
+  productColumns, categoryColumns, subCategoryColumns
 }

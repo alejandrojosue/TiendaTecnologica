@@ -4,6 +4,7 @@ import ProductList from "./pages/list/ProductList";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Single from "./pages/single/Single";
+import Unauthorized from "./pages/unauthorized/Unauthorized";
 import New from "./pages/new/New";
 import ProtectedRouted from "./auth/ProtectedRouted";
 import { BrowserRouter, Routes, Route, RouterProvider } from "react-router-dom";
@@ -39,6 +40,7 @@ function App() {
                 element={<New inputs={productInputs} title="Add New Product" />}
               />
             </Route>
+            <Route path="/unauthorized" element={<Unauthorized />} />
           </Route>
         </Routes>
       </BrowserRouter>
