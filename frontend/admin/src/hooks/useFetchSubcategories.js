@@ -12,7 +12,6 @@ export const useFetchSubcategories = () => {
         (new SubcategoriesRepository()).getAll()
             .then((result) => setData(result))
             .catch((error) => {
-                alert(error)
                 if (error.name === 'AbortError')
                     console.log('Request Cancelled')
                 else setError(error)

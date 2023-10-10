@@ -12,6 +12,7 @@ import { productInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
+import NotFound from "./pages/notFound/NotFound";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -41,6 +42,7 @@ function App() {
               />
             </Route>
             <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>

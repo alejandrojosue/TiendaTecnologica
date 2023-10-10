@@ -2,17 +2,15 @@ import { fetchDataFromAPI } from './api/context'; // Asegúrate de importar tu f
 export default class SubcategoriesRepository {
     async getAll() {
         try {
-            const response = await fetchDataFromAPI('/subcategorias?populate=deep', 'GET',
+            const { data } = await fetchDataFromAPI('/subcategorias?populate=deep', 'GET',
                 sessionStorage.getItem('daiswadod'))
-            return (response.data).map(subcategory => ({
+            return data.map(subcategory => ({
                 id: subcategory.id,
                 name: subcategory.attributes.nombre,
                 description: subcategory.attributes.descripcion,
             }))
         } catch (error) {
-            if (error == 'Error: Usuario no autorizado') {
-                window.location.href = './unauthorized'
-            }
+            console.log('Error al obtener usbcategorias', error);
         }
     }
 

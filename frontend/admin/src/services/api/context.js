@@ -10,6 +10,7 @@ const API_BASE_URL = 'http://localhost:1337/api';
  * @throws {Error} Si se produce un error en la solicitud.
  */
 export const fetchDataFromAPI = async (url, method = 'GET', token = null, data = null) => {
+
     try {
         if (!url || typeof url !== 'string') throw new Error('La URL no es válida.')
 
@@ -23,9 +24,17 @@ export const fetchDataFromAPI = async (url, method = 'GET', token = null, data =
 
         const response = await fetch(API_BASE_URL + url, requestOptions)
 
-        if (response.status === 500) throw new Error('Usuario no autorizado')
+        const errorList = {
+            'Bad Request': () => { throw new Error('Bad Request') },
+            Unauthorized: () => window.location.href = `./unauthorized`,
+            Forbidden: () => window.location.href = `./unauthorized`,
+            'Not Found': () => { },
+            'Internal Server Error': () => { },
+        }
 
-        if (!response.ok) throw new Error(response.statusText)
+        if (!response.ok)
+            if (errorList[response.statusText]) errorList[response.statusText]()
+            else throw new Error(response.statusText)
 
         const responseData = await response.json()
         return responseData

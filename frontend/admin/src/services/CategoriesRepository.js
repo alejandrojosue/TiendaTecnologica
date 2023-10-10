@@ -2,8 +2,8 @@ import { fetchDataFromAPI } from './api/context'; // Asegúrate de importar tu f
 export default class CategoriesRepository {
     async getAll() {
         try {
-            const response = await fetchDataFromAPI('/categorias?populate=deep')
-            return (response.data).map(category => ({
+            const { data } = await fetchDataFromAPI('/categorias?populate=deep')
+            return data.map(category => ({
                 id: category.id,
                 name: category.attributes.nombre,
                 description: category.attributes.descripcion,

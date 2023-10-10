@@ -63,7 +63,6 @@
       "minLength": 8,
       "private": true,
       "searchable": false,
-      "configurable": false,
       "required": true,
       "regex": "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*+=])[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9!@#$%^&*+=]{8,}$"
     },

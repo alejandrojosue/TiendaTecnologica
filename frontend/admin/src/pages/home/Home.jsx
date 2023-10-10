@@ -12,18 +12,19 @@ const Home = () => {
       <Sidebar />
       <div className="homeContainer">
         <Navbar />
+        <p className="textTime">Movimientos del <strong>1 oct. 2023</strong> hasta <strong>31 oct. 2023.</strong></p>
         <div className="widgets">
-          <Widget type="user" />
-          <Widget type="order" />
+          <Widget type="sale" />
+          <Widget type="expense" />
           <Widget type="earning" />
-          <Widget type="balance" />
+          <Widget type="tax" />
         </div>
         <div className="charts">
           <Featured />
-          <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
+          <Chart title="Últimos 6 meses (Ingresos)" aspect={2 / 1} />
         </div>
         <div className="listContainer">
-          <div className="listTitle">Latest Transactions</div>
+          <div className="listTitle">Últimas Transacciones</div>
           <Table />
         </div>
       </div>

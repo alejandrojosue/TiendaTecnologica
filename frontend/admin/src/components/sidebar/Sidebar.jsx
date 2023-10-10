@@ -88,15 +88,16 @@ const Sidebar = () => {
             <SettingsApplicationsIcon className="icon" />
             <span>Settings</span>
           </li>
-          <p className="title">USER</p>
+          <p className="title">USUARIO</p>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
+            <span>Perfil</span>
           </li>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <li>
               <ExitToAppIcon className="icon" />
-              <span>Logout</span>
+              <span onClick={() => { sessionStorage.clear() }}
+              >Cerrar Sesión</span>
             </li>
           </Link>
         </ul>

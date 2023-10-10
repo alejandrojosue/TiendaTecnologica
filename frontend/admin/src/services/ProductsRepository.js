@@ -2,8 +2,8 @@ import { fetchDataFromAPI } from './api/context'; // Asegúrate de importar tu f
 export default class ProductsRepository {
     async getAll() {
         try {
-            const response = await fetchDataFromAPI('/productos?populate=deep')
-            return (response.data).map(product => ({
+            const { data } = await fetchDataFromAPI('/productos?populate=deep')
+            return data.map(product => ({
                 id: product.id,
                 sku: product.attributes.codigo,
                 name: product.attributes.nombre,

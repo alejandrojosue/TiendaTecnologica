@@ -601,11 +601,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
         minLength: 6;
       }>;
     provider: Attribute.String;
-    password: Attribute.Password &
-      Attribute.Private &
-      Attribute.SetMinMaxLength<{
-        minLength: 6;
-      }>;
     resetPasswordToken: Attribute.String & Attribute.Private;
     confirmationToken: Attribute.String & Attribute.Private;
     confirmed: Attribute.Boolean & Attribute.DefaultTo<false>;
@@ -615,6 +610,12 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    password: Attribute.Password &
+      Attribute.Required &
+      Attribute.Private &
+      Attribute.SetMinMaxLength<{
+        minLength: 8;
+      }>;
     nombre: Attribute.String &
       Attribute.Required &
       Attribute.SetMinMaxLength<{
@@ -1029,6 +1030,43 @@ export interface ApiGarantiaGarantia extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::garantia.garantia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiHistorialContrasenaHistorialContrasena
+  extends Schema.CollectionType {
+  collectionName: 'historial_contrasenas';
+  info: {
+    singularName: 'historial-contrasena';
+    pluralName: 'historial-contrasenas';
+    displayName: 'HistorialContrase\u00F1a';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    users_permissions_user: Attribute.Relation<
+      'api::historial-contrasena.historial-contrasena',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    clave: Attribute.String & Attribute.Required & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::historial-contrasena.historial-contrasena',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::historial-contrasena.historial-contrasena',
       'oneToOne',
       'admin::user'
     > &
@@ -1488,6 +1526,7 @@ declare module '@strapi/types' {
       'api::empresa.empresa': ApiEmpresaEmpresa;
       'api::facturacion.facturacion': ApiFacturacionFacturacion;
       'api::garantia.garantia': ApiGarantiaGarantia;
+      'api::historial-contrasena.historial-contrasena': ApiHistorialContrasenaHistorialContrasena;
       'api::interaccion.interaccion': ApiInteraccionInteraccion;
       'api::marca.marca': ApiMarcaMarca;
       'api::producto.producto': ApiProductoProducto;

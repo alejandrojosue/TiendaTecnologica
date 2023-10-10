@@ -12,10 +12,14 @@ const Login = () => {
     try {
       if (identifier && password) {
         const response = await fetchDataFromAPI('/auth/local', 'POST', null, { identifier, password })
-          .catch(alert)
-        sessionStorage.setItem('daiswadod', response.jwt)
-        sessionStorage.setItem('SESSION_TIME', new Date().getTime())
-        navigate('/dashboard')
+          .catch(err => {
+            if (err == 'Error: Bad Request') alert('Usuario y/o contraseña no váildos!')
+          })
+        if (response) {
+          sessionStorage.setItem('daiswadod', response.jwt)
+          sessionStorage.setItem('SESSION_TIME', new Date().getTime())
+          navigate('/dashboard')
+        }
       } else alert("Debe llenar los campos!")
     } catch (error) {
       setError(error)

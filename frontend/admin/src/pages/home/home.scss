@@ -4,6 +4,10 @@
   .homeContainer {
     flex: 6;
 
+    .textTime {
+      margin: 5px;
+    }
+
     .widgets,
     .charts {
       display: flex;

@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "historial_contrasenas",
+  "info": {
+    "singularName": "historial-contrasena",
+    "pluralName": "historial-contrasenas",
+    "displayName": "HistorialContraseña",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "clave": {
+      "type": "string",
+      "unique": true,
+      "required": true,
+      "regex": "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*+=])[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9!@#$%^&*+=]{8,}$"
+    }
+  }
+}
