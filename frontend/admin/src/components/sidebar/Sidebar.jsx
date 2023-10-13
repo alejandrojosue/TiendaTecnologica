@@ -58,6 +58,7 @@ const Sidebar = () => {
               <span onClick={() => { SessionValidate() }}>Subcategorías</span>
             </li>
           </Link>
+          {/*           
           <li>
             <CreditCardIcon className="icon" />
             <span>Orders</span>
@@ -92,7 +93,8 @@ const Sidebar = () => {
           <li>
             <AccountCircleOutlinedIcon className="icon" />
             <span>Perfil</span>
-          </li>
+          </li> */}
+          <p className="title">USUARIO</p>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <li>
               <ExitToAppIcon className="icon" />
