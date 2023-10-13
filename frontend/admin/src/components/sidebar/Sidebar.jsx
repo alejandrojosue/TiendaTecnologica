@@ -34,7 +34,7 @@ const Sidebar = () => {
           <Link to="/dashboard" style={{ textDecoration: "none" }}>
             <li>
               <DashboardIcon className="icon" />
-              <span onClick={() => { SessionValidate() }}>Dashboard</span>
+              <span onClick={() => { SessionValidate() }}>Panel de control</span>
             </li>
           </Link>
           <p className="title">LISTAS</p>
