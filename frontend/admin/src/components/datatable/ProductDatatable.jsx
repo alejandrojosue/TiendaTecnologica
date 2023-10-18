@@ -38,6 +38,12 @@ const Datatable = () => {
           Agregar
         </Link>
       </div>
+      <select name="categoria" id="categoria">
+        <option value=""></option>
+      </select>
+      <select name="subcategoria" id="subcategoria">
+      <option value=""></option>
+      </select>
       <DataGrid
         className="datagrid"
         rows={data}
