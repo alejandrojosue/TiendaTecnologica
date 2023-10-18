@@ -4,10 +4,11 @@
   "info": {
     "singularName": "sucursal",
     "pluralName": "sucursals",
-    "displayName": "Sucursal"
+    "displayName": "Sucursal",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {

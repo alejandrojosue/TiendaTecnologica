@@ -13,7 +13,6 @@ export default class CategoriesRepository {
             console.log('Error al obtener categorias', error);
         }
     }
-
     async getById(id) {
         try {
             const response = await fetchDataFromAPI(`/categorias/${id}?populate=deep`)

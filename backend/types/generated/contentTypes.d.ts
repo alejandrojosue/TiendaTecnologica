@@ -710,7 +710,7 @@ export interface ApiCategoriaCategoria extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     nombre: Attribute.String &
@@ -733,7 +733,6 @@ export interface ApiCategoriaCategoria extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::categoria.categoria',
       'oneToOne',
@@ -850,15 +849,63 @@ export interface ApiCuponCupon extends Schema.CollectionType {
   };
 }
 
+export interface ApiDanadoDanado extends Schema.CollectionType {
+  collectionName: 'danados';
+  info: {
+    singularName: 'danado';
+    pluralName: 'danados';
+    displayName: 'Da\u00F1ado';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    producto: Attribute.Relation<
+      'api::danado.danado',
+      'oneToOne',
+      'api::producto.producto'
+    >;
+    Estado: Attribute.Enumeration<['Da\u00F1ado', 'No Recibido', 'Robado']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'Da\u00F1ado'>;
+    Motivo: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    Cantidad: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<{
+        min: 1;
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::danado.danado',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::danado.danado',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiDevolucionDevolucion extends Schema.CollectionType {
   collectionName: 'devolucions';
   info: {
     singularName: 'devolucion';
     pluralName: 'devolucions';
     displayName: 'Devolucion';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     users_permissions_user: Attribute.Relation<
@@ -877,7 +924,6 @@ export interface ApiDevolucionDevolucion extends Schema.CollectionType {
       Attribute.DefaultTo<'En proceso'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::devolucion.devolucion',
       'oneToOne',
@@ -899,9 +945,10 @@ export interface ApiEmpresaEmpresa extends Schema.SingleType {
     singularName: 'empresa';
     pluralName: 'empresas';
     displayName: 'Empresa';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     nombre: Attribute.String &
@@ -926,7 +973,6 @@ export interface ApiEmpresaEmpresa extends Schema.SingleType {
     website: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::empresa.empresa',
       'oneToOne',
@@ -951,7 +997,7 @@ export interface ApiFacturacionFacturacion extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     RangoInicial: Attribute.Integer &
@@ -982,7 +1028,6 @@ export interface ApiFacturacionFacturacion extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::facturacion.facturacion',
       'oneToOne',
@@ -1004,9 +1049,10 @@ export interface ApiGarantiaGarantia extends Schema.CollectionType {
     singularName: 'garantia';
     pluralName: 'garantias';
     displayName: 'Garantia';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     categoria: Attribute.Relation<
@@ -1021,7 +1067,6 @@ export interface ApiGarantiaGarantia extends Schema.CollectionType {
       Attribute.DefaultTo<'Activa'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::garantia.garantia',
       'oneToOne',
@@ -1030,43 +1075,6 @@ export interface ApiGarantiaGarantia extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::garantia.garantia',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiHistorialContrasenaHistorialContrasena
-  extends Schema.CollectionType {
-  collectionName: 'historial_contrasenas';
-  info: {
-    singularName: 'historial-contrasena';
-    pluralName: 'historial-contrasenas';
-    displayName: 'HistorialContrase\u00F1a';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    users_permissions_user: Attribute.Relation<
-      'api::historial-contrasena.historial-contrasena',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    clave: Attribute.String & Attribute.Required & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::historial-contrasena.historial-contrasena',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::historial-contrasena.historial-contrasena',
       'oneToOne',
       'admin::user'
     > &
@@ -1080,9 +1088,10 @@ export interface ApiInteraccionInteraccion extends Schema.CollectionType {
     singularName: 'interaccion';
     pluralName: 'interaccions';
     displayName: 'Interaccion';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     users_permissions_user: Attribute.Relation<
@@ -1098,7 +1107,6 @@ export interface ApiInteraccionInteraccion extends Schema.CollectionType {
     fecha: Attribute.DateTime & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::interaccion.interaccion',
       'oneToOne',
@@ -1114,6 +1122,35 @@ export interface ApiInteraccionInteraccion extends Schema.CollectionType {
   };
 }
 
+export interface ApiLogLog extends Schema.CollectionType {
+  collectionName: 'logs';
+  info: {
+    singularName: 'log';
+    pluralName: 'logs';
+    displayName: 'Log';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    DateTime: Attribute.DateTime;
+    ACTION: Attribute.Enumeration<['POST', 'PUT', 'DELETE', 'GET']> &
+      Attribute.Required;
+    Table: Attribute.String & Attribute.Required;
+    Description: Attribute.Text & Attribute.Required;
+    admin_user: Attribute.Relation<'api::log.log', 'oneToOne', 'admin::user'>;
+    rowID: Attribute.Integer & Attribute.Required;
+    information: Attribute.JSON & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::log.log', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::log.log', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiMarcaMarca extends Schema.CollectionType {
   collectionName: 'marcas';
   info: {
@@ -1123,7 +1160,7 @@ export interface ApiMarcaMarca extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     nombre: Attribute.String &
@@ -1136,7 +1173,6 @@ export interface ApiMarcaMarca extends Schema.CollectionType {
     img: Attribute.Media & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::marca.marca',
       'oneToOne',
@@ -1161,7 +1197,7 @@ export interface ApiProductoProducto extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     nombre: Attribute.String &
@@ -1227,7 +1263,6 @@ export interface ApiProductoProducto extends Schema.CollectionType {
     activo: Attribute.Boolean & Attribute.Required & Attribute.DefaultTo<true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::producto.producto',
       'oneToOne',
@@ -1249,9 +1284,10 @@ export interface ApiPromocionPromocion extends Schema.CollectionType {
     singularName: 'promocion';
     pluralName: 'promocions';
     displayName: 'Promocion';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     nombre_promocion: Attribute.String &
@@ -1263,7 +1299,6 @@ export interface ApiPromocionPromocion extends Schema.CollectionType {
     fechaFin: Attribute.Date & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::promocion.promocion',
       'oneToOne',
@@ -1285,9 +1320,10 @@ export interface ApiProveedorProveedor extends Schema.CollectionType {
     singularName: 'proveedor';
     pluralName: 'proveedors';
     displayName: 'Proveedor';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     RTN: Attribute.String &
@@ -1338,7 +1374,6 @@ export interface ApiProveedorProveedor extends Schema.CollectionType {
       }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::proveedor.proveedor',
       'oneToOne',
@@ -1363,7 +1398,7 @@ export interface ApiSubcategoriaSubcategoria extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     nombre: Attribute.String &
@@ -1384,7 +1419,6 @@ export interface ApiSubcategoriaSubcategoria extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::subcategoria.subcategoria',
       'oneToOne',
@@ -1406,9 +1440,10 @@ export interface ApiSucursalSucursal extends Schema.CollectionType {
     singularName: 'sucursal';
     pluralName: 'sucursals';
     displayName: 'Sucursal';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     nombre: Attribute.String &
@@ -1434,7 +1469,6 @@ export interface ApiSucursalSucursal extends Schema.CollectionType {
     activa: Attribute.Boolean & Attribute.Required & Attribute.DefaultTo<true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::sucursal.sucursal',
       'oneToOne',
@@ -1459,7 +1493,7 @@ export interface ApiVentaVenta extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     noFactura: Attribute.Integer &
@@ -1487,7 +1521,6 @@ export interface ApiVentaVenta extends Schema.CollectionType {
       Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::venta.venta',
       'oneToOne',
@@ -1522,12 +1555,13 @@ declare module '@strapi/types' {
       'api::categoria.categoria': ApiCategoriaCategoria;
       'api::compra.compra': ApiCompraCompra;
       'api::cupon.cupon': ApiCuponCupon;
+      'api::danado.danado': ApiDanadoDanado;
       'api::devolucion.devolucion': ApiDevolucionDevolucion;
       'api::empresa.empresa': ApiEmpresaEmpresa;
       'api::facturacion.facturacion': ApiFacturacionFacturacion;
       'api::garantia.garantia': ApiGarantiaGarantia;
-      'api::historial-contrasena.historial-contrasena': ApiHistorialContrasenaHistorialContrasena;
       'api::interaccion.interaccion': ApiInteraccionInteraccion;
+      'api::log.log': ApiLogLog;
       'api::marca.marca': ApiMarcaMarca;
       'api::producto.producto': ApiProductoProducto;
       'api::promocion.promocion': ApiPromocionPromocion;

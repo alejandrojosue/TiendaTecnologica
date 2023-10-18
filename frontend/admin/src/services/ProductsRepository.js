@@ -23,4 +23,21 @@ export default class ProductsRepository {
             console.error('Error al obtener producto:', error);
         }
     }
+
+    async create(data, token){
+        try {
+            const response = await fetchDataFromAPI('/productos', 'POST', token, data);
+        
+            if (response) {
+              // El producto se creó con éxito, y response puede contener información sobre el nuevo producto creado.
+              console.log('Producto creado con éxito:', response);
+            } else {
+              // La respuesta no contiene información del nuevo producto.
+              console.error('No se pudo obtener información del nuevo producto.');
+            }
+          } catch (error) {
+            // Maneja errores de red o del servidor
+            console.error('Error al crear el producto:', error.message);
+          }
+    }
 }
