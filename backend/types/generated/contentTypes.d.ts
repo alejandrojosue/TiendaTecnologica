@@ -850,6 +850,53 @@ export interface ApiCuponCupon extends Schema.CollectionType {
   };
 }
 
+export interface ApiDanadoDanado extends Schema.CollectionType {
+  collectionName: 'danados';
+  info: {
+    singularName: 'danado';
+    pluralName: 'danados';
+    displayName: 'Da\u00F1ado';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    producto: Attribute.Relation<
+      'api::danado.danado',
+      'oneToOne',
+      'api::producto.producto'
+    >;
+    Estado: Attribute.Enumeration<['Da\u00F1ado', 'No Recibido', 'Robado']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'Da\u00F1ado'>;
+    Motivo: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    Cantidad: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<{
+        max: 1;
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::danado.danado',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::danado.danado',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiDevolucionDevolucion extends Schema.CollectionType {
   collectionName: 'devolucions';
   info: {
@@ -1522,6 +1569,7 @@ declare module '@strapi/types' {
       'api::categoria.categoria': ApiCategoriaCategoria;
       'api::compra.compra': ApiCompraCompra;
       'api::cupon.cupon': ApiCuponCupon;
+      'api::danado.danado': ApiDanadoDanado;
       'api::devolucion.devolucion': ApiDevolucionDevolucion;
       'api::empresa.empresa': ApiEmpresaEmpresa;
       'api::facturacion.facturacion': ApiFacturacionFacturacion;

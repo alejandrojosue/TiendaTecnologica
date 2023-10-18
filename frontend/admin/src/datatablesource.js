@@ -11,6 +11,11 @@ const productColumns = [
     width: 550,
   },
   {
+    field: "existencia",
+    headerName: "Existencia",
+    width: 100,
+  },
+  {
     field: "status",
     headerName: "Activo",
     width: 60,
@@ -50,7 +55,30 @@ const subCategoryColumns = [
     width: 430
   }
 ]
+const damagedColumns =[
+  {field: "id", headerName: "ID", width: 70},
+  {
+    field: "sku",
+    headerName: "Código",
+    width: 140,
+  },
+  {
+    field: "estado",
+    headerName: "Estado",
+    width: 140,
+  },
+  {
+    field: "motivo",
+    headerName: "Motivo",
+    with: 140,
+  },
+  {
+    field: "cantidad",
+    headerName: "Cantidad",
+    with: 100,
+  }
+]
 
 export {
-  productColumns, categoryColumns, subCategoryColumns
+  productColumns, categoryColumns, subCategoryColumns, damagedColumns
 }

@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "danados",
+  "info": {
+    "singularName": "danado",
+    "pluralName": "danados",
+    "displayName": "Dañado"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "producto": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::producto.producto"
+    },
+    "Estado": {
+      "type": "enumeration",
+      "enum": [
+        "Dañado",
+        "No Recibido",
+        "Robado"
+      ],
+      "default": "Dañado",
+      "required": true
+    },
+    "Motivo": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "Cantidad": {
+      "type": "integer",
+      "required": true,
+      "max": 1
+    }
+  }
+}

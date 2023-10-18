@@ -8,13 +8,13 @@ export default class ProductsRepository {
                 sku: product.attributes.codigo,
                 name: product.attributes.nombre,
                 description: product.attributes.descripcion,
+                existencia: product.attributes.existencia,
                 status: product.attributes.activo,
             }))
         } catch (error) {
             console.error('Error al obtener productos:', error);
         }
     }
-
     async getById(id) {
         try {
             const response = await fetchDataFromAPI(`/productos/${id}?populate=deep`)

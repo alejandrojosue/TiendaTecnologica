@@ -43,7 +43,7 @@ const Sidebar = () => {
             <li>
               <StoreIcon className="icon" />
               <span
-                onClick={() => { SessionValidate() }}>Productos</span>
+                onClick={() => { SessionValidate() }}>Inventario</span>
             </li>
           </Link>
           <Link to="/categories" style={{ textDecoration: "none" }}>
