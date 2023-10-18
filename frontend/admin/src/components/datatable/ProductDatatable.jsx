@@ -3,14 +3,19 @@ import { DataGrid } from "@mui/x-data-grid"
 import { Link } from "react-router-dom"
 import { productColumns } from "../../datatablesource"
 import { useFetchProducts } from '../../hooks/useFetchProducts'
+import { useFetchSubcategories } from '../../hooks/useFetchSubcategories'
+import  {useFetchCategories}  from '../../hooks/useFetchCategories'
+
 
 const Datatable = () => {
   const { data, handleDelete } = useFetchProducts()
+  const { dataSubcategories } = useFetchSubcategories()
+  const { dataCategorias } = useFetchCategories()
   const actionColumn = [
     {
       field: "action",
       headerName: "Acción",
-      width: 150,
+      width: 70,
       renderCell: (params) => {
 
         return (
@@ -18,13 +23,13 @@ const Datatable = () => {
             <Link to={`/products/${params.row.id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton" style={{ padding: "5px" }}>Ver</div>
             </Link>
-            <div
+            {/* <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
               style={{ padding: "5px" }}
             >
               Borrar
-            </div>
+            </div> */}
           </div>
         )
       },
@@ -38,11 +43,27 @@ const Datatable = () => {
           Agregar
         </Link>
       </div>
-      <select name="categoria" id="categoria">
-        <option value=""></option>
+      <select name="categoria" className="categoria" id="categoria">
+      {
+          dataCategorias.map(data =>(
+            <option key={data.id} value={data.id}>
+              {
+                data.name
+              }
+            </option>
+          ))
+        }
       </select>
-      <select name="subcategoria" id="subcategoria">
-      <option value=""></option>
+      <select name="subcategoria" className="subcategoria" style={{width: "100px"}} id="subcategoria">
+        {
+          dataSubcategories.map(data =>(
+            <option key={data.id} value={data.id}>
+              {
+                data.name
+              }
+            </option>
+          ))
+        }
       </select>
       <DataGrid
         className="datagrid"

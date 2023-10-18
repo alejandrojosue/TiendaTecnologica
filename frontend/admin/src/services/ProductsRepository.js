@@ -8,6 +8,7 @@ export default class ProductsRepository {
                 sku: product.attributes.codigo,
                 name: product.attributes.nombre,
                 description: product.attributes.descripcion,
+                existencia: product.attributes.existencia,
                 status: product.attributes.activo,
             }))
         } catch (error) {
@@ -24,20 +25,20 @@ export default class ProductsRepository {
         }
     }
 
-    async create(data, token){
+    async getBySubcategories(id){
         try {
-            const response = await fetchDataFromAPI('/productos', 'POST', token, data);
-        
-            if (response) {
-              // El producto se creó con éxito, y response puede contener información sobre el nuevo producto creado.
-              console.log('Producto creado con éxito:', response);
-            } else {
-              // La respuesta no contiene información del nuevo producto.
-              console.error('No se pudo obtener información del nuevo producto.');
-            }
-          } catch (error) {
-            // Maneja errores de red o del servidor
-            console.error('Error al crear el producto:', error.message);
-          }
+            const { data } = await fetchDataFromAPI(`/productos?populate[0]=subcategorias&filters[subcategorias][nombre][$eq]=${id}`)
+            return data.map(product => ({
+                id: product.id,
+                sku: product.attributes.codigo,
+                name: product.attributes.nombre,
+                description: product.attributes.descripcion,
+                existencia: product.attributes.existencia,
+                img: product.img.data.attributes.formats.thumbnail.url,
+                status: product.attributes.activo,
+            }))
+        } catch (error) {
+            console.error('Error al obtener productos:', error);
+        }
     }
 }

@@ -2,10 +2,10 @@ import "./datatable.scss"
 import { DataGrid } from "@mui/x-data-grid"
 import { Link } from "react-router-dom"
 import { categoryColumns } from "../../datatablesource"
-import { useFetchCategories, useGetAll } from '../../hooks/useFetchCategories'
+import  {useFetchCategories}  from '../../hooks/useFetchCategories'
 
 const Datatable = () => {
-  const { data, loading, error, handleDelete } = useGetAll() // useFetchCategories()
+  const { data, loading, error, handleDelete } = useFetchCategories() // useFetchCategories()
   const actionColumn = [
     {
       field: "action",

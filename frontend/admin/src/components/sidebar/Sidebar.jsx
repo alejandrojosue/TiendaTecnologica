@@ -43,10 +43,10 @@ const Sidebar = () => {
             <li>
               <StoreIcon className="icon" />
               <span
-                onClick={() => { SessionValidate() }}>Productos</span>
+                onClick={() => { SessionValidate() }}>Inventario</span>
             </li>
           </Link>
-          <Link to="/categories" style={{ textDecoration: "none" }}>
+          {/* <Link to="/categories" style={{ textDecoration: "none" }}>
             <li>
               <BrandingIcon className="icon" />
               <span onClick={() => { SessionValidate() }}>Categorías</span>
@@ -57,7 +57,7 @@ const Sidebar = () => {
               <BrandingOutlineIcon className="icon" />
               <span onClick={() => { SessionValidate() }}>Subcategorías</span>
             </li>
-          </Link>
+          </Link> */}
           {/*           
           <li>
             <CreditCardIcon className="icon" />
