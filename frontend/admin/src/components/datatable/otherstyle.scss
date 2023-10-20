@@ -1,0 +1,29 @@
+.btnReload{
+    border-radius: 5px;
+    color: darkblue;
+    border: 1px dotted rgba(0, 0, 139, 0.596);
+    background-color: white;
+    padding: 5px;
+  }
+
+.btnReload:hover{
+    border-radius: 5px;
+    color: #fff;
+    background-color: darkblue;
+    border: 1px dotted rgba(0, 0, 139, 0.596);
+    cursor: pointer;
+    padding: 5px;
+}
+
+.selectCategory{
+    width: 200px;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.selectSubcategory{
+    width: 200px;
+    padding: 3px;
+    border-radius: 5px;
+    margin: 20px;    
+}

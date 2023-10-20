@@ -1,16 +1,19 @@
-import "./datatable.scss"
+import './datatable.scss'
+import './otherstyle.scss'
 import { DataGrid } from "@mui/x-data-grid"
 import { Link } from "react-router-dom"
 import { productColumns } from "../../datatablesource"
 import { useFetchProducts } from '../../hooks/useFetchProducts'
 import { useFetchSubcategories } from '../../hooks/useFetchSubcategories'
-import  {useFetchCategories}  from '../../hooks/useFetchCategories'
+import {useFetchCategories}  from '../../hooks/useFetchCategories'
 
 
 const Datatable = () => {
-  const { data, handleDelete } = useFetchProducts()
+  const { data, handleDelete, handleSubcategory, handleReloadPage} = useFetchProducts()
   const { dataSubcategories } = useFetchSubcategories()
-  const { dataCategorias } = useFetchCategories()
+  const { dataCategorias } = useFetchCategories();
+
+
   const actionColumn = [
     {
       field: "action",
@@ -20,7 +23,7 @@ const Datatable = () => {
 
         return (
           <div className="cellAction">
-            <Link to={`/products/${params.row.id}`} style={{ textDecoration: "none" }}>
+            <Link to={`/products/new?id=${params.row.id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton" style={{ padding: "5px" }}>Ver</div>
             </Link>
             {/* <div
@@ -37,13 +40,13 @@ const Datatable = () => {
   ]
   return (
     <div className="datatable">
-      <div className="datatableTitle">
+      {/* <div className="datatableTitle">
         Agregar nuevo
         <Link to="/product/new" className="link">
           Agregar
         </Link>
-      </div>
-      <select name="categoria" className="categoria" id="categoria">
+      </div> */}
+      <select name="categoria" className='selectCategory' id="categoria">
       {
           dataCategorias.map(data =>(
             <option key={data.id} value={data.id}>
@@ -54,17 +57,22 @@ const Datatable = () => {
           ))
         }
       </select>
-      <select name="subcategoria" className="subcategoria" style={{width: "100px"}} id="subcategoria">
+      <select name="subcategoria" className='selectSubcategory' id="subcategoria" onChange={e => handleSubcategory(e.target.value)} 
+       >
         {
           dataSubcategories.map(data =>(
             <option key={data.id} value={data.id}>
               {
                 data.name
               }
+
             </option>
           ))
         }
       </select>
+        <button className='btnReload' onClick={handleReloadPage}>Actualizar</button>
+      <br />
+      <br />
       <DataGrid
         className="datagrid"
         rows={data}

@@ -11,7 +11,7 @@ const productColumns = [
     width: 620,
   },
   {
-    field: "existencia",
+    field: "quantity",
     headerName: "Existencia",
     with: 70,
   },
