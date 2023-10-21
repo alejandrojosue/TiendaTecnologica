@@ -19,32 +19,17 @@ export default class ProductsRepository {
 
     async getById(id) {
         try {
-            const { data } = await fetchDataFromAPI(`/productos/${id}`)
-            return data.map(product => ({
-                id: product.id,
-                sku: product.attributes.codigo,
-                name: product.attributes.nombre,
-                description: product.attributes.descripcion,
-                quantity: product.attributes.existencia,
-                img: product.img.data.attributes.formats.thumbnail.url,
-                status: product.attributes.activo,
-            }))
-        } catch (error) {
-            console.error('Error al obtener productos:', error);
-        }
-    }
-
-    async getBySubcategories(id){
-        try {
-            // const { data } = await fetchDataFromAPI(`/productos?populate[0]=subcategorias&filters[subcategorias][nombre][$eq]=${id}`)
-            // return data.map(product => ({
-            //     id: product.id,
-            //     sku: product.attributes.codigo,
-            //     name: product.attributes.nombre,
-            //     description: product.attributes.descripcion,
-            //     quantity: product.attributes.existencia,
-            //     status: product.attributes.activo,
-            // }))
+            const { data } = await fetchDataFromAPI(`/productos/${id}?populate=deep`)
+            return  ({
+                id: data.id,
+                sku: data.attributes.codigo,
+                name: data.attributes.nombre,
+                description: data.attributes.descripcion,
+                quantity: data.attributes.existencia,
+                subcategory: data.attributes.subcategorias.data,
+                img: data.attributes.img.data.attributes.formats.thumbnail.url,
+                status: data.attributes.activo,
+            })
         } catch (error) {
             console.error('Error al obtener productos:', error);
         }

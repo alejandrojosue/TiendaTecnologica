@@ -7,7 +7,6 @@ import { useFetchProducts } from '../../hooks/useFetchProducts'
 import { useFetchSubcategories } from '../../hooks/useFetchSubcategories'
 import {useFetchCategories}  from '../../hooks/useFetchCategories'
 
-
 const Datatable = () => {
   const { data, handleDelete, handleSubcategory, handleReloadPage} = useFetchProducts()
   const { dataSubcategories } = useFetchSubcategories()
@@ -23,7 +22,7 @@ const Datatable = () => {
 
         return (
           <div className="cellAction">
-            <Link to={`/products/new?id=${params.row.id}`} style={{ textDecoration: "none" }}>
+            <Link to={`/products/new/?id=${params.row.id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton" style={{ padding: "5px" }}>Ver</div>
             </Link>
             {/* <div

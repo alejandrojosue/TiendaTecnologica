@@ -1,22 +1,36 @@
+
 import "./new.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
+import { useFetchProductsId } from "../../hooks/useFetchProducts";
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
 
+// Obtenemos la cadena de consulta de la URL
+const queryString = window.location.search;
+
+// Creamos un objeto URLSearchParams con la cadena de consulta
+const params = new URLSearchParams(queryString);
+
+// Accedemos a los parámetros por su nombre
+const id = params.get('id'); // Devuelve "valor1"
+
+  const {data, loading}  = useFetchProductsId(id)
+
   return (
     <div className="new">
-      <Sidebar />
+      {loading ? 'cargando': JSON.stringify(data)}
+      {/* <Sidebar />
       <div className="newContainer">
         <Navbar />
         <div className="top">
           <h1>{title}</h1>
         </div>
         <div className="bottom">
-          <div className="left">
+          <div className="left">f
             <img
               src={
                 file
@@ -50,7 +64,7 @@ const New = ({ inputs, title }) => {
             </form>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
