@@ -29,6 +29,8 @@ export default class ProductsRepository {
                 subcategory: data.attributes.subcategorias.data,
                 img: data.attributes.img.data.attributes.formats.thumbnail.url,
                 status: data.attributes.activo,
+                priceC: data.attributes.precio_compra,
+                priceV: data.attributes.precio_venta
             })
         } catch (error) {
             console.error('Error al obtener productos:', error);

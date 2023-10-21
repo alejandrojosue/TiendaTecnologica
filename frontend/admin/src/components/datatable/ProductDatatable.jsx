@@ -22,7 +22,7 @@ const Datatable = () => {
 
         return (
           <div className="cellAction">
-            <Link to={`/products/new/?id=${params.row.id}`} style={{ textDecoration: "none" }}>
+            <Link to={`/products/foundproduct/?id=${params.row.id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton" style={{ padding: "5px" }}>Ver</div>
             </Link>
             {/* <div

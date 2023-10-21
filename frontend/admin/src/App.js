@@ -13,6 +13,7 @@ import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import NotFound from "./pages/notFound/NotFound";
+import FoundProduct from "./pages/found/foundProduct";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -40,8 +41,8 @@ function App() {
                 path="new"
                 element={<New inputs={productInputs} title="Add New Product" />}
               />
+              <Route path="foundproduct" element={<FoundProduct />} />
             </Route>
-            <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
