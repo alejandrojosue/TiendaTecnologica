@@ -51,6 +51,48 @@ const subCategoryColumns = [
   }
 ]
 
+const InvoiceColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "nInvoice",
+    headerName: "No. Factura",
+    width: 120,
+  },
+  {
+    field: "date",
+    headerName: "Fecha (dd/MM/yyyy)",
+    width: 200
+  },
+  {
+    field: "paymentMethod",
+    headerName: "Método de Pago",
+    width: 150
+  },
+  {
+    field: "total",
+    headerName: "Total",
+    width: 150
+  },
+  {
+    field: "status",
+    headerName: "Estado",
+    width: "200",
+    renderCell: (params) => {
+      const status = {
+        "No Pagada": 'No-Pagada',
+        Pagada: 'Pagada',
+        Anulada: 'Anulada',
+        "Parcialmente Pagada": "Parcialmente-Pagada"
+      }
+      return (
+        <div className={`cellWithStatus ${status[params.row.status]}`}>
+          {params.row.status}
+        </div>
+      )
+    }
+  }
+]
+
 export {
-  productColumns, categoryColumns, subCategoryColumns
+  productColumns, categoryColumns, subCategoryColumns, InvoiceColumns
 }

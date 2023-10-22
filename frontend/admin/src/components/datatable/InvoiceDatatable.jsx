@@ -1,29 +1,23 @@
 import "./datatable.scss"
 import { DataGrid } from "@mui/x-data-grid"
 import { Link } from "react-router-dom"
-import { categoryColumns } from "../../datatablesource"
-import { useFetchCategories, useGetAll } from '../../hooks/useFetchCategories'
+import { InvoiceColumns } from "../../datatablesource"
+import { useFetchSInvoices } from '../../hooks/useFetchInvoices'
+
 
 const Datatable = () => {
-  const { data, loading, error, handleDelete } = useGetAll() // useFetchCategories()
+  const { data, loading, error, handleDelete } = useFetchSInvoices()
   const actionColumn = [
     {
       field: "action",
       headerName: "Acción",
-      width: 150,
+      width: 70,
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to={`/categories/${params.row.id}`} style={{ textDecoration: "none" }}>
+            <Link to={`/invoice?id=${params.row.id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton" style={{ padding: "5px" }}>Ver</div>
             </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-              style={{ padding: "5px" }}
-            >
-              Borrar
-            </div>
           </div>
         )
       },
@@ -34,14 +28,14 @@ const Datatable = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Agregar nuevo
-        <Link to="/category/new" className="link">
+        <Link to="/invoices/new" className="link">
           Agregar
         </Link>
       </div>
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={categoryColumns.concat(actionColumn)}
+        columns={InvoiceColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection

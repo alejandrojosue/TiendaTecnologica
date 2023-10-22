@@ -1205,7 +1205,7 @@ export interface ApiProductoProducto extends Schema.CollectionType {
       Attribute.Unique &
       Attribute.SetMinMaxLength<{
         minLength: 5;
-        maxLength: 70;
+        maxLength: 95;
       }>;
     codigo: Attribute.String &
       Attribute.Required &
@@ -1406,7 +1406,7 @@ export interface ApiSubcategoriaSubcategoria extends Schema.CollectionType {
       Attribute.Unique &
       Attribute.SetMinMaxLength<{
         minLength: 3;
-        maxLength: 30;
+        maxLength: 40;
       }>;
     descripcion: Attribute.Text &
       Attribute.SetMinMaxLength<{
@@ -1416,7 +1416,8 @@ export interface ApiSubcategoriaSubcategoria extends Schema.CollectionType {
       'api::subcategoria.subcategoria',
       'oneToOne',
       'api::categoria.categoria'
-    >;
+    > &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1512,13 +1513,19 @@ export interface ApiVentaVenta extends Schema.CollectionType {
     > &
       Attribute.Required &
       Attribute.DefaultTo<'Efectivo'>;
-    cliente_user: Attribute.Relation<
+    users_permissions_user: Attribute.Relation<
       'api::venta.venta',
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
+    > &
+      Attribute.Required;
     detalleVentas: Attribute.Component<'detalles.detalles', true> &
       Attribute.Required;
+    estado: Attribute.Enumeration<
+      ['Pagada', 'Anulada', 'No Pagada', 'Parcialmente Pagada']
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'No Pagada'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

@@ -1,0 +1,140 @@
+$gray: #F7F9F9;
+$green: #2ECC71;
+
+.new-invoice {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 10px;
+
+    .top-right {
+      background-color: $gray;
+      display: flex;
+      align-content: center;
+      justify-content: end;
+
+      span {
+        background-color: rgba(105, 105, 105, .1);
+        padding: 10px;
+        border-radius: 10px;
+        font-weight: bold;
+        margin: 10px 10px 0px 0px;
+      }
+    }
+
+    .customer-vendor {
+      display: flex;
+      background-color: $gray;
+      justify-content: start;
+
+      .formInput {
+        width: 220px;
+        margin-bottom: 20px;
+        font-weight: bold;
+        margin-right: 20px;
+
+        label {
+          display: flex;
+          align-items: center;
+
+          .icon {
+            cursor: pointer;
+          }
+        }
+
+        input {
+          width: 100%;
+          padding: 5px;
+          border: 1px solid rgb(173, 173, 173);
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+
+  table {
+    width: 98%;
+    border-collapse: collapse;
+    margin: 0px auto;
+
+    thead {
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      /* Ajusta el color de fondo según tu diseño */
+    }
+
+    tbody {
+      max-height: 300px;
+      height: 0;
+      overflow-y: scroll;
+    }
+
+    th,
+    td {
+      border-top: 1px solid $gray;
+      /* Borde solo en la parte superior de las celdas */
+      border-bottom: 1px solid $gray;
+      /* Borde solo en la parte inferior de las celdas */
+      padding: 8px;
+      text-align: center;
+
+      input {
+        padding: 5px;
+        border: 1px solid rgb(173, 173, 173);
+        border-radius: 5px;
+      }
+    }
+
+    td {
+      button {
+        color: crimson;
+        background-color: #fff;
+        border-width: 0;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+
+      button:hover {
+        color: rgb(121, 0, 0)
+      }
+    }
+  }
+
+  .btnAdd {
+    background-color: $green;
+    border: none;
+    padding: 5px;
+    margin: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .btnAdd:hover {
+    box-shadow: 2px 2px 2px #ccc;
+  }
+
+  .calculations {
+    /* Add styling for calculations section */
+  }
+
+  .actions {
+    display: flex;
+    justify-content: space-around;
+
+    button {
+      background-color: $green;
+      border: none;
+      padding: 12px 18px;
+      margin-top: 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      color: white;
+      font-size: 1.1em;
+    }
+  }
+}

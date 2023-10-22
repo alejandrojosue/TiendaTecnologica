@@ -16,9 +16,9 @@
       "type": "string",
       "unique": true,
       "required": true,
-      "maxLength": 30,
+      "maxLength": 40,
       "minLength": 3,
-      "regex": "^[A-Za-zñÑáéíóúÁÉÍÓÚ]+$"
+      "regex": "^[A-Za-zñÑáéíóúÁÉÍÓÚ ]*$"
     },
     "descripcion": {
       "type": "text",
@@ -28,7 +28,8 @@
     "categoria": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::categoria.categoria"
+      "target": "api::categoria.categoria",
+      "required": true
     }
   }
 }

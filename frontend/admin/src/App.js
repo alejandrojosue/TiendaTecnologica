@@ -1,4 +1,4 @@
-import CategoryList from "./pages/list/CategoryList";
+import InvoiceList from "./pages/list/InvoiceList";
 import SubcategoryList from "./pages/list/SubcategoryList";
 import ProductList from "./pages/list/ProductList";
 import Home from "./pages/home/Home";
@@ -6,6 +6,7 @@ import Login from "./pages/login/Login";
 import Single from "./pages/single/Single";
 import Unauthorized from "./pages/unauthorized/Unauthorized";
 import New from "./pages/new/New";
+import NewInvoice from "./pages/new/NewInvoice";
 import ProtectedRouted from "./auth/ProtectedRouted";
 import { BrowserRouter, Routes, Route, RouterProvider } from "react-router-dom";
 import { productInputs, userInputs } from "./formSource";
@@ -25,12 +26,12 @@ function App() {
           <Route path="/" element={<ProtectedRouted />}>
             <Route path="dashboard" element={<Home />} />
             <Route path="subcategories" element={<SubcategoryList />} />
-            <Route path="categories">
-              <Route index element={<CategoryList />} />
-              <Route path=":categoryId" element={<Single />} />
+            <Route path="invoices">
+              <Route index element={<InvoiceList />} />
+              <Route path=":invoiceId" element={<Single />} />
               <Route
                 path="new"
-                element={<New inputs={userInputs} title="Add New User" />}
+                element={<NewInvoice inputs={userInputs} title="Nueva Factura" />}
               />
             </Route>
             <Route path="products">

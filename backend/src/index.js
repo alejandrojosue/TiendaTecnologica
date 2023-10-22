@@ -106,12 +106,87 @@ module.exports = {
           subcategorias,
           activo
         }
+        if (admin_user)
+          await strapi.service("api::log.log").create({
+            data: {
+              DateTime: updated,
+              ACTION: ACTIONS.PUT,
+              Table: 'PRODUCTO',
+              Description: `UPDATE PRODUCTO`,
+              admin_user,
+              rowID: id,
+              information: lastRecord
+            }
+          })
+      }
+    })
+
+    /*
+      lifecycles para {DAÑADO}
+    */
+
+    strapi.db.lifecycles.subscribe({
+      models: ['api::danado.danado'],
+      afterCreate: async ({ result, params }) => {
+        const {
+          id,
+          Cantidad,
+          Estado,
+          Motivo,
+          createdAt, createdBy } = result
+        const information = {
+          id,
+          Cantidad,
+          Estado,
+          Motivo,
+        }
+        const productId = params.data.producto.connect[0].id
+        const updateProduct = (await strapi
+          .service("api::producto.producto")
+          .find({ id: productId }))
+          .results[0]
+
+        await strapi.service("api::log.log").create({
+          data: {
+            DateTime: createdAt,
+            ACTION: ACTIONS.POST,
+            Table: 'DAÑADO',
+            Description: 'CREATE NEW DAÑADO',
+            admin_user: createdBy,
+            rowID: id,
+            information
+          }
+        })
+        await strapi
+          .service("api::producto.producto")
+          .update(productId, {
+            data: {
+              existencia: parseInt(updateProduct.existencia) - parseInt(Cantidad)
+            }
+          })
+      },
+      beforeUpdate: async ({ params }) => {
+        const admin_user = params.data.updatedBy
+        const updated = params.data.updatedAt
+        const { id } = params.where // id de la fila de tabla
+        const {
+          publishedAt,
+          Estado,
+          Motivo,
+          Cantidad,
+        } = await strapi.query('api::danado.danado').findOne({ id });
+        const lastRecord = {
+          publishedAt,
+          Estado,
+          Motivo,
+          Cantidad,
+        }
         await strapi.service("api::log.log").create({
           data: {
             DateTime: updated,
             ACTION: ACTIONS.PUT,
-            Table: 'PRODUCTO',
-            Description: `UPDATE PRODUCTO`,
+            Table: 'DAÑADO',
+            Description: `UPDATE DAÑADO`,
             admin_user,
             rowID: id,
             information: lastRecord
@@ -119,6 +194,7 @@ module.exports = {
         })
       }
     })
-
   },
+
+
 };

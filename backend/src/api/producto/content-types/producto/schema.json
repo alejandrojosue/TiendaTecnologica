@@ -17,7 +17,7 @@
       "type": "string",
       "required": true,
       "unique": true,
-      "maxLength": 70,
+      "maxLength": 95,
       "minLength": 5
     },
     "codigo": {
