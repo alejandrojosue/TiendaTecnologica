@@ -36,6 +36,7 @@ export default class ProductsRepository {
                 discount: data.attributes.descuento,
                 existence: data.attributes.existencia,
                 brand: data.attributes.marca.data.attributes.nombre,
+                asset: data.attributes.activo,
             })
         } catch (error) {
             console.error('Error al obtener productos:', error);

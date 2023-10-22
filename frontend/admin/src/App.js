@@ -13,7 +13,7 @@ import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import NotFound from "./pages/notFound/NotFound";
-import FoundProduct from "./pages/found/foundProduct";
+import View from "./pages/view/viewproducts";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -41,7 +41,7 @@ function App() {
                 path="new"
                 element={<New inputs={productInputs} title="Add New Product" />}
               />
-              <Route path="foundproduct" element={<FoundProduct />} />
+              <Route path="view" element={<View />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Route>
