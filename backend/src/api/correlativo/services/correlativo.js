@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * facturacion service
+ * correlativo service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::facturacion.facturacion');
+module.exports = createCoreService('api::correlativo.correlativo');

@@ -1,0 +1,20 @@
+{
+  "kind": "singleType",
+  "collectionName": "correlativos",
+  "info": {
+    "singularName": "correlativo",
+    "pluralName": "correlativos",
+    "displayName": "Correlativo"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "NoFactura": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    }
+  }
+}

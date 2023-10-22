@@ -1,10 +1,15 @@
 $gray: #F7F9F9;
 $green: #2ECC71;
+$purple: #7451f8;
 
 .new-invoice {
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  button {
+    cursor: pointer;
+  }
 
   .header {
     display: flex;
@@ -53,65 +58,84 @@ $green: #2ECC71;
           border-radius: 5px;
         }
       }
+
+      .btnRegresar {
+        text-decoration: none;
+        padding: 5px;
+        margin: auto 10px auto auto;
+        border: 1px solid green;
+        border-radius: 5px;
+        color: green;
+      }
+
+      .btnRegresar:hover {
+        background-color: green;
+        color: white;
+      }
     }
   }
 
-  table {
-    width: 98%;
-    border-collapse: collapse;
-    margin: 0px auto;
+  .wraper {
+    max-height: 250px;
+    overflow-y: scroll;
 
-    thead {
-      position: sticky;
-      top: 0;
-      background-color: #fff;
-      /* Ajusta el color de fondo según tu diseño */
-    }
+    table {
+      width: 98%;
+      border-collapse: collapse;
+      margin: 0px auto;
 
-    tbody {
-      max-height: 300px;
-      height: 0;
-      overflow-y: scroll;
-    }
-
-    th,
-    td {
-      border-top: 1px solid $gray;
-      /* Borde solo en la parte superior de las celdas */
-      border-bottom: 1px solid $gray;
-      /* Borde solo en la parte inferior de las celdas */
-      padding: 8px;
-      text-align: center;
-
-      input {
-        padding: 5px;
-        border: 1px solid rgb(173, 173, 173);
-        border-radius: 5px;
-      }
-    }
-
-    td {
-      button {
-        color: crimson;
+      thead {
+        position: sticky;
+        top: 0;
         background-color: #fff;
-        border-width: 0;
-        cursor: pointer;
-        border-radius: 50%;
       }
 
-      button:hover {
-        color: rgb(121, 0, 0)
+      tbody {
+        max-height: 300px;
+        height: 0;
+        overflow-y: scroll;
+      }
+
+      th,
+      td {
+        border-top: 1px solid $gray;
+        /* Borde solo en la parte superior de las celdas */
+        border-bottom: 1px solid $gray;
+        /* Borde solo en la parte inferior de las celdas */
+        padding: 8px;
+        text-align: center;
+
+        input {
+          padding: 5px;
+          border: 1px solid rgb(173, 173, 173);
+          border-radius: 5px;
+        }
+      }
+
+      td {
+        button {
+          color: crimson;
+          background-color: #fff;
+          border-width: 0;
+          cursor: pointer;
+          border-radius: 50%;
+        }
+
+        button:hover {
+          color: rgb(121, 0, 0)
+        }
       }
     }
   }
 
   .btnAdd {
-    background-color: $green;
+    background-color: $purple;
     border: none;
     padding: 5px;
     margin: 5px;
+    color: white;
+    font-size: 1.05em;
     font-weight: bold;
-    cursor: pointer;
   }
 
   .btnAdd:hover {
@@ -119,22 +143,52 @@ $green: #2ECC71;
   }
 
   .calculations {
-    /* Add styling for calculations section */
-  }
-
-  .actions {
+    width: 100%;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    text-align: end;
 
-    button {
-      background-color: $green;
-      border: none;
-      padding: 12px 18px;
-      margin-top: 10px;
-      border-radius: 5px;
-      font-weight: bold;
-      color: white;
-      font-size: 1.1em;
+    .invoice-summary {
+      padding: 5px 10px;
+      margin: 0px 0px 0px auto;
+
+      .summary-detail {
+        .summary-div {
+          display: flex;
+          font-size: 18px;
+          justify-content: end;
+          width: 410px;
+
+          .summary-description {
+            font-weight: bold;
+            width: 40%;
+          }
+
+          .summary-value {
+            min-width: 100px;
+            width: 40%;
+          }
+        }
+      }
+
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      margin-bottom: 10px;
+
+      button {
+        background-color: $purple;
+        border: none;
+        padding: 12px 18px;
+        margin-top: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        color: white;
+        font-size: 1.1em;
+      }
     }
   }
 }

@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * facturacion router
+ * correlativo router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::facturacion.facturacion');
+module.exports = createCoreRouter('api::correlativo.correlativo');

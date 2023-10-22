@@ -609,7 +609,8 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.user',
       'manyToOne',
       'plugin::users-permissions.role'
-    >;
+    > &
+      Attribute.Required;
     password: Attribute.Password &
       Attribute.Required &
       Attribute.Private &
@@ -796,6 +797,39 @@ export interface ApiCompraCompra extends Schema.CollectionType {
   };
 }
 
+export interface ApiCorrelativoCorrelativo extends Schema.SingleType {
+  collectionName: 'correlativos';
+  info: {
+    singularName: 'correlativo';
+    pluralName: 'correlativos';
+    displayName: 'Correlativo';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    NoFactura: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<{
+        min: 1;
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::correlativo.correlativo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::correlativo.correlativo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiCuponCupon extends Schema.CollectionType {
   collectionName: 'cupons';
   info: {
@@ -968,9 +1002,13 @@ export interface ApiEmpresaEmpresa extends Schema.SingleType {
         minLength: 8;
         maxLength: 8;
       }>;
-    leyenda: Attribute.String &
+    lema: Attribute.String &
       Attribute.DefaultTo<'- Eslogan de la compa\u00F1\u00EDa -'>;
     website: Attribute.String;
+    CAI: Attribute.String & Attribute.Required;
+    RangoInicial: Attribute.Integer & Attribute.Required;
+    RangoFinal: Attribute.Integer & Attribute.Required;
+    fechaVencimiento: Attribute.Date;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -981,61 +1019,6 @@ export interface ApiEmpresaEmpresa extends Schema.SingleType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::empresa.empresa',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiFacturacionFacturacion extends Schema.CollectionType {
-  collectionName: 'facturacions';
-  info: {
-    singularName: 'facturacion';
-    pluralName: 'facturacions';
-    displayName: 'Facturacion';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    RangoInicial: Attribute.Integer &
-      Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 1;
-      }> &
-      Attribute.DefaultTo<1>;
-    RangoFinal: Attribute.Integer &
-      Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 2;
-      }> &
-      Attribute.DefaultTo<2>;
-    CAI: Attribute.String &
-      Attribute.Required &
-      Attribute.Unique &
-      Attribute.SetMinMaxLength<{
-        minLength: 14;
-        maxLength: 14;
-      }>;
-    fechaInicio: Attribute.Date & Attribute.Required;
-    fechaFin: Attribute.Date & Attribute.Required;
-    sucursal: Attribute.Relation<
-      'api::facturacion.facturacion',
-      'oneToOne',
-      'api::sucursal.sucursal'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::facturacion.facturacion',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::facturacion.facturacion',
       'oneToOne',
       'admin::user'
     > &
@@ -1247,6 +1230,7 @@ export interface ApiProductoProducto extends Schema.CollectionType {
       Attribute.Required &
       Attribute.SetMinMax<{
         min: 0;
+        max: 1;
       }>;
     img: Attribute.Media & Attribute.Required;
     modelo: Attribute.String &
@@ -1561,11 +1545,11 @@ declare module '@strapi/types' {
       'plugin::i18n.locale': PluginI18NLocale;
       'api::categoria.categoria': ApiCategoriaCategoria;
       'api::compra.compra': ApiCompraCompra;
+      'api::correlativo.correlativo': ApiCorrelativoCorrelativo;
       'api::cupon.cupon': ApiCuponCupon;
       'api::danado.danado': ApiDanadoDanado;
       'api::devolucion.devolucion': ApiDevolucionDevolucion;
       'api::empresa.empresa': ApiEmpresaEmpresa;
-      'api::facturacion.facturacion': ApiFacturacionFacturacion;
       'api::garantia.garantia': ApiGarantiaGarantia;
       'api::interaccion.interaccion': ApiInteraccionInteraccion;
       'api::log.log': ApiLogLog;

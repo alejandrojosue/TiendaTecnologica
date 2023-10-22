@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useFetchProducts } from "../../hooks/useFetchProducts";
 import "./newInvoice.scss";
+import { useFetchUsers } from "../../hooks/useFetchUsers";
 
 const New = () => {
     const { data } = useFetchProducts()
+    const [rtnCustomer, setRtnCustomer] = useState('')
+    const { dataUser } = useFetchUsers(rtnCustomer)
     const [invoiceItems, setInvoiceItems] = useState([])
     const [totalSummary, setTotalSummary] = useState(0)
     const [subtotalSummary, setSubtotalSummary] = useState(0)
     const [taxSummary, setTaxSummary] = useState(0)
     const [discountSummary, setDiscountSummary] = useState(0)
+
+    const handleRTN = (value) => {
+        setRtnCustomer(value)
+    }
 
     const handleAddItem = () => {
         const newItem = {
@@ -26,7 +33,7 @@ const New = () => {
 
     const handleDeleteItem = (index) => {
         invoiceItems.splice(index--, 1)
-        setInvoiceItems(invoiceItems)
+        setInvoiceItems([...invoiceItems])
         updateTotalSumary()
     }
 
@@ -69,12 +76,33 @@ const New = () => {
         updateTotalSumary()
     }
 
-    // Implement calculations for subtotal, tax, discount, and total
+    const handleSaveFullPayment = () => {
+        const data = {
+            data: {
+                noFactura: 5,
+                medotoPago: "Efectivo",
+                users_permissions_user: {
+                    id: 3
+                },
+                detalleVentas: [
+                    {
+                        cantidad: 2,
+                        precio: 10000,
+                        descuento: 0,
+                        isv: 0.15,
+                        producto: {
+                            id: 2
+                        }
+                    }
+                ]
+            }
+        };
+
+    }
     return (
         <div className="new-invoice">
             <div className="header">
                 <div className="top-right">
-                    {/* Display the date */}
                     <span>
                         Fecha: {`${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`}
                     </span>
@@ -86,122 +114,137 @@ const New = () => {
                     {/* Input fields for Customer and Vendor */}
                     <div className="formInput">
                         <label>RTN:</label>
-                        <input type="text" placeholder="RTN del Cliente" />
+                        <input type="text"
+                            onChange={e => handleRTN(e.target.value)}
+                            placeholder="RTN del Cliente" />
                     </div>
                     <div className="formInput">
                         <label>Cliente:</label>
-                        <input type="text" placeholder="Nombre del Cliente" />
+                        <input type="text"
+                            value={dataUser && dataUser.name || ''}
+                            readOnly
+                            placeholder="Nombre del Cliente" />
                     </div>
+                    <div className="formInput">
+                        <label>Vendedor:</label>
+                        <input type="text" value={'Chabelo Rivas'} readOnly />
+                    </div>
+                    <a href="/invoices" className="btnRegresar">Regresar</a>
                 </div>
             </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th style={{ width: "330px" }}>Producto</th>
-                        <th style={{ width: "100px" }}> Cantidad</th>
-                        <th style={{ width: "80px" }}>Precio</th>
-                        <th style={{ width: "60px" }}>ISV</th>
-                        <th>Descuento</th>
-                        <th>Subtotal</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {invoiceItems.map((item, index) => (
-                        <tr key={index}>
-                            <td>
-                                <input
-                                    type="number"
-                                    required
-                                    onChange={(e) => handleSkuChange(index, e.target.value)}
-                                />
-                            </td>
-                            <td>
-                                <input type="text"
-                                    value={item.product}
-                                    style={{ width: "400px" }}
-                                />
-                            </td>
-                            <td>
-                                <input
-                                    type="number"
-                                    required
-                                    min={1}
-                                    style={{ width: "100px" }}
-                                    onChange={(e) => handleQuantityChange(index, e.target.value)}
-                                />
-                            </td>
-                            <td>
-                                <input
-                                    type="number"
-                                    value={item.price}
-                                    min={0}
-                                    style={{ width: "80px" }}
-                                />
-                            </td>
-                            <td>
-                                <input
-                                    type="number"
-                                    value={item.tax}
-                                    min={0}
-                                    style={{ width: "60px" }}
-                                />
-                            </td>
-                            <td>
-                                <input
-                                    type="number"
-                                    value={item.discount}
-                                    min={0}
-                                    max={100}
-                                />
-                            </td>
-                            <td
-                                style={{ width: "120px", color: item.total < 0 ? "red" : "initial" }}>
-                                L. {item.total}</td>
-                            <td>
-                                <button onClick={() => handleDeleteItem(index)}>
-                                    <DeleteForeverIcon className="icon" />
-                                </button>
-                            </td>
+            <div className="wraper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th style={{ width: "330px" }}>Producto</th>
+                            <th style={{ width: "100px" }}> Cantidad</th>
+                            <th style={{ width: "80px" }}>Precio</th>
+                            <th style={{ width: "60px" }}>ISV</th>
+                            <th>Descuento</th>
+                            <th>Subtotal</th>
+                            <th></th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody >
+                        {invoiceItems.map((item, index) => (
+                            <tr key={index}>
+                                <td>
+                                    <input
+                                        type="number"
+                                        required
+                                        onChange={(e) => handleSkuChange(index, e.target.value)}
+                                    />
+                                </td>
+                                <td>
+                                    <input type="text"
+                                        value={item.product}
+                                        style={{ width: "400px" }}
+                                        readOnly
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        required
+                                        min={1}
+                                        style={{ width: "100px" }}
+                                        onChange={(e) => handleQuantityChange(index, e.target.value)}
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        value={item.price}
+                                        min={0}
+                                        style={{ width: "80px" }}
+                                        readOnly
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        value={item.tax}
+                                        min={0}
+                                        style={{ width: "60px" }}
+                                        readOnly
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        value={item.discount}
+                                        min={0}
+                                        max={100}
+                                        readOnly
+                                    />
+                                </td>
+                                <td
+                                    style={{ width: "120px", color: item.total < 0 ? "red" : "initial" }}>
+                                    L. {item.total}</td>
+                                <td>
+                                    <button onClick={() => handleDeleteItem(index)}>
+                                        <DeleteForeverIcon className="icon" />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
             <button className="btnAdd" onClick={handleAddItem}>Añadir Nuevo Artículo</button>
             <div className="calculations">
                 {/* Display Subtotal, Tax, Discount, and Total */}
                 <div className="invoice-summary">
-                    <div>
-                        <h2>Resumen de la Factura</h2>
-                    </div>
-                    <div>
-                        <div>
-                            <span>Subtotal:</span>
-                            <span> L.{subtotalSummary.toFixed(2)} </span>
+                    <div className="summary-detail">
+                        <div className="summary-div">
+                            <div className="summary-description">Subtotal:</div>
+                            <div className="summary-value"> L.{subtotalSummary.toFixed(2)} </div>
                         </div>
-                        <div>
-                            <span>Impuesto Total:</span>
-                            <span> L.{taxSummary.toFixed(2)} </span>
+                        <div className="summary-div">
+                            <div className="summary-description">Impuesto Total:</div>
+                            <div className="summary-value"> L.{taxSummary.toFixed(2)} </div>
                         </div>
-                        <div>
-                            <span>Descuento Total:</span>
-                            <span> L.{discountSummary.toFixed(2)} </span>
+                        <div className="summary-div">
+                            <div className="summary-description">Descuento Total:</div>
+                            <div className="summary-value"> L.{discountSummary.toFixed(2)} </div>
                         </div>
-                        <div>
-                            <span>Total:</span>
-                            <span> L.{totalSummary.toFixed(2)} </span>
+                        <div className="summary-div">
+                            <div className="summary-description">Monto Total:</div>
+                            <div className="summary-value"> L.{totalSummary.toFixed(2)} </div>
                         </div>
                     </div>
                 </div>
+                <div className="actions">
+                    <button id="btnSave">Guardar</button>
+                    <button id="btnSavePartialPayment">Guardar y Hacer Pago Parcial</button>
+                    <button
+                        onClick={handleSaveFullPayment}
+                        id="btnSaveFullPayment">Guardar y Hacer Pago Completo</button>
+                </div>
             </div>
-            <div className="actions">
-                <button>Guardar</button>
-                <button>Guardar y Hacer Pago Parcial</button>
-                <button>Guardar y Hacer Pago Completo</button>
-            </div>
-        </div>
+
+        </div >
     );
 };
 
