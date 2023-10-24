@@ -26,20 +26,30 @@ export default class ProductsRepository {
         }
     }
 
-    async create(data, token) {
+    async getByCodigo(sku) {
         try {
-            const response = await fetchDataFromAPI('/productos', 'POST', token, data);
-
-            if (response) {
-                // El producto se creó con éxito, y response puede contener información sobre el nuevo producto creado.
-                console.log('Producto creado con éxito:', response);
-            } else {
-                // La respuesta no contiene información del nuevo producto.
-                console.error('No se pudo obtener información del nuevo producto.');
-            }
+            const data = await fetchDataFromAPI(`/productos?filters[activo]=true&filters[codigo][$eq]=${sku}`);
+            console.log(data[0].attributes)
+            return ({
+                sku: data[0].attributes.codigo,
+                name: data[0].attributes.nombre,
+                discount: data[0].attributes.descuento,
+                price: data[0].attributes.precio_venta,
+                status: data[0].attributes.activo,
+            })
         } catch (error) {
             // Maneja errores de red o del servidor
-            console.error('Error al crear el producto:', error.message);
+            console.log('Error al obtener el producto repo:', error.message);
         }
+    }
+
+    async create(data, token) {
+        // try {
+        //     const data = await fetchDataFromAPI(`/productos?filters[codigo][$eq]=${sku}`, 'GET', token, data);
+        //     return
+        // } catch (error) {
+        //     // Maneja errores de red o del servidor
+        //     console.error('Error al crear el producto:', error.message);
+        // }
     }
 }

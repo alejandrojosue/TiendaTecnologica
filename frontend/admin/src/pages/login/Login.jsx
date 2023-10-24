@@ -17,6 +17,8 @@ const Login = () => {
           })
         if (response) {
           sessionStorage.setItem('daiswadod', response.jwt)
+          sessionStorage.setItem('userID', response.user.id)
+          sessionStorage.setItem('userName', response.user.nombre)
           sessionStorage.setItem('SESSION_TIME', new Date().getTime())
           navigate('/dashboard')
         }

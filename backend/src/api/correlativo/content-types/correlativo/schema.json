@@ -4,7 +4,8 @@
   "info": {
     "singularName": "correlativo",
     "pluralName": "correlativos",
-    "displayName": "Correlativo"
+    "displayName": "Correlativo",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -14,7 +15,8 @@
     "NoFactura": {
       "type": "integer",
       "required": true,
-      "min": 1
+      "min": 1,
+      "default": 0
     }
   }
 }

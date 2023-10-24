@@ -3,6 +3,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useFetchProducts } from "../../hooks/useFetchProducts";
 import "./newInvoice.scss";
 import { useFetchUsers } from "../../hooks/useFetchUsers";
+import { useFetchCompany } from "../../hooks/useFetchCompany";
+import InvoiceSummaryModal from "../../components/modals/InvoiceSummaryModal";
 
 const New = () => {
     const { data } = useFetchProducts()
@@ -13,6 +15,7 @@ const New = () => {
     const [subtotalSummary, setSubtotalSummary] = useState(0)
     const [taxSummary, setTaxSummary] = useState(0)
     const [discountSummary, setDiscountSummary] = useState(0)
+    const { dataCompany } = useFetchCompany()
 
     const handleRTN = (value) => {
         setRtnCustomer(value)
@@ -32,7 +35,7 @@ const New = () => {
     };
 
     const handleDeleteItem = (index) => {
-        invoiceItems.splice(index--, 1)
+        invoiceItems.splice(index, 1)
         setInvoiceItems([...invoiceItems])
         updateTotalSumary()
     }
@@ -46,7 +49,7 @@ const New = () => {
 
     const handleSkuChange = (index, value) => {
         // Buscar el producto en base al SKU
-        const product = data.find((product) => product.sku === value);
+        const product = data.find((product) => product.sku === value && product.status);
         if (product) {
             const updatedItems = [...invoiceItems];
             updatedItems[index] = {
@@ -76,38 +79,42 @@ const New = () => {
         updateTotalSumary()
     }
 
-    const handleSaveFullPayment = () => {
-        const data = {
-            data: {
-                noFactura: 5,
-                medotoPago: "Efectivo",
-                users_permissions_user: {
-                    id: 3
-                },
-                detalleVentas: [
-                    {
-                        cantidad: 2,
-                        precio: 10000,
-                        descuento: 0,
-                        isv: 0.15,
-                        producto: {
-                            id: 2
+    const handleSaveAction = (actionType) => {
+        if (actionType === "fullPayment") {
+            const data = {
+                data: {
+                    noFactura: 5,
+                    medotoPago: "Efectivo",
+                    users_permissions_user: {
+                        id: 3
+                    },
+                    detalleVentas: [
+                        {
+                            cantidad: 2,
+                            precio: 10000,
+                            descuento: 0,
+                            isv: 0.15,
+                            producto: {
+                                id: 2
+                            }
                         }
-                    }
-                ]
-            }
-        };
-
+                    ]
+                }
+            };
+        } else if (actionType === "partialPayment") {
+            // Lógica para guardar y hacer un pago parcial
+        } else alert("Disponible Próximante");
     }
+
     return (
         <div className="new-invoice">
             <div className="header">
                 <div className="top-right">
                     <span>
-                        Fecha: {`${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`}
+                        Fecha: {`${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`}
                     </span>
                     <span>
-                        Fecha Vencimiento: {`${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`}
+                        Fecha Vencimiento: {data && dataCompany.invoiceDueDate}
                     </span>
                 </div>
                 <div className="customer-vendor">
@@ -127,7 +134,7 @@ const New = () => {
                     </div>
                     <div className="formInput">
                         <label>Vendedor:</label>
-                        <input type="text" value={'Chabelo Rivas'} readOnly />
+                        <input type="text" value={sessionStorage.getItem('userName')} readOnly />
                     </div>
                     <a href="/invoices" className="btnRegresar">Regresar</a>
                 </div>
@@ -236,14 +243,18 @@ const New = () => {
                     </div>
                 </div>
                 <div className="actions">
-                    <button id="btnSave">Guardar</button>
-                    <button id="btnSavePartialPayment">Guardar y Hacer Pago Parcial</button>
                     <button
-                        onClick={handleSaveFullPayment}
+                        onClick={handleSaveAction}
+                        id="btnSave">Guardar</button>
+                    <button
+                        onClick={handleSaveAction}
+                        id="btnSavePartialPayment">Guardar y Hacer Pago Parcial</button>
+                    <button
+                        onClick={handleSaveAction('fullPayment')}
                         id="btnSaveFullPayment">Guardar y Hacer Pago Completo</button>
                 </div>
             </div>
-
+            <InvoiceSummaryModal />
         </div >
     );
 };

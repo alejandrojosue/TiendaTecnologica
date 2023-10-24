@@ -199,20 +199,20 @@ module.exports = {
       lifecycles para {EMPRESA <<CORRELATIVO>>}
     */
 
-    strapi.db.lifecycles.subscribe({
-      models: ['api::empresa.empresa'],
+    // strapi.db.lifecycles.subscribe({
+    //   models: ['api::empresa.empresa'],
 
-      afterUpdate: async ({ result }) => {
-        const noInvoice = result.RangoInicial
-        await strapi
-          .service("api::correlativo.correlativo")
-          .update(1, {
-            data: {
-              NoFactura: parseInt(noInvoice)
-            }
-          })
-      }
-    })
+    //   afterUpdate: async ({ result }) => {
+    //     const noInvoice = result.RangoInicial
+    //     await strapi
+    //       .service("api::correlativo.correlativo")
+    //       .update(1, {
+    //         data: {
+    //           NoFactura: parseInt(noInvoice)
+    //         }
+    //       })
+    //   }
+    // })
   },
 
 

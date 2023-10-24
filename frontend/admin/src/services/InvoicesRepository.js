@@ -30,6 +30,8 @@ export default class InvoiceRepository {
         }
     }
 
+    async getByDateRange(startDate, endDate = new Date().toISOString()) { }
+
     async create(data, token) {
         try {
             const response = await fetchDataFromAPI('/invoiceos', 'POST', token, data);

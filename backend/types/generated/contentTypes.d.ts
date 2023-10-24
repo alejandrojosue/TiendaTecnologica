@@ -803,6 +803,7 @@ export interface ApiCorrelativoCorrelativo extends Schema.SingleType {
     singularName: 'correlativo';
     pluralName: 'correlativos';
     displayName: 'Correlativo';
+    description: '';
   };
   options: {
     draftAndPublish: false;
@@ -812,7 +813,8 @@ export interface ApiCorrelativoCorrelativo extends Schema.SingleType {
       Attribute.Required &
       Attribute.SetMinMax<{
         min: 1;
-      }>;
+      }> &
+      Attribute.DefaultTo<0>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
