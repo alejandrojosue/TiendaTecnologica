@@ -22,6 +22,9 @@ const FoundProduct =({inputs, title}) => {
             <div>
                 <Navbar />
                 </div>
+                <div className="h1">
+                    <h1>Ver Producto</h1>
+                    </div>
         <div className="bottom1">
             <div style={{ textAlign: 'right', marginBottom: "20px"}}>
             <label style={{alignitems: "center", gap: "10px", marginbottom: "10px"}}>
@@ -29,11 +32,19 @@ const FoundProduct =({inputs, title}) => {
             {data && data.asset && (
           <input
             type="checkbox"
-            checked={data.asset}
+            checked={data.asset || false}
+            onChange={(event) => this.setState({ asset: event.target.checked })}
             className="chekbox1"
             readOnly
           />
             )}
+            {data && (data.asset ||  <input
+            type="checkbox"
+            checked={data.asset || false}
+            onChange={(event) => this.setState({ asset: event.target.checked })}
+            className="chekbox1"
+            readOnly
+          />)}
         </label>
             </div>
             <div className="top1">
@@ -49,27 +60,27 @@ const FoundProduct =({inputs, title}) => {
         <label className="label1" htmlFor="descripcion">Descripcion:</label>
         <input className="input2" type="text" value={data && data.description ? data.description : ''} readOnly />
         <label className="label1"  htmlFor="preciov">Precio de venta:</label>
-        <input className="input2" style={{width: "150px"}} type="number" value={data && data.priceV ? data.priceV : ''} readOnly />
+        <input className="input3"  type="number" value={data && data.priceV ? data.priceV : ''} readOnly />
         </div>
         <br />
         <div className="down">
         <div className="left1">
         {data && data.img && (
-        <img className="img" src={`http://localhost:1337${data.img}`} alt="Mi Imagen" />
+        <img src={`http://localhost:1337${data.img}`} alt="Mi Imagen" />
         )}
         </div>
         <div className="right1">
             <div className="contenido-derecha ">
         <label className="label1" htmlFor="model">Modelo:</label>
-        <input className="input1" style={{width:"380px"}} type="text" value={data && data.model ? data.model : ''} readOnly />
+        <input className="input1" style={{width:"290px"}} type="text" value={data && data.model ? data.model : ''} readOnly />
         <label className="label1" htmlFor="isv">ISV:</label>
-        <input className="input1" style={{width:"380px"}}  type="number" value={data && data.tax ? data.tax : ''} readOnly />
-        <label className="label1" htmlFor="descuento">Descuento:</label>
-        <input className="input1" style={{width:"380px"}}  type="number" value={data && data.discount!==null ? data.discount : ''} readOnly />
-        <label className="label1" htmlFor="existencia">Existencia:</label>
-        <input className="input1" style={{width:"380px"}}  type="number" value={data && data.existence ? data.existence : ''} readOnly />
+        <input className="input1" style={{width:"290px"}}  type="number" value={data && data.tax ? data.tax : ''} readOnly />
+        <label className="label2" htmlFor="descuento">Descuento:</label>
+        <input className="input1" style={{width:"50px"}}  type="number" value={data && data.discount!==null ? data.discount : ''} readOnly />
+        <label className="label2" htmlFor="existencia">Existencia:</label>
+        <input className="input1" style={{width:"50px"}}  type="number" value={data && data.existence ? data.existence : ''} readOnly />
         <label className="label1" htmlFor="marca">Marca:</label>
-        <input className="input1" style={{width:"380px"}}  type="text" value={data && data.brand ? data.brand : ''} readOnly />
+        <input className="input1" style={{width:"290px"}}  type="text" value={data && data.brand ? data.brand : ''} readOnly />
         <Link to="/products">
         <button className="button1">Volver</button>
         </Link>
