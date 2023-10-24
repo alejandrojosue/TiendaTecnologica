@@ -2,18 +2,22 @@
 import React from "react";
 import './invoiceSummaryModal.scss'
 
-const InvoiceSummaryModal = () => {
+const InvoiceSummaryModal = (isOpen) => {
     return (
         // Contenido del modal
-        <div className="invoice-form">
-            <h2>Formulario de Factura</h2>
+        <div className={`invoice-form ${isOpen && 'isOpen'}`}
+        >
+            <span
+                className="btnClose">x</span>
+            <h2>Confirmación de Factura</h2>
             <form>
                 <div className="form-group">
-                    <label htmlFor="idCliente">ID del Cliente:</label>
+                    <label htmlFor="idCliente">RTN del Cliente:</label>
                     <input
                         type="text"
                         id="idCliente"
-                        value={'03012001010192'}
+                        defaultValue={'03012001010192'}
+                        readOnly
                     />
                 </div>
 
@@ -22,36 +26,36 @@ const InvoiceSummaryModal = () => {
                     <input
                         type="text"
                         id="nombreCliente"
-                        value={'Alejandro Diaz'}
+                        defaultValue={'Alejandro Diaz'}
+                        readOnly
                     />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="fecha">Fecha:</label>
                     <input
-                        type="date"
+                        type="datetime-local"
                         id="fecha"
-                        value={'2023-10-23'}
+                        defaultValue={'2023-10-23T12:00'}
+                        readOnly
                     />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="metodoPago">Método de Pago:</label>
-                    <select
-                        id="metodoPago"
-                        value={'Efectivo'}
-                    >
+                    <select id="metodoPago" defaultValue={"Efectivo"} readOnly>
                         <option value="">Seleccionar Método de Pago</option>
                         <option value="Efectivo">Efectivo</option>
                         <option value="Tarjeta">Tarjeta</option>
                         <option value="Transferencia">Transferencia</option>
                     </select>
+
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="totalAPagar">Total a Pagar:</label>
                     <input
-                        type="number"
+                        type="text"
                         id="totalAPagar"
                         value={'L. 50000.00'}
                     />

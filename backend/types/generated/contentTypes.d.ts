@@ -1499,12 +1499,11 @@ export interface ApiVentaVenta extends Schema.CollectionType {
     > &
       Attribute.Required &
       Attribute.DefaultTo<'Efectivo'>;
-    users_permissions_user: Attribute.Relation<
+    cliente: Attribute.Relation<
       'api::venta.venta',
       'oneToOne',
       'plugin::users-permissions.user'
-    > &
-      Attribute.Required;
+    >;
     detalleVentas: Attribute.Component<'detalles.detalles', true> &
       Attribute.Required;
     estado: Attribute.Enumeration<
@@ -1512,6 +1511,11 @@ export interface ApiVentaVenta extends Schema.CollectionType {
     > &
       Attribute.Required &
       Attribute.DefaultTo<'No Pagada'>;
+    vendedor: Attribute.Relation<
+      'api::venta.venta',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

@@ -4,9 +4,11 @@ import { useFetchProducts } from "../../hooks/useFetchProducts";
 import "./newInvoice.scss";
 import { useFetchUsers } from "../../hooks/useFetchUsers";
 import { useFetchCompany } from "../../hooks/useFetchCompany";
-import InvoiceSummaryModal from "../../components/modals/InvoiceSummaryModal";
+// import InvoiceSummaryModal from "../../components/modals/InvoiceSummaryModal";
+// import { useModal } from "../../hooks/useModal";
 
 const New = () => {
+    // const [isOpenModal, openModal, closeModal] = useModal(false)
     const { data } = useFetchProducts()
     const [rtnCustomer, setRtnCustomer] = useState('')
     const { dataUser } = useFetchUsers(rtnCustomer)
@@ -78,29 +80,40 @@ const New = () => {
         setInvoiceItems([...invoiceItems])
         updateTotalSumary()
     }
-
     const handleSaveAction = (actionType) => {
         if (actionType === "fullPayment") {
+            const seller = sessionStorage.getItem('userID')
+            if (!invoiceItems.length || !invoiceItems[0].sku) return;
+            if (!seller) return;
+            if (!dataCompany) return;
+            if (!dataUser) return;
+
+            const detalleVentas = invoiceItems.map(item => ({
+                cantidad: item.quantity,
+                precio: item.price,
+                isv: item.tax,
+                descuento: item.discount,
+                producto: {
+                    id: parseInt(item.sku)
+                },
+            }));
+
+            const noFactura = parseInt(dataCompany.invoiceDueDate)
+
             const data = {
                 data: {
-                    noFactura: 5,
+                    noFactura,
                     medotoPago: "Efectivo",
-                    users_permissions_user: {
-                        id: 3
+                    vendedor: {
+                        id: parseInt(seller)
                     },
-                    detalleVentas: [
-                        {
-                            cantidad: 2,
-                            precio: 10000,
-                            descuento: 0,
-                            isv: 0.15,
-                            producto: {
-                                id: 2
-                            }
-                        }
-                    ]
+                    cliente: {
+                        id: parseInt(dataUser.id)
+                    },
+                    detalleVentas
                 }
             };
+
         } else if (actionType === "partialPayment") {
             // Lógica para guardar y hacer un pago parcial
         } else alert("Disponible Próximante");
@@ -111,7 +124,7 @@ const New = () => {
             <div className="header">
                 <div className="top-right">
                     <span>
-                        Fecha: {`${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`}
+                        Fecha: {`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`}
                     </span>
                     <span>
                         Fecha Vencimiento: {data && dataCompany.invoiceDueDate}
@@ -128,7 +141,7 @@ const New = () => {
                     <div className="formInput">
                         <label>Cliente:</label>
                         <input type="text"
-                            value={dataUser && dataUser.name || ''}
+                            value={dataUser && dataUser.name}
                             readOnly
                             placeholder="Nombre del Cliente" />
                     </div>
@@ -250,11 +263,11 @@ const New = () => {
                         onClick={handleSaveAction}
                         id="btnSavePartialPayment">Guardar y Hacer Pago Parcial</button>
                     <button
-                        onClick={handleSaveAction('fullPayment')}
+                        onClick={() => handleSaveAction('fullPayment')}
                         id="btnSaveFullPayment">Guardar y Hacer Pago Completo</button>
                 </div>
             </div>
-            <InvoiceSummaryModal />
+            {/* <InvoiceSummaryModal isOpen={isOpenModal} /> */}
         </div >
     );
 };
