@@ -5,6 +5,7 @@ import ProductsRepository from '../services/ProductsRepository'
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     const [originalData, setOriginalData] = useState([]);
+    
     useEffect(() => {
         (new ProductsRepository()).getAll()
             .then((result) => {
@@ -18,12 +19,15 @@ import ProductsRepository from '../services/ProductsRepository'
             })
       }, []);
     const handleDelete = (id) => { setData(data.filter((item) => item.id !== id)) }
+
     const handleSubcategory = (id) => {
         setData(originalData.filter(product => product.subcategory.some(sub => sub.id === parseInt(id))))
     }
+
     const handleReloadPage = () => {
         window.location.reload();
     }   
+    
     return { data, handleDelete, handleSubcategory, handleReloadPage}
 }
 

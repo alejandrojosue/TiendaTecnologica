@@ -24,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<ProtectedRouted />}>
+          <Route path="single" element={<Single />} />
             <Route path="dashboard" element={<Home />} />
             <Route path="subcategories" element={<SubcategoryList />} />
             <Route path="categories">

@@ -90,10 +90,12 @@ const Sidebar = () => {
             <span>Settings</span>
           </li>
           <p className="title">USUARIO</p>
-          <li>
+           */}
+           <Link to={"/single"} style={{ textDecoration: "none" }}>
+           <li>
             <AccountCircleOutlinedIcon className="icon" />
             <span>Perfil</span>
-          </li> */}
+          </li></Link>
           <p className="title">USUARIO</p>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <li>

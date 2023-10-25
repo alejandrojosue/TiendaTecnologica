@@ -6,12 +6,28 @@ import { productColumns } from "../../datatablesource"
 import { useFetchProducts } from '../../hooks/useFetchProducts'
 import { useFetchSubcategories } from '../../hooks/useFetchSubcategories'
 import {useFetchCategories}  from '../../hooks/useFetchCategories'
+import filterSubcategoryByCategory from '../../auth/helpers/subcategories-filter'
+import { useEffect, useState } from 'react'
 
 const Datatable = () => {
-  const { data, handleDelete, handleSubcategory, handleReloadPage} = useFetchProducts()
-  const { dataSubcategories } = useFetchSubcategories()
+  const { data, handleDelete, handleSubcategory, handleReloadPage, handleCategory} = useFetchProducts();
+  const { dataSubcategories } = useFetchSubcategories();
   const { dataCategorias } = useFetchCategories();
 
+  const [selectedCategory, setSelectedCategory] = useState(''); // Estado para almacenar el category seleccionado
+  const [filteredSubcategories, setFilteredSubcategories] = useState(dataSubcategories); // Estado para subcategorías filtradas
+
+
+  useEffect(() => {
+    if (selectedCategory) {
+      // Filtra las subcategorías según la categoría seleccionada
+      const filtered = filterSubcategoryByCategory(selectedCategory, dataSubcategories);
+      setFilteredSubcategories(filtered);
+    } else {
+      // Si no se ha seleccionado una categoría, muestra todas las subcategorías
+      setFilteredSubcategories(dataSubcategories);
+    }
+  }, [selectedCategory]);
 
   const actionColumn = [
     {
@@ -45,10 +61,11 @@ const Datatable = () => {
           Agregar
         </Link>
       </div> */}
-      <select name="categoria" className='selectCategory' id="categoria">
+      <select name="categoria" className='selectCategory' id="categoria" onChange={(e) => setSelectedCategory(e.target.value)}>
+      <option value="none">Seleccione una Categoria</option>
       {
           dataCategorias.map(data =>(
-            <option key={data.id} value={data.id}>
+            <option key={data.id} value={data.name}>
               {
                 data.name
               }
@@ -56,10 +73,14 @@ const Datatable = () => {
           ))
         }
       </select>
-      <select name="subcategoria" className='selectSubcategory' id="subcategoria" onChange={e => handleSubcategory(e.target.value)} 
+      <select name="subcategoria" className='selectSubcategory' id="subcategoria"  onChange={e=>{
+        if(e.target.value === 'none') return
+        handleSubcategory(parseInt(e.target.value))
+      }}
        >
+        <option value="none">Seleccione una subcategoría</option>
         {
-          dataSubcategories.map(data =>(
+          filteredSubcategories.map(data =>(
             <option key={data.id} value={data.id}>
               {
                 data.name
