@@ -1,5 +1,5 @@
 import { fetchDataFromAPI } from './api/context'; // Asegúrate de importar tu función correctamente
-export default class dataRepository {
+export default class CompanyRepository {
     async get() {
         try {
             const { data } = await fetchDataFromAPI('/empresa')

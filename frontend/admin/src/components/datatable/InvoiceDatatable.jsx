@@ -6,7 +6,7 @@ import { useFetchSInvoices } from '../../hooks/useFetchInvoices'
 
 
 const Datatable = () => {
-  const { data, loading, error, handleDelete } = useFetchSInvoices()
+  const { data, loading, error } = useFetchSInvoices()
   const actionColumn = [
     {
       field: "action",

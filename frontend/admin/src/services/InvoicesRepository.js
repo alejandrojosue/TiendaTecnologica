@@ -34,12 +34,9 @@ export default class InvoiceRepository {
 
     async create(data, token) {
         try {
-            const response = await fetchDataFromAPI('/invoiceos', 'POST', token, data);
+            const response = await fetchDataFromAPI('/ventas', 'POST', token, data);
 
-            if (response) {
-                // El invoiceo se creó con éxito, y response puede contener información sobre el nuevo invoiceo creado.
-                console.log('invoiceo creado con éxito:', response);
-            } else {
+            if (!response) {
                 // La respuesta no contiene información del nuevo invoiceo.
                 console.error('No se pudo obtener información del nuevo invoiceo.');
             }

@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useFetchProducts } from "../../hooks/useFetchProducts";
 import "./newInvoice.scss";
 import { useFetchUsers } from "../../hooks/useFetchUsers";
 import { useFetchCompany } from "../../hooks/useFetchCompany";
+import InvoiceValidations from "../../middlewares/invoice-validations";
+import { useFetchCorrelative } from "../../hooks/useFetchCorrelative";
+import useCorrelativeUpdater from "../../hooks/useCorrelativeUpdater";
+import useCreateInvoice from "../../hooks/useCreateInvoice";
 // import InvoiceSummaryModal from "../../components/modals/InvoiceSummaryModal";
 // import { useModal } from "../../hooks/useModal";
+
 
 const New = () => {
     // const [isOpenModal, openModal, closeModal] = useModal(false)
@@ -18,13 +23,22 @@ const New = () => {
     const [taxSummary, setTaxSummary] = useState(0)
     const [discountSummary, setDiscountSummary] = useState(0)
     const { dataCompany } = useFetchCompany()
+    const { dataCorrelative } = useFetchCorrelative()
+    const correlativeUpdater = useCorrelativeUpdater()
+    const createInvoiceHook = useCreateInvoice()
+    const invoiceValidations = new InvoiceValidations()
 
-    const handleRTN = (value) => {
-        setRtnCustomer(value)
-    }
+    useEffect(() => {
+        invoiceValidations.isExpired(dataCompany.invoiceDueDate)
+        invoiceValidations.outRange(parseInt(dataCorrelative.nInvoice) + 1, parseInt(dataCompany.finalInvoiceRange))
+    },
+        [dataCompany, dataCorrelative]) // Solo cuando dataCompany cambia
+
+    const handleRTN = (value) => setRtnCustomer(value)
 
     const handleAddItem = () => {
         const newItem = {
+            id: 0,
             sku: "", // Agregar un campo SKU
             product: "",
             quantity: 2,
@@ -56,6 +70,7 @@ const New = () => {
             const updatedItems = [...invoiceItems];
             updatedItems[index] = {
                 ...updatedItems[index],
+                id: product.id,
                 sku: value,
                 product: product.name,
                 price: product.price,
@@ -80,13 +95,18 @@ const New = () => {
         setInvoiceItems([...invoiceItems])
         updateTotalSumary()
     }
+
     const handleSaveAction = (actionType) => {
         if (actionType === "fullPayment") {
             const seller = sessionStorage.getItem('userID')
-            if (!invoiceItems.length || !invoiceItems[0].sku) return;
-            if (!seller) return;
-            if (!dataCompany) return;
-            if (!dataUser) return;
+            if (!invoiceValidations
+                .beforeCreate(
+                    seller,
+                    dataCompany.invoiceDueDate, //dueDate
+                    invoiceItems.length,
+                    invoiceItems.length && invoiceItems[0].sku,
+                    dataCompany, dataUser
+                )) return;
 
             const detalleVentas = invoiceItems.map(item => ({
                 cantidad: item.quantity,
@@ -94,16 +114,15 @@ const New = () => {
                 isv: item.tax,
                 descuento: item.discount,
                 producto: {
-                    id: parseInt(item.sku)
+                    id: parseInt(item.id)
                 },
             }));
 
-            const noFactura = parseInt(dataCompany.invoiceDueDate)
-
-            const data = {
+            const dataNewInvoice = {
                 data: {
-                    noFactura,
+                    noFactura: parseInt(dataCorrelative.nInvoice) + 1,
                     medotoPago: "Efectivo",
+                    estado: "Pagada",
                     vendedor: {
                         id: parseInt(seller)
                     },
@@ -112,8 +131,9 @@ const New = () => {
                     },
                     detalleVentas
                 }
-            };
-
+            }
+            correlativeUpdater.updateCorrelative(dataNewInvoice.data.noFactura)
+            createInvoiceHook.createInvoice(dataNewInvoice)
         } else if (actionType === "partialPayment") {
             // Lógica para guardar y hacer un pago parcial
         } else alert("Disponible Próximante");
@@ -265,6 +285,7 @@ const New = () => {
                     <button
                         onClick={() => handleSaveAction('fullPayment')}
                         id="btnSaveFullPayment">Guardar y Hacer Pago Completo</button>
+
                 </div>
             </div>
             {/* <InvoiceSummaryModal isOpen={isOpenModal} /> */}

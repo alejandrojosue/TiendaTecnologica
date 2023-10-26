@@ -43,13 +43,13 @@ export default class ProductsRepository {
         }
     }
 
-    async create(data, token) {
-        // try {
-        //     const data = await fetchDataFromAPI(`/productos?filters[codigo][$eq]=${sku}`, 'GET', token, data);
-        //     return
-        // } catch (error) {
-        //     // Maneja errores de red o del servidor
-        //     console.error('Error al crear el producto:', error.message);
-        // }
+    async update(data, token) {
+        try {
+            const response = await fetchDataFromAPI(`/productos`, 'GET', token, data);
+            if (!response) console.error('Error en repo: No se pudo actualizar producto')
+        } catch (error) {
+            // Maneja errores de red o del servidor
+            console.error('Error al crear el producto:', error.message);
+        }
     }
 }
