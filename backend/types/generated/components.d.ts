@@ -38,10 +38,31 @@ export interface DetallesDetalles extends Schema.Component {
   };
 }
 
+export interface DetallesDevoluciones extends Schema.Component {
+  collectionName: 'components_detalles_devoluciones';
+  info: {
+    displayName: 'devoluciones';
+    icon: 'attachment';
+  };
+  attributes: {
+    producto: Attribute.Relation<
+      'detalles.devoluciones',
+      'oneToOne',
+      'api::producto.producto'
+    >;
+    cantidad: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<{
+        min: 0;
+      }>;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
       'detalles.detalles': DetallesDetalles;
+      'detalles.devoluciones': DetallesDevoluciones;
     }
   }
 }

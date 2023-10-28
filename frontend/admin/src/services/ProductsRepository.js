@@ -19,8 +19,8 @@ export default class ProductsRepository {
 
     async getById(id) {
         try {
-            const response = await fetchDataFromAPI(`/productos/${id}?populate=deep`)
-            return response.data
+            const { data } = await fetchDataFromAPI(`/productos/${id}?filters[activo]=true&populate=deep`)
+            return data
         } catch (error) {
             console.error('Error al obtener producto:', error);
         }
@@ -43,13 +43,13 @@ export default class ProductsRepository {
         }
     }
 
-    async update(data, token) {
+    async update(data, id) {
         try {
-            const response = await fetchDataFromAPI(`/productos`, 'GET', token, data);
+            const response = await fetchDataFromAPI(`/productos/${id}`, 'PUT', sessionStorage.getItem('daiswadod'), data);
             if (!response) console.error('Error en repo: No se pudo actualizar producto')
         } catch (error) {
             // Maneja errores de red o del servidor
-            console.error('Error al crear el producto:', error.message);
+            console.error('Error al actualizar el producto:', error.message);
         }
     }
 }

@@ -12,18 +12,13 @@ const useCreateInvoice = () => {
 
         try {
             const invoiceRepo = new InvoiceRepository();
-            await invoiceRepo.create(invoiceData, sessionStorage.getItem('daiswadod'))
-                .then(() => {
-                    alert('Factura guardada exitósamente!')
-                    window.location.reload()
-                })
-                .catch(console.error)
-
+            await invoiceRepo
+                .create(invoiceData, sessionStorage.getItem('daiswadod'))
+            alert('Factura guardada exitósamente!')
             setSuccess(true);
-
-
         } catch (error) {
             setError(error);
+            alert(error)
         } finally {
             setLoading(false);
         }

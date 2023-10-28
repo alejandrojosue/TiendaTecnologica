@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_detalles_devoluciones",
+  "info": {
+    "displayName": "devoluciones",
+    "icon": "attachment"
+  },
+  "options": {},
+  "attributes": {
+    "producto": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::producto.producto"
+    },
+    "cantidad": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    }
+  }
+}

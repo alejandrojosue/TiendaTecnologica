@@ -7,23 +7,27 @@ import { useFetchCompany } from "../../hooks/useFetchCompany";
 import InvoiceValidations from "../../middlewares/invoice-validations";
 import { useFetchCorrelative } from "../../hooks/useFetchCorrelative";
 import useCorrelativeUpdater from "../../hooks/useCorrelativeUpdater";
+import { useUpdateProduct } from '../../hooks/useUpdateProduct'
 import useCreateInvoice from "../../hooks/useCreateInvoice";
-// import InvoiceSummaryModal from "../../components/modals/InvoiceSummaryModal";
-// import { useModal } from "../../hooks/useModal";
+import LoadingModal from "../../components/modal/LoadingModal";
+
 
 
 const New = () => {
-    // const [isOpenModal, openModal, closeModal] = useModal(false)
     const { data } = useFetchProducts()
     const [rtnCustomer, setRtnCustomer] = useState('')
     const { dataUser } = useFetchUsers(rtnCustomer)
+    const { dataCompany } = useFetchCompany()
+    const { dataCorrelative } = useFetchCorrelative()
+    const { isLoadingProduct, error, updateProduct } = useUpdateProduct();
+
     const [invoiceItems, setInvoiceItems] = useState([])
     const [totalSummary, setTotalSummary] = useState(0)
     const [subtotalSummary, setSubtotalSummary] = useState(0)
     const [taxSummary, setTaxSummary] = useState(0)
     const [discountSummary, setDiscountSummary] = useState(0)
-    const { dataCompany } = useFetchCompany()
-    const { dataCorrelative } = useFetchCorrelative()
+    const [isLoading, setIsLoading] = useState(false);
+
     const correlativeUpdater = useCorrelativeUpdater()
     const createInvoiceHook = useCreateInvoice()
     const invoiceValidations = new InvoiceValidations()
@@ -96,7 +100,8 @@ const New = () => {
         updateTotalSumary()
     }
 
-    const handleSaveAction = (actionType) => {
+    const handleSaveAction = async (actionType) => {
+        setIsLoading(true); // Muestra el modal de carga
         if (actionType === "fullPayment") {
             const seller = sessionStorage.getItem('userID')
             if (!invoiceValidations
@@ -106,7 +111,10 @@ const New = () => {
                     invoiceItems.length,
                     invoiceItems.length && invoiceItems[0].sku,
                     dataCompany, dataUser
-                )) return;
+                )) {
+                setIsLoading(false); // Oculta el modal de carga en caso de error
+                return;
+            }
 
             const detalleVentas = invoiceItems.map(item => ({
                 cantidad: item.quantity,
@@ -132,8 +140,11 @@ const New = () => {
                     detalleVentas
                 }
             }
-            correlativeUpdater.updateCorrelative(dataNewInvoice.data.noFactura)
-            createInvoiceHook.createInvoice(dataNewInvoice)
+            await correlativeUpdater.updateCorrelative(dataNewInvoice.data.noFactura)
+            await createInvoiceHook.createInvoice(dataNewInvoice)
+            invoiceItems.forEach(async (item) => await updateProduct(item.id, item.quantity))
+            if (error === null) window.location.reload()
+            setIsLoading(false);
         } else if (actionType === "partialPayment") {
             // Lógica para guardar y hacer un pago parcial
         } else alert("Disponible Próximante");
@@ -141,6 +152,7 @@ const New = () => {
 
     return (
         <div className="new-invoice">
+            {isLoading && <LoadingModal />}
             <div className="header">
                 <div className="top-right">
                     <span>
@@ -288,7 +300,6 @@ const New = () => {
 
                 </div>
             </div>
-            {/* <InvoiceSummaryModal isOpen={isOpenModal} /> */}
         </div >
     );
 };

@@ -944,7 +944,7 @@ export interface ApiDevolucionDevolucion extends Schema.CollectionType {
     draftAndPublish: false;
   };
   attributes: {
-    users_permissions_user: Attribute.Relation<
+    vendedor: Attribute.Relation<
       'api::devolucion.devolucion',
       'oneToOne',
       'plugin::users-permissions.user'
