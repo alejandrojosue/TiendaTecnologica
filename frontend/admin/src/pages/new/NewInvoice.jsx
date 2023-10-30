@@ -98,7 +98,16 @@ const New = () => {
         setIsLoading(true); // Muestra el modal de carga
         if (actionType === "fullPayment") {
             const seller = sessionStorage.getItem('userID')
-
+            if (!invoiceItems.length) {
+                alert('No ha añadido ningún producto!')
+                setIsLoading(false)
+                return
+            }
+            if (!dataUser) {
+                alert('No ha ingresado los datos de Cliente!')
+                setIsLoading(false)
+                return
+            }
             if (!beforeCreateInvoice(
                 seller, dataCompany, dataUser, invoiceItems
             )) {
@@ -133,9 +142,11 @@ const New = () => {
             await correlativeUpdater.updateCorrelative(dataNewInvoice.data.noFactura)
             await createInvoiceHook.createInvoice(dataNewInvoice)
             invoiceItems.forEach(async (item) => await updateProduct(item.id, item.quantity))
-            if (error === null) window.location.reload()
-            setTimeout(() => { }, 2000)
-            setIsLoading(false);
+            setTimeout(() => {
+                if (error === null) window.location.reload()
+
+                setIsLoading(false)
+            }, 2000)
         } else if (actionType === "partialPayment") {
             // Lógica para guardar y hacer un pago parcial
         } else alert("Disponible Próximante");

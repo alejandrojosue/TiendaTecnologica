@@ -1,16 +1,18 @@
 .filters {
     display: flex;
-    width: 430px;
-    justify-content: space-between;
+    width: 540px;
+    flex-wrap: wrap;
     align-items: center;
 
-    .btnRefresh {
+    .btnRefresh,
+    .btnReport {
         border-radius: 5px;
         color: darkblue;
         border: 1px dotted rgba(0, 0, 139, 0.596);
         background-color: white;
-        height: 40px;
+        height: 35px;
         cursor: pointer;
+        margin: auto;
     }
 
     .btnRefresh:hover {

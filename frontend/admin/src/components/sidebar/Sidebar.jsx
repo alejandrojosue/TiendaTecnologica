@@ -46,6 +46,12 @@ const Sidebar = () => {
                 onClick={() => { SessionValidate() }}>Inventario</span>
             </li>
           </Link>
+          <Link to="/invoices" style={{ textDecoration: "none" }}>
+            <li>
+              <BrandingIcon className="icon" />
+              <span onClick={() => { SessionValidate() }}>Facturas</span>
+            </li>
+          </Link>
           {/* <Link to="/categories" style={{ textDecoration: "none" }}>
             <li>
               <BrandingIcon className="icon" />

@@ -2,8 +2,7 @@ import { fetchDataFromAPI } from './api/context'; // Asegúrate de importar tu f
 export default class SubcategoriesRepository {
     async getAll() {
         try {
-            const { data } = await fetchDataFromAPI('/subcategorias?populate=deep', 'GET',
-                sessionStorage.getItem('daiswadod'))
+            const { data } = await fetchDataFromAPI('/subcategorias?populate=deep')
             return data.map(subcategory => ({
                 id: subcategory.id,
                 name: subcategory.attributes.nombre,
@@ -11,7 +10,7 @@ export default class SubcategoriesRepository {
                 category: subcategory.attributes.categoria.data.attributes.nombre,
             }))
         } catch (error) {
-            console.log('Error al obtener usbcategorias', error);
+            console.log('Error al obtener subcategorias', error);
         }
     }
 

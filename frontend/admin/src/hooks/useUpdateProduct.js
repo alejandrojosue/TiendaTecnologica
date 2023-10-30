@@ -7,13 +7,13 @@ export const useUpdateProduct = () => {
     const [isLoadingProduct, setIsLoadingProduct] = useState(false);
     const [error, setError] = useState(null);
 
-    const updateProduct = async (id, quantity) => {
+    const updateProduct = async (id, _quantity) => {
         setIsLoadingProduct(true);
         try {
-            const data = await productsRepository.getById(id)
+            const { quantity } = await productsRepository.getById(id)
             await productsRepository.update({
                 data: {
-                    existencia: parseInt(data.attributes.existencia) - parseInt(quantity)
+                    existencia: parseInt(quantity) - parseInt(_quantity)
                 }
             }, id)
             setIsLoadingProduct(false);

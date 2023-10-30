@@ -2,12 +2,12 @@ import { fetchDataFromAPI } from './api/context'; // Asegúrate de importar tu f
 export default class InvoiceRepository {
     async getAll() {
         try {
-            const { data } = await fetchDataFromAPI('/ventas?populate=deep', 'GET',
+            const { data } = await fetchDataFromAPI('/ventas?populate=deep&pagination[pageSize]=80', 'GET',
                 sessionStorage.getItem('daiswadod'))
             return data.map(invoice => ({
                 id: invoice.id,
                 nInvoice: invoice.attributes.noFactura,
-                date: `${new Date(invoice.attributes.createdAt).getDay()} /
+                date: `${new Date(invoice.attributes.createdAt).getDate()} /
                         ${new Date(invoice.attributes.createdAt).getMonth() + 1} /
                         ${new Date(invoice.attributes.createdAt).getFullYear()}`,
                 paymentMethod: invoice.attributes.metodoPago,
@@ -75,7 +75,7 @@ export default class InvoiceRepository {
             return data.map(invoice => ({
                 id: invoice.id,
                 nInvoice: invoice.attributes.noFactura,
-                date: `${new Date(invoice.attributes.createdAt).getDay()} /
+                date: `${new Date(invoice.attributes.createdAt).getDate()} /
                         ${new Date(invoice.attributes.createdAt).getMonth() + 1} /
                         ${new Date(invoice.attributes.createdAt).getFullYear()}`,
                 paymentMethod: invoice.attributes.metodoPago,

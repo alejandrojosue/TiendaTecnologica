@@ -35,12 +35,13 @@ const Datatable = () => {
       <div className="datatableTitle">
         Agregar nuevo
         <Link to="/invoices/new" className="link">
-          Agregar
+          Crear Nueva
         </Link>
       </div>
       <div className="filters">
         <MuiDateRange onDateRangeChange={handleDateRangeChange} />
         <button className="btnRefresh" onClick={handleDateRangeChange}>Actualizar</button>
+        <button className="btnReport">Generar Report</button>
       </div>
       <DataGrid
         className="datagrid"

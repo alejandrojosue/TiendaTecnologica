@@ -9,7 +9,9 @@ export default class ProductsRepository {
                 name: product.attributes.nombre,
                 description: product.attributes.descripcion,
                 discount: product.attributes.descuento,
+                quantity: product.attributes.existencia,
                 price: product.attributes.precio_venta,
+                subcategory: product.attributes.subcategorias.data,
                 status: product.attributes.activo,
             }))
         } catch (error) {
@@ -21,13 +23,12 @@ export default class ProductsRepository {
         try {
             const { data } = await fetchDataFromAPI(`/productos/${id}?filters[activo]=true&populate=deep`)
             return ({
-                id: data.id,
                 sku: data.attributes.codigo,
                 name: data.attributes.nombre,
                 description: data.attributes.descripcion,
                 quantity: data.attributes.existencia,
                 subcategory: data.attributes.subcategorias.data,
-                img: data.attributes.img.data.attributes.formats.thumbnail.url,
+                img: (data.attributes.img.data.attributes.formats) ? data.attributes.img.data.attributes.formats.thumbnail.url : data.attributes.img.data.attributes.url,
                 status: data.attributes.activo,
                 priceC: data.attributes.precio_compra,
                 priceV: data.attributes.precio_venta,

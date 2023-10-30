@@ -18,7 +18,7 @@ const productColumns = [
   {
     field: "status",
     headerName: "Activo",
-    width: 60,
+    width: 75,
     renderCell: (params) => {
       return (
         <div className={`cellWithStatus ${params.row.status}`}>

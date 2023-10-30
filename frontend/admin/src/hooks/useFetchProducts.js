@@ -19,8 +19,17 @@ const useFetchProducts = () => {
                 setLoading(false)
             })
     }, []);
+
     const handleDelete = (id) => { setData(data.filter((item) => item.id !== id)) }
-    return { data, handleDelete }
+    const handleSubcategory = (id) => {
+        console.log(originalData)
+        setData(originalData.filter(product => product.subcategory.some(sub => sub.id === parseInt(id))))
+    }
+
+    const handleReloadPage = () => {
+        window.location.reload();
+    }
+    return { data, handleDelete, handleSubcategory, handleReloadPage }
 }
 
 const useFetchProductsByCodigo = (sku) => {
@@ -30,15 +39,8 @@ const useFetchProductsByCodigo = (sku) => {
         (new ProductsRepository()).getByCodigo(sku)
             .then((result) => setData(result))
     }, [sku])
-    const handleSubcategory = (id) => {
-        setData(originalData.filter(product => product.subcategory.some(sub => sub.id === parseInt(id))))
-    }
 
-    const handleReloadPage = () => {
-        window.location.reload();
-    }
-
-    return { data, handleDelete, handleSubcategory, handleReloadPage }
+    return { data }
 }
 
 const useFetchProductsId = (id) => {

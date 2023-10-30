@@ -50,7 +50,7 @@ function App() {
                 element={<New inputs={productInputs} title="Add New Product" />}
               />
               <Route path="view" element={<View />} />
-              <Route path="/unauthorized" element={<Unauthorized />} />
+              <Route path="unauthorized" element={<Unauthorized />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Route>

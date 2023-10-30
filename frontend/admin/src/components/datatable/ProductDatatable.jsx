@@ -5,14 +5,14 @@ import { Link } from "react-router-dom"
 import { productColumns } from "../../datatablesource"
 import { useFetchProducts } from '../../hooks/useFetchProducts'
 import { useFetchSubcategories } from '../../hooks/useFetchSubcategories'
-import {useFetchCategories}  from '../../hooks/useFetchCategories'
+import { useFetchCategories } from '../../hooks/useFetchCategories'
 import filterSubcategoryByCategory from '../../auth/helpers/subcategories-filter'
 import { useEffect, useState } from 'react'
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 const Datatable = () => {
-  const { data, handleDelete, handleSubcategory, handleReloadPage, handleCategory} = useFetchProducts();
+  const { data, handleSubcategory, handleReloadPage } = useFetchProducts();
   const { dataSubcategories } = useFetchSubcategories();
   const { dataCategorias } = useFetchCategories();
   const [selectedCategory, setSelectedCategory] = useState(''); // Estado para almacenar el category seleccionado
@@ -21,34 +21,34 @@ const Datatable = () => {
   const generateReport = (data) => {
     // Crear un nuevo objeto jsPDF
     const doc = new jsPDF();
-  
+
     // Definir las columnas y filas para el informe
     const columns = productColumns.map((column) => column.headerName);
     const rows = data.map((row) => productColumns.map((column) => row[column.field]));
-  
+
     // Agregar el título al informe
     doc.text("Informe de Inventario", 10, 10);
-  
+
     // Generar la tabla
     doc.autoTable({
       head: [columns],
       body: rows,
     });
-  
+
     // Guardar o mostrar el informe
     doc.save("Informe_Productos.pdf");
   };
 
   const transformedData = data.map((row) => {
     const transformedRow = { ...row };
-    
+
     // Reemplaza los valores booleanos con "Activo" o "Inactivo"
     if (transformedRow.status === true) {
       transformedRow.status = "Activo";
     } else {
       transformedRow.status = "Inactivo";
     }
-    
+
     return transformedRow;
   });
 
@@ -90,16 +90,11 @@ const Datatable = () => {
   ]
   return (
     <div className="datatable">
-      {/* <div className="datatableTitle">
-        Agregar nuevo
-        <Link to="/product/new" className="link">
-          Agregar
-        </Link>
-      </div> */}
+      Inventario <br />
       <select name="categoria" className='selectCategory' id="categoria" onChange={(e) => setSelectedCategory(e.target.value)}>
-      <option value="none">Seleccione una Categoria</option>
-      {
-          dataCategorias.map(data =>(
+        <option value="none">Seleccione una Categoria</option>
+        {
+          dataCategorias.map(data => (
             <option key={data.id} value={data.name}>
               {
                 data.name
@@ -108,27 +103,26 @@ const Datatable = () => {
           ))
         }
       </select>
-      <select name="subcategoria" className='selectSubcategory' id="subcategoria"  onChange={e=>{
-        if(e.target.value === 'none') return
+      <select name="subcategoria" className='selectSubcategory' id="subcategoria" onChange={e => {
+        if (e.target.value === 'none') return
         handleSubcategory(parseInt(e.target.value))
       }}
-       >
+      >
         <option value="none">Seleccione una subcategoría</option>
         {
-          filteredSubcategories.map(data =>(
+          filteredSubcategories.map(data => (
             <option key={data.id} value={data.id}>
               {
                 data.name
               }
-
             </option>
           ))
         }
       </select>
-        <button className='btnReload' onClick={handleReloadPage}>Actualizar</button>
-        <button className='btnReport' onClick={() => generateReport(transformedData)}>
+      <button className='btnReload' onClick={handleReloadPage}>Actualizar</button>
+      <button className='btnReport' onClick={() => generateReport(transformedData)}>
         Generar Informe
-        </button>
+      </button>
       <br />
       <br />
       <DataGrid
