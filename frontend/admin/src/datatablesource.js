@@ -3,12 +3,17 @@ const productColumns = [
   {
     field: "sku",
     headerName: "Código",
-    width: 140,
+    width: 155,
   },
   {
     field: "name",
     headerName: "Nombre",
-    width: 550,
+    width: 620,
+  },
+  {
+    field: "quantity",
+    headerName: "Existencia",
+    with: 70,
   },
   {
     field: "status",

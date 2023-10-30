@@ -7,7 +7,7 @@ export default class CategoriesRepository {
                 id: category.id,
                 name: category.attributes.nombre,
                 description: category.attributes.descripcion,
-                imgURL: category.attributes.img.data.attributes.formats.medium.url
+                // imgURL: category.attributes.img.data.attributes.formats.medium.url: Falla por la imagen en la bd
             }))
         } catch (error) {
             console.log('Error al obtener categorias', error);

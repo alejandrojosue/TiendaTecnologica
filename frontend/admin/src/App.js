@@ -15,6 +15,7 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import NotFound from "./pages/notFound/NotFound";
 import InvoiceView from "./pages/single/InvoiceView";
+import View from "./pages/view/viewproducts";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<ProtectedRouted />}>
+            <Route path="single" element={<Single />} />
             <Route path="dashboard" element={<Home />} />
             <Route path="subcategories" element={<SubcategoryList />} />
             <Route path="invoices">
@@ -47,8 +49,9 @@ function App() {
                 path="new"
                 element={<New inputs={productInputs} title="Add New Product" />}
               />
+              <Route path="view" element={<View />} />
+              <Route path="/unauthorized" element={<Unauthorized />} />
             </Route>
-            <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

@@ -20,7 +20,6 @@
       padding: 5px;
       border-radius: 5px;
     }
-
     .link:hover {
       text-decoration: none;
       color: #fff;
@@ -48,7 +47,7 @@
   }
 
   .cellWithStatus {
-    padding: 5px;
+      // padding: 5px;
     border-radius: 5px;
 
     &.true {
@@ -98,7 +97,6 @@
       color: darkblue;
       border: 1px dotted rgba(0, 0, 139, 0.596);
     }
-
     .viewButton:hover {
       padding: 2px 5px;
       border-radius: 5px;

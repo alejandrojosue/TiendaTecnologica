@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import SubcategoriesRepository from '../services/SubcategoriesRepository'
 
 export const useFetchSubcategories = () => {
-    const [data, setData] = useState([])
+    const [dataSubcategories, setData] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [controller, setController] = useState(null)
@@ -19,12 +19,12 @@ export const useFetchSubcategories = () => {
             .finally(() => setLoading(false));
         return () => abortController.abort()
     }, [])
-    const handleDelete = (id) => setData(data.filter((item) => item.id !== id))
+    const handleDelete = (id) => setData(dataSubcategories.filter((item) => item.id !== id))
     const handleCancelRequest = () => {
         if (controller) {
             controller.abort()
             setError('Request Cancelled')
         }
     }
-    return { data, loading, error, handleDelete, handleCancelRequest }
+    return { dataSubcategories, loading, error, handleDelete, handleCancelRequest }
 }

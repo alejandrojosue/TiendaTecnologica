@@ -43,10 +43,10 @@ const Sidebar = () => {
             <li>
               <StoreIcon className="icon" />
               <span
-                onClick={() => { SessionValidate() }}>Productos</span>
+                onClick={() => { SessionValidate() }}>Inventario</span>
             </li>
           </Link>
-          <Link to="/invoices" style={{ textDecoration: "none" }}>
+          {/* <Link to="/categories" style={{ textDecoration: "none" }}>
             <li>
               <BrandingIcon className="icon" />
               <span onClick={() => { SessionValidate() }}>Facturas</span>
@@ -57,7 +57,7 @@ const Sidebar = () => {
               <BrandingOutlineIcon className="icon" />
               <span onClick={() => { SessionValidate() }}>Subcategorías</span>
             </li>
-          </Link>
+          </Link> */}
           {/*           
           <li>
             <CreditCardIcon className="icon" />
@@ -90,10 +90,12 @@ const Sidebar = () => {
             <span>Settings</span>
           </li>
           <p className="title">USUARIO</p>
-          <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span>Perfil</span>
-          </li> */}
+           */}
+          <Link to={"/single"} style={{ textDecoration: "none" }}>
+            <li>
+              <AccountCircleOutlinedIcon className="icon" />
+              <span>Perfil</span>
+            </li></Link>
           <p className="title">USUARIO</p>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <li>

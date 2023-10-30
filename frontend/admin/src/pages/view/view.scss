@@ -1,0 +1,140 @@
+.input1 {
+  flex: 1;
+  width: 30%;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid gray;
+  margin-bottom: 10px;
+  color: gray;
+}
+
+.input2 {
+  flex: 1;
+  width: 30%;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid gray;
+  margin-bottom: 10px;
+  color: gray;
+}
+
+.input3 {
+  width: 8%;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid gray;
+  margin-bottom: 10px;
+  color: gray;
+}
+
+.input4 {
+  width: 30%;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid gray;
+  margin-bottom: 10px;
+  color: gray;
+}
+
+.label1 {
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.label2 {
+  align-items: center;
+  margin-bottom: 10px;
+  padding-right: 10px;
+}
+
+.label3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.top1{
+  display: flex;
+  gap: 10px;
+  width: 80%;
+}
+
+.top2{
+  display: flex;
+  gap: 10px;
+  width: 80%;
+}
+
+.new1{
+   width: 100%;
+  display: flex;
+}
+.new2{
+  width: 90%;
+}
+
+.newContainer1 {
+  flex: 6;
+}
+
+.bottom1 {
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  padding: 10px;
+  margin: 20px;
+
+  .down{
+    display: flex;
+    padding-bottom: 3%;
+    .right1{
+      flex: 1;
+      margin-left: 5%; 
+      .contenido-derecha {
+        justify-content: flex-end;
+      }
+    }
+  }
+}
+.button1 {
+  width: 300px;
+  padding: 10px;
+  background-color:white;
+  border-color: #4ca8ff;
+  border-style: solid;
+  color: #4ca8ff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.chekbox1{
+  width: 15px;
+  height: 15px;
+  padding: 5px;
+  border: none;
+  background-color: rgb(120, 0, 190);
+  border-style: solid;
+}
+
+.h1 {
+  color: lightgray;
+  font-size: 12px;
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  padding: 10px;
+  margin: 20px;
+  display: flex;
+}
+
+.left1{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #1475cf;
+  cursor: pointer;
+  border-radius: 5px;
+}

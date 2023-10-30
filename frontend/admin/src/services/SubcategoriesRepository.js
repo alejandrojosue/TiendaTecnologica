@@ -8,6 +8,7 @@ export default class SubcategoriesRepository {
                 id: subcategory.id,
                 name: subcategory.attributes.nombre,
                 description: subcategory.attributes.descripcion,
+                category: subcategory.attributes.categoria.data.attributes.nombre,
             }))
         } catch (error) {
             console.log('Error al obtener usbcategorias', error);

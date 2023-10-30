@@ -20,9 +20,26 @@ export default class ProductsRepository {
     async getById(id) {
         try {
             const { data } = await fetchDataFromAPI(`/productos/${id}?filters[activo]=true&populate=deep`)
-            return data
+            return ({
+                id: data.id,
+                sku: data.attributes.codigo,
+                name: data.attributes.nombre,
+                description: data.attributes.descripcion,
+                quantity: data.attributes.existencia,
+                subcategory: data.attributes.subcategorias.data,
+                img: data.attributes.img.data.attributes.formats.thumbnail.url,
+                status: data.attributes.activo,
+                priceC: data.attributes.precio_compra,
+                priceV: data.attributes.precio_venta,
+                model: data.attributes.modelo,
+                tax: data.attributes.isv,
+                discount: data.attributes.descuento,
+                existence: data.attributes.existencia,
+                brand: data.attributes.marca.data.attributes.nombre,
+                asset: data.attributes.activo,
+            })
         } catch (error) {
-            console.error('Error al obtener producto:', error);
+            console.error('Error al obtener productos:', error);
         }
     }
 
