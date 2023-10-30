@@ -19,7 +19,7 @@ export interface DetallesDetalles extends Schema.Component {
       Attribute.SetMinMax<{
         min: 0;
       }>;
-    descuento: Attribute.Integer &
+    descuento: Attribute.Decimal &
       Attribute.Required &
       Attribute.SetMinMax<{
         min: 0;

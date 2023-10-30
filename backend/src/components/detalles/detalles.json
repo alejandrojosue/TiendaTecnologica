@@ -19,7 +19,7 @@
       "min": 0
     },
     "descuento": {
-      "type": "integer",
+      "type": "decimal",
       "min": 0,
       "required": true
     },

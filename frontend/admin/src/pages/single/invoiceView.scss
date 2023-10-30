@@ -1,0 +1,67 @@
+$blue: lightblue;
+
+.view {
+    display: flex;
+    width: 100%;
+
+    .viewContainer {
+        flex: 6;
+
+        .top {
+            font-size: 24px;
+            color: gray;
+            margin: 15px;
+        }
+
+        .bottom {
+            -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+            box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+            padding: 10px;
+            margin: 20px;
+            display: flex;
+
+            form {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 30px;
+                justify-content: space-around;
+
+                .formInput {
+                    width: 40%;
+
+                    label {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+
+                        .icon {
+                            cursor: pointer;
+                        }
+                    }
+
+                    input {
+                        width: 100%;
+                        padding: 5px;
+                        border: none;
+                        border-bottom: 1px solid gray;
+                    }
+                }
+
+                a {
+                    width: 150px;
+                    text-decoration: none;
+                    text-align: center;
+                    font-size: 1.02em;
+                    padding: 10px;
+                    background-color: transparent;
+                    border: 2px solid $blue;
+                    color: $blue;
+                    font-weight: bold;
+                    cursor: pointer;
+                    margin-top: 10px;
+                }
+            }
+        }
+
+    }
+}

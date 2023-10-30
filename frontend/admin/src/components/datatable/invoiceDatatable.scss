@@ -1,0 +1,20 @@
+.filters {
+    display: flex;
+    width: 430px;
+    justify-content: space-between;
+    align-items: center;
+
+    .btnRefresh {
+        border-radius: 5px;
+        color: darkblue;
+        border: 1px dotted rgba(0, 0, 139, 0.596);
+        background-color: white;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    .btnRefresh:hover {
+        color: #fff;
+        background-color: darkblue;
+    }
+}

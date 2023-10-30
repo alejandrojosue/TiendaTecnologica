@@ -14,6 +14,7 @@ import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import NotFound from "./pages/notFound/NotFound";
+import InvoiceView from "./pages/single/InvoiceView";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -31,7 +32,12 @@ function App() {
               <Route path=":invoiceId" element={<Single />} />
               <Route
                 path="new"
-                element={<NewInvoice inputs={userInputs} title="Nueva Factura" />}
+                element={<NewInvoice title="Nueva Factura" />}
+              />
+              <Route
+                path="view"
+                element={<InvoiceView title="Ver Factura"
+                  inputs={productInputs} />}
               />
             </Route>
             <Route path="products">

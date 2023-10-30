@@ -4,12 +4,12 @@ import { useFetchProducts } from "../../hooks/useFetchProducts";
 import "./newInvoice.scss";
 import { useFetchUsers } from "../../hooks/useFetchUsers";
 import { useFetchCompany } from "../../hooks/useFetchCompany";
-import InvoiceValidations from "../../middlewares/invoice-validations";
 import { useFetchCorrelative } from "../../hooks/useFetchCorrelative";
 import useCorrelativeUpdater from "../../hooks/useCorrelativeUpdater";
 import { useUpdateProduct } from '../../hooks/useUpdateProduct'
 import useCreateInvoice from "../../hooks/useCreateInvoice";
 import LoadingModal from "../../components/modal/LoadingModal";
+import { beforeCreateInvoice, performInvoiceValidations } from '../../helpers/invoice-validation'
 
 
 
@@ -19,7 +19,9 @@ const New = () => {
     const { dataUser } = useFetchUsers(rtnCustomer)
     const { dataCompany } = useFetchCompany()
     const { dataCorrelative } = useFetchCorrelative()
-    const { isLoadingProduct, error, updateProduct } = useUpdateProduct();
+    const { error, updateProduct } = useUpdateProduct();
+    const correlativeUpdater = useCorrelativeUpdater()
+    const createInvoiceHook = useCreateInvoice()
 
     const [invoiceItems, setInvoiceItems] = useState([])
     const [totalSummary, setTotalSummary] = useState(0)
@@ -28,16 +30,8 @@ const New = () => {
     const [discountSummary, setDiscountSummary] = useState(0)
     const [isLoading, setIsLoading] = useState(false);
 
-    const correlativeUpdater = useCorrelativeUpdater()
-    const createInvoiceHook = useCreateInvoice()
-    const invoiceValidations = new InvoiceValidations()
 
-    useEffect(() => {
-        invoiceValidations.isExpired(dataCompany.invoiceDueDate)
-        invoiceValidations.outRange(parseInt(dataCorrelative.nInvoice) + 1, parseInt(dataCompany.finalInvoiceRange))
-    },
-        [dataCompany, dataCorrelative]) // Solo cuando dataCompany cambia
-
+    performInvoiceValidations(dataCompany, dataCorrelative)
     const handleRTN = (value) => setRtnCustomer(value)
 
     const handleAddItem = () => {
@@ -104,15 +98,11 @@ const New = () => {
         setIsLoading(true); // Muestra el modal de carga
         if (actionType === "fullPayment") {
             const seller = sessionStorage.getItem('userID')
-            if (!invoiceValidations
-                .beforeCreate(
-                    seller,
-                    dataCompany.invoiceDueDate, //dueDate
-                    invoiceItems.length,
-                    invoiceItems.length && invoiceItems[0].sku,
-                    dataCompany, dataUser
-                )) {
-                setIsLoading(false); // Oculta el modal de carga en caso de error
+
+            if (!beforeCreateInvoice(
+                seller, dataCompany, dataUser, invoiceItems
+            )) {
+                setIsLoading(false);
                 return;
             }
 
@@ -144,6 +134,7 @@ const New = () => {
             await createInvoiceHook.createInvoice(dataNewInvoice)
             invoiceItems.forEach(async (item) => await updateProduct(item.id, item.quantity))
             if (error === null) window.location.reload()
+            setTimeout(() => { }, 2000)
             setIsLoading(false);
         } else if (actionType === "partialPayment") {
             // Lógica para guardar y hacer un pago parcial
@@ -173,7 +164,7 @@ const New = () => {
                     <div className="formInput">
                         <label>Cliente:</label>
                         <input type="text"
-                            value={dataUser && dataUser.name}
+                            value={dataUser ? dataUser.name : ''}
                             readOnly
                             placeholder="Nombre del Cliente" />
                     </div>
