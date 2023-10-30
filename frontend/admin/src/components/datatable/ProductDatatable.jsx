@@ -39,6 +39,19 @@ const Datatable = () => {
     doc.save("Informe_Productos.pdf");
   };
 
+  const transformedData = data.map((row) => {
+    const transformedRow = { ...row };
+    
+    // Reemplaza los valores booleanos con "Activo" o "Inactivo"
+    if (transformedRow.status === true) {
+      transformedRow.status = "Activo";
+    } else {
+      transformedRow.status = "Inactivo";
+    }
+    
+    return transformedRow;
+  });
+
 
   useEffect(() => {
     if (selectedCategory) {
@@ -113,7 +126,7 @@ const Datatable = () => {
         }
       </select>
         <button className='btnReload' onClick={handleReloadPage}>Actualizar</button>
-        <button className='btnReport' onClick={() => generateReport(data)}>
+        <button className='btnReport' onClick={() => generateReport(transformedData)}>
         Generar Informe
         </button>
       <br />
