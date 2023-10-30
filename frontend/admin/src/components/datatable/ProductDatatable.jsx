@@ -8,14 +8,36 @@ import { useFetchSubcategories } from '../../hooks/useFetchSubcategories'
 import {useFetchCategories}  from '../../hooks/useFetchCategories'
 import filterSubcategoryByCategory from '../../auth/helpers/subcategories-filter'
 import { useEffect, useState } from 'react'
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const Datatable = () => {
   const { data, handleDelete, handleSubcategory, handleReloadPage, handleCategory} = useFetchProducts();
   const { dataSubcategories } = useFetchSubcategories();
   const { dataCategorias } = useFetchCategories();
-
   const [selectedCategory, setSelectedCategory] = useState(''); // Estado para almacenar el category seleccionado
   const [filteredSubcategories, setFilteredSubcategories] = useState(dataSubcategories); // Estado para subcategorías filtradas
+
+  const generateReport = (data) => {
+    // Crear un nuevo objeto jsPDF
+    const doc = new jsPDF();
+  
+    // Definir las columnas y filas para el informe
+    const columns = productColumns.map((column) => column.headerName);
+    const rows = data.map((row) => productColumns.map((column) => row[column.field]));
+  
+    // Agregar el título al informe
+    doc.text("Informe de Inventario", 10, 10);
+  
+    // Generar la tabla
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+    });
+  
+    // Guardar o mostrar el informe
+    doc.save("Informe_Productos.pdf");
+  };
 
 
   useEffect(() => {
@@ -91,6 +113,9 @@ const Datatable = () => {
         }
       </select>
         <button className='btnReload' onClick={handleReloadPage}>Actualizar</button>
+        <button className='btnReport' onClick={() => generateReport(data)}>
+        Generar Informe
+        </button>
       <br />
       <br />
       <DataGrid
