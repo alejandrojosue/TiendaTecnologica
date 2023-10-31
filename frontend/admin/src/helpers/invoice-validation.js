@@ -21,5 +21,4 @@ const beforeCreateInvoice = (seller, dataCompany, dataUser, invoiceItems) => {
             dataCompany, dataUser
         )
 }
-
 export { performInvoiceValidations, beforeCreateInvoice }
