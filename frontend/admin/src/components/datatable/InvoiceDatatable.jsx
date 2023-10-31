@@ -33,7 +33,7 @@ const Datatable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Agregar nuevo
+        Listado de Facturas
         <Link to="/invoices/new" className="link">
           Crear Nueva
         </Link>

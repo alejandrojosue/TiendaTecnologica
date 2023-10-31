@@ -2,7 +2,8 @@
   "collectionName": "components_detalles_devoluciones",
   "info": {
     "displayName": "devoluciones",
-    "icon": "attachment"
+    "icon": "attachment",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -15,6 +16,10 @@
       "type": "integer",
       "required": true,
       "min": 0
+    },
+    "motivo": {
+      "type": "text",
+      "required": true
     }
   }
 }

@@ -102,4 +102,32 @@ export default class InvoiceRepository {
             console.error('Error al crear el invoiceo:', error.message);
         }
     }
+
+    async getForDashboard(startDate, endDate = new Date().toISOString()) {
+        try {
+            const { data } =
+                await fetchDataFromAPI(`/ventas?populate=detalleVentas&filters[$and][0][createdAt][$gte]=${new Date(startDate).toISOString()}&filters[$and][1][createdAt][$lte]=${new Date(endDate).toISOString()}&sort=noFactura:DESC&pagination[pageSize]=200`,
+                    'GET', sessionStorage.getItem('daiswadod'))
+            return data.map(invoice => ({
+                id: invoice.id,
+                nInvoice: invoice.attributes.noFactura,
+                date: `${new Date(invoice.attributes.createdAt).getDate()} /
+                        ${new Date(invoice.attributes.createdAt).getMonth() + 1} /
+                        ${new Date(invoice.attributes.createdAt).getFullYear()}`,
+                paymentMethod: invoice.attributes.metodoPago,
+                tax: invoice.attributes.detalleVentas.reduce((acc, value) => {
+                    return acc + (value.cantidad * value.precio * value.isv);
+                }, 0).toFixed(2),
+                discount: invoice.attributes.detalleVentas.reduce((acc, value) => {
+                    return acc + (value.cantidad * value.precio * value.descuento);
+                }, 0).toFixed(2),
+                total: invoice.attributes.detalleVentas.reduce((acc, value) => {
+                    return acc + (value.cantidad * (value.precio * (1 + value.isv) - value.precio * value.descuento));
+                }, 0).toFixed(2),
+                status: invoice.attributes.estado
+            }))
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }

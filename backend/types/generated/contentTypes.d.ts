@@ -947,16 +947,19 @@ export interface ApiDevolucionDevolucion extends Schema.CollectionType {
       'api::devolucion.devolucion',
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
-    fecha: Attribute.DateTime;
-    motivo: Attribute.String &
-      Attribute.Required &
-      Attribute.SetMinMaxLength<{
-        maxLength: 25;
-      }>;
+    > &
+      Attribute.Required;
     estado: Attribute.Enumeration<['Entregada', 'En proceso', 'Cancelada']> &
       Attribute.Required &
       Attribute.DefaultTo<'En proceso'>;
+    noFactura: Attribute.Relation<
+      'api::devolucion.devolucion',
+      'oneToOne',
+      'api::venta.venta'
+    > &
+      Attribute.Required;
+    detalleDevoluciones: Attribute.Component<'detalles.devoluciones', true> &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

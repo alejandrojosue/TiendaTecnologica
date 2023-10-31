@@ -43,6 +43,7 @@ export interface DetallesDevoluciones extends Schema.Component {
   info: {
     displayName: 'devoluciones';
     icon: 'attachment';
+    description: '';
   };
   attributes: {
     producto: Attribute.Relation<
@@ -55,6 +56,7 @@ export interface DetallesDevoluciones extends Schema.Component {
       Attribute.SetMinMax<{
         min: 0;
       }>;
+    motivo: Attribute.Text & Attribute.Required;
   };
 }
 

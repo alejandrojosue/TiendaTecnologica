@@ -30,11 +30,11 @@ const Sidebar = () => {
       <hr />
       <div className="center">
         <ul>
-          <p className="title">MAIN</p>
+          <p className="title">PRINCIPAL</p>
           <Link to="/dashboard" style={{ textDecoration: "none" }}>
             <li>
               <DashboardIcon className="icon" />
-              <span onClick={() => { SessionValidate() }}>Dashboard</span>
+              <span onClick={() => { SessionValidate() }}>Tablero</span>
             </li>
           </Link>
           <p className="title">LISTAS</p>
@@ -95,14 +95,13 @@ const Sidebar = () => {
             <SettingsApplicationsIcon className="icon" />
             <span>Settings</span>
           </li>
+        */}
           <p className="title">USUARIO</p>
-           */}
           <Link to={"/single"} style={{ textDecoration: "none" }}>
             <li>
               <AccountCircleOutlinedIcon className="icon" />
               <span>Perfil</span>
             </li></Link>
-          <p className="title">USUARIO</p>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <li>
               <ExitToAppIcon className="icon" />

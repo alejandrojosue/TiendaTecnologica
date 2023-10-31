@@ -6,6 +6,10 @@
 
     .textTime {
       margin: 5px;
+
+      strong {
+        cursor: pointer;
+      }
     }
 
     .widgets,

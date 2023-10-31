@@ -6,13 +6,13 @@ import { productColumns } from "../../datatablesource"
 import { useFetchProducts } from '../../hooks/useFetchProducts'
 import { useFetchSubcategories } from '../../hooks/useFetchSubcategories'
 import { useFetchCategories } from '../../hooks/useFetchCategories'
-import filterSubcategoryByCategory from '../../auth/helpers/subcategories-filter'
+import filterSubcategoryByCategory from '../../helpers/subcategories-filter'
 import { useEffect, useState } from 'react'
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 const Datatable = () => {
-  const { data, handleSubcategory, handleReloadPage } = useFetchProducts();
+  const { data, handleSubcategory, handleReloadPage, loading } = useFetchProducts();
   const { dataSubcategories } = useFetchSubcategories();
   const { dataCategorias } = useFetchCategories();
   const [selectedCategory, setSelectedCategory] = useState(''); // Estado para almacenar el category seleccionado
@@ -88,9 +88,14 @@ const Datatable = () => {
       },
     },
   ]
+
+  if (loading) return (<div>Cargando...</div>)
+
   return (
     <div className="datatable">
-      Inventario <br />
+      <div className="datatableTitle">
+        Listado de Productos
+      </div>
       <select name="categoria" className='selectCategory' id="categoria" onChange={(e) => setSelectedCategory(e.target.value)}>
         <option value="none">Seleccione una Categoria</option>
         {

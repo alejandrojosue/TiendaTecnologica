@@ -5,11 +5,11 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ShopOutlinedIcon from '@mui/icons-material/ShopOutlined';
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 
-const Widget = ({ type }) => {
+const Widget = ({ type, _value }) => {
   let data;
 
   //temporary
-  const amount = 1000
+  const amount = _value
   const diff = 30
 
   switch (type) {
@@ -99,7 +99,7 @@ const Widget = ({ type }) => {
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {data.isMoney && "$"} {amount}
+          {data.isMoney && "L."} {amount}
         </span>
         <span className="link">{data.link}</span>
       </div>

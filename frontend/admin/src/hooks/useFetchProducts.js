@@ -29,7 +29,7 @@ const useFetchProducts = () => {
     const handleReloadPage = () => {
         window.location.reload();
     }
-    return { data, handleDelete, handleSubcategory, handleReloadPage }
+    return { data, handleDelete, handleSubcategory, handleReloadPage, loading }
 }
 
 const useFetchProductsByCodigo = (sku) => {

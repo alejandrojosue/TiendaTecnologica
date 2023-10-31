@@ -15,15 +15,8 @@
     "vendedor": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
-    },
-    "fecha": {
-      "type": "datetime"
-    },
-    "motivo": {
-      "type": "string",
-      "required": true,
-      "maxLength": 25
+      "target": "plugin::users-permissions.user",
+      "required": true
     },
     "estado": {
       "type": "enumeration",
@@ -33,6 +26,18 @@
         "Cancelada"
       ],
       "default": "En proceso",
+      "required": true
+    },
+    "noFactura": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::venta.venta",
+      "required": true
+    },
+    "detalleDevoluciones": {
+      "type": "component",
+      "repeatable": true,
+      "component": "detalles.devoluciones",
       "required": true
     }
   }

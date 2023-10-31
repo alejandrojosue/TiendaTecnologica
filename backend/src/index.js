@@ -195,5 +195,60 @@ module.exports = {
         })
       }
     })
+
+    /*
+      lifecycles para {DEVOLUCIONES}
+    */
+
+    strapi.db.lifecycles.subscribe({
+      models: ['api::devolucion.devolucion'],
+      afterCreate: async ({ result }) => {
+        const { id,
+          motivo,
+          estado,
+          vendedor,
+          noFactura,
+          detalleDevoluciones,
+          createdAt, createdBy } = result
+        const information = {
+          motivo,
+          estado,
+          vendedor,
+          noFactura,
+          detalleDevoluciones,
+        }
+        console.clear()
+        console.log(information)
+        // await strapi.service("api::log.log").create({
+        //   data: {
+        //     DateTime: createdAt,
+        //     ACTION: ACTIONS.POST,
+        //     Table: 'PRODUCTO',
+        //     Description: 'CREATE NEW PRODUCTO',
+        //     admin_user: createdBy,
+        //     rowID: id,
+        //     information
+        //   }
+        // })
+      },
+      beforeUpdate: async ({ params }) => {
+        const admin_user = params.data.updatedBy
+        const updated = params.data.updatedAt
+        const { id } = params.where // id de la fila de tabla
+        // const {
+        //   publishedAt,
+        //   nombre,
+        //   descripcion,
+        //   marca,
+        //   isv,
+        //   precio_venta,
+        //   precio_compra,
+        //   descuento,
+        //   modelo,
+        //   subcategorias,
+        //   activo
+        // } = await strapi.query('api::producto.producto').findOne({ id })
+      }
+    })
   },
 };
