@@ -7,9 +7,14 @@ import Chart from "../../components/chart/Chart";
 import Table from "../../components/table/Table";
 import dateFormatToSpanish from "../../helpers/date-format-to-spanish";
 import { useDashboard } from "../../hooks/useDashboard";
+import { useFetchShopping } from "../../hooks/useFetchShopping";
+import { useState } from "react";
 
 const Home = () => {
   const { data, loading, error, handleCurrentDate } = useDashboard()
+  const { dataShop, loadingShop, errorShop } = useFetchShopping()
+  const date = new Date()
+
   const salesAmount =
     data
       .filter(data => data.status === 'Pagada')
@@ -23,24 +28,33 @@ const Home = () => {
         return acc + parseFloat(value.tax)
       }, 0)
 
-  if (loading) return (<div>Cargando...</div>)
-  if (error) return (<div>{'error'}</div>)
+  const expense = dataShop.reduce((acc, value) => {
+    return acc + value.details.reduce((acc, detail) => {
+      return acc + detail.precio * detail.cantidad * (1 + detail.isv - detail.descuento)
+    }, 0)
+  }, 0)
+
+
+  if (loading || loadingShop) return (<div>Cargando...</div>)
+  if (error || errorShop) return (<div>{'Ha ocurrido un error...'}</div>)
+
   return (
     <div className="home">
       <Sidebar />
       <div className="homeContainer">
+
         <Navbar />
         <p className="textTime">
           Movimientos del <strong
             onClick={() => handleCurrentDate(false)}
-          >{dateFormatToSpanish(`${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : "0" + (new Date().getMonth() + 1)}-1`)}</strong>
+          >{dateFormatToSpanish(date)}</strong>
           hasta <strong
             onClick={() => handleCurrentDate(true)}
-          >{dateFormatToSpanish(`${new Date().getFullYear()}-${new Date().getUTCDate() === 31 ? new Date().getMonth() + 2 : new Date().getMonth() + 1}-${new Date().getUTCDate() === 31 ? '01' : new Date().getUTCDate()}`)}</strong></p>
+          >{dateFormatToSpanish(date, true)}</strong></p>
         <div className="widgets">
           <Widget type="sale" _value={data && salesAmount} />
-          <Widget type="expense" _value={'----'} />
-          <Widget type="earning" _value={'----'} />
+          <Widget type="expense" _value={dataShop && expense} />
+          {/* <Widget type="earning" _value={'----'} /> */}
           <Widget type="tax" _value={data && salesTax} />
         </div>
         {/* <div className="charts">
