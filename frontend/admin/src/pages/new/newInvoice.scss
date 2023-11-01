@@ -193,3 +193,21 @@ $purple: #7451f8;
     }
   }
 }
+
+@media print {
+  /* Ocultar elementos que no deseas imprimir */
+  .no-print {
+    display: none;
+  }
+  
+  /* Estilos específicos para elementos que deseas personalizar en la versión impresa */
+  .print-header {
+    text-align: center; /* Centrar el contenido del encabezado */
+    background-color: #f5f5f5; /* Color de fondo */
+    padding: 10px; /* Espaciado interno */
+    font-size: 14px; /* Tamaño de fuente */
+    font-weight: bold; /* Peso de la fuente en negrita */
+    border-bottom: 2px solid #333; /* Línea de separación en la parte inferior del encabezado */
+    margin-bottom: 20px; /* Espaciado entre el encabezado y el contenido principal */
+  }
+}
