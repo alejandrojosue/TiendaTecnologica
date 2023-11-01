@@ -24,7 +24,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <Link to="/dashboard" style={{ textDecoration: "none" }}>
-          <span onClick={() => { SessionValidate() }}
+          <span onClick={() => SessionValidate()}
             className="logo">Panel de Control</span>
         </Link>
       </div>
