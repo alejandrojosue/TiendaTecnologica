@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import MuiDateRange from '../DateRange/MuiDateRange'
 import { InvoiceColumns } from "../../datatablesource"
 import { useFetchInvoices } from '../../hooks/useFetchInvoices'
+import jsPDF from 'jspdf';
 
 const Datatable = () => {
   const { data, loading, error, handleDateRange } = useFetchInvoices()
@@ -12,6 +13,48 @@ const Datatable = () => {
   const handleDateRangeChange = (dateRange) => {
     handleDateRange(dateRange)
   };
+
+  const generatePDFReport = () => {
+    const doc = new jsPDF();
+  
+    // Configura el título o encabezado del reporte
+    doc.setFontSize(18);
+    doc.text('Reporte de Facturas', 10, 10);
+  
+    const InvoiceColumns = [
+      { field: 'id', headerName: 'ID', width: 150 },
+      { field: 'nInvoice', headerName: 'No. de Factura', width: 150 },
+      { field: 'date', headerName: 'Fecha', width: 150 },
+      { field: 'paymentMethod', headerName: 'Metodo de Pago', width: 150 },
+      { field: 'total', headerName: 'Total', width: 150 },
+      { field: 'status', headerName: 'Estado', width: 150 },
+    ];
+  
+    const columnMapping = {
+      id: 'ID',
+      nInvoice: ' No. de Factura',
+      date: 'Fecha',
+      paymentMethod: 'Metodo de Pago',
+      total: 'Total',
+      status: 'Estado',
+    };
+  
+    // Configura la tabla o contenido de tu reporte
+    const columns = InvoiceColumns.map((column) => columnMapping[column.field] || column.headerName);
+    const rows = data.map((row) =>
+      InvoiceColumns.map((column) => row[column.field])
+    );
+
+    doc.autoTable({
+      startY: 20, // Posición inicial en la página
+      head: [columns], // Encabezados de la tabla
+      body: rows, // Datos de la tabla
+    });
+  
+    // Guarda el reporte en un archivo PDF
+    doc.save('reporte_facturas.pdf');
+  };
+
   const actionColumn = [
     {
       field: "action",
@@ -41,7 +84,7 @@ const Datatable = () => {
       <div className="filters">
         <MuiDateRange onDateRangeChange={handleDateRangeChange} />
         <button className="btnRefresh" onClick={handleDateRangeChange}>Actualizar</button>
-        <button className="btnReport">Generar Report</button>
+        <button className="btnReport" onClick={generatePDFReport}>Generar Report</button>
       </div>
       <DataGrid
         className="datagrid"
