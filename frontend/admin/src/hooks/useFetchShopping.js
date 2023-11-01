@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react"
-import InvoicesRepository from '../services/InvoicesRepository'
+import ShoppingRepository from "../services/ShoppingRepository"
 
-export const useDashboard = () => {
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+export const useFetchShopping = () => {
+    const [dataShop, setData] = useState([])
+    const [loadingShop, setLoading] = useState(true)
+    const [errorShop, setError] = useState(null)
     const [controller, setController] = useState(null)
-    const [currentDate, setCurrentDate] = useState(false)
+
     useEffect(() => {
         try {
+            const shoppingRepository = new ShoppingRepository()
             const abortController = new AbortController()
             setController(abortController);
 
-            const invoicesRepository = new InvoicesRepository()
-            invoicesRepository
-                .getForDashboard(currentDate)
+            shoppingRepository
+                .getAll()
                 .then((result) => setData(result))
                 .catch((error) => {
                     if (error.name === 'AbortError')
@@ -24,19 +24,15 @@ export const useDashboard = () => {
                 .finally(() => setLoading(false));
             return () => abortController.abort()
         } catch (error) {
-            setLoading(false)
-            console.log(error)
-            setError(error)
+
         }
-    }, [currentDate])
+    }, [])
     const handleCancelRequest = () => {
         if (controller) {
             controller.abort()
             setError('Request Cancelled')
+            setLoading(false)
         }
     }
-
-    const handleCurrentDate = (value = false) => setCurrentDate(value)
-
-    return { data, loading, error, handleCancelRequest, handleCurrentDate }
+    return { dataShop, loadingShop, errorShop, handleCancelRequest }
 }
