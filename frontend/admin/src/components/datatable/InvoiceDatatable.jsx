@@ -16,11 +16,11 @@ const Datatable = () => {
 
   const generatePDFReport = () => {
     const doc = new jsPDF();
-  
+
     // Configura el título o encabezado del reporte
     doc.setFontSize(18);
     doc.text('Reporte de Facturas', 10, 10);
-  
+
     const InvoiceColumns = [
       { field: 'id', headerName: 'ID', width: 150 },
       { field: 'nInvoice', headerName: 'No. de Factura', width: 150 },
@@ -29,7 +29,7 @@ const Datatable = () => {
       { field: 'total', headerName: 'Total', width: 150 },
       { field: 'status', headerName: 'Estado', width: 150 },
     ];
-  
+
     const columnMapping = {
       id: 'ID',
       nInvoice: ' No. de Factura',
@@ -38,7 +38,7 @@ const Datatable = () => {
       total: 'Total',
       status: 'Estado',
     };
-  
+
     // Configura la tabla o contenido de tu reporte
     const columns = InvoiceColumns.map((column) => columnMapping[column.field] || column.headerName);
     const rows = data.map((row) =>
@@ -50,7 +50,7 @@ const Datatable = () => {
       head: [columns], // Encabezados de la tabla
       body: rows, // Datos de la tabla
     });
-  
+
     // Guarda el reporte en un archivo PDF
     doc.save('reporte_facturas.pdf');
   };
@@ -84,11 +84,7 @@ const Datatable = () => {
       <div className="filters">
         <MuiDateRange onDateRangeChange={handleDateRangeChange} />
         <button className="btnRefresh" onClick={handleDateRangeChange}>Actualizar</button>
-<<<<<<< HEAD
-        <button className="btnReport">Generar Reporte</button>
-=======
         <button className="btnReport" onClick={generatePDFReport}>Generar Report</button>
->>>>>>> 5c046ede4e85017a58a9656d68c51ae60d11c3b7
       </div>
       <DataGrid
         className="datagrid"

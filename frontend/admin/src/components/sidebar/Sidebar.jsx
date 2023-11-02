@@ -62,7 +62,7 @@ const Sidebar = () => {
           <Link to={"/single"} style={{ textDecoration: "none" }}>
             <li>
               <AccountCircleOutlinedIcon className="icon" />
-              <span>Perfil</span>
+              <span onClick={SessionValidate}>Perfil</span>
             </li></Link>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <li>

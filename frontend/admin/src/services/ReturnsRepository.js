@@ -13,7 +13,7 @@ export default class ReturnsRepository {
                 sessionStorage.getItem('daiswadod'))
             return data.map(valueReturn => ({
                 id: valueReturn.id,
-                nInvoice: valueReturn.attributes.noFactura.data.attributes.noFactura,
+                nInvoice: valueReturn.attributes.noFactura.data?.attributes.noFactura,
                 status: valueReturn.attributes.estado,
                 date: new Date(valueReturn.attributes.createdAt)
                     .toLocaleDateString('es-ES', {
@@ -100,7 +100,7 @@ export default class ReturnsRepository {
             const response = await fetchDataFromAPI('/devolucions', 'POST', token, data)
             if (!response) {
                 // La respuesta no contiene información de la nueva devolucion.
-                console.error('No se pudo obtener información del nuevo invoiceo.')
+                console.error('No se pudo obtener información del nuevo devolucion.')
             }
         } catch (error) {
             // Maneja errores de red o del servidor
