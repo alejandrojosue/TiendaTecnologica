@@ -13,6 +13,7 @@ import { beforeCreateInvoice, performInvoiceValidations } from '../../helpers/in
 
 
 
+
 const New = () => {
     const { data } = useFetchProducts()
     const [rtnCustomer, setRtnCustomer] = useState('')
@@ -141,15 +142,101 @@ const New = () => {
             }
             await correlativeUpdater.updateCorrelative(dataNewInvoice.data.noFactura)
             await createInvoiceHook.createInvoice(dataNewInvoice)
+            printInvoice(); // Llama a la función de impresión después de guardar
             invoiceItems.forEach(async (item) => await updateProduct(item.id, item.quantity))
             setTimeout(() => {
-                if (error === null) window.location.reload()
-
+                if (error === null) window.location.href = '/invoices'
                 setIsLoading(false)
             }, 2000)
         } else if (actionType === "partialPayment") {
             // Lógica para guardar y hacer un pago parcial
         } else alert("Disponible Próximante");
+    }
+
+    const printInvoice = () => {
+       
+
+        const invoiceInfo = {
+            rtnCustomer: rtnCustomer,
+            customerName: dataUser ? dataUser.name : '',
+            vendorId: sessionStorage.getItem('userID'),
+            vendorName: sessionStorage.getItem('userName'),
+            creationDate: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`,
+            subtotal: subtotalSummary.toFixed(2),   
+            taxTotal: taxSummary.toFixed(2),
+            discountTotal: discountSummary.toFixed(2),
+            total: totalSummary.toFixed(2),
+        };
+
+        // Crear un formato imprimible con la información recolectada
+        const printableContent = `
+            Nombre: ${dataCompany.dataName}
+            Direccion: ${dataCompany.address}
+            Correo: ${dataCompany.email}
+            Telefono: ${dataCompany.telphone}
+            Sitio Web: ${dataCompany.website}
+            Slogan: ${dataCompany.slogan}
+            CAI: ${dataCompany.CAI}
+            ----------------------------------------------------- 
+            RTN del Cliente: ${invoiceInfo.rtnCustomer}
+            Nombre del Cliente: ${invoiceInfo.customerName}
+            Nombre del Vendedor: ${invoiceInfo.vendorName}
+            Fecha Creada: ${invoiceInfo.creationDate}
+            Fecha de Vencimiento: ${dataCompany.invoiceDueDate}
+            -----------------------------------------------------
+            -----------------------------------------------------
+            Detalles de la Factura:
+            -----------------------------------------------------
+            ${invoiceItems.map((item) => {
+            return `
+            Codigo: ${item.sku}
+            ${item.product}
+            Cantidad: ${item.quantity} Precio: L. ${item.price}${item.tax===0 ? '':'*'}${item.discount===0 ? '':'**'} Subtotal: L. ${item.total}
+            -----------------------------------------------------
+            `;
+            }).join('')}
+            -----------------------------------------------------
+            Subtotal: ${invoiceInfo.subtotal}
+            Impuesto Total: ${invoiceInfo.taxTotal}
+            Descuento Total: ${invoiceInfo.discountTotal}
+            Monto Total: ${invoiceInfo.total}
+        `;
+        const thermalPrintWidth = 100;
+        const fontSize = '8x'
+
+        // Asegurarse de que el contenido se ajuste al ancho de impresión térmica
+    const lines = printableContent.split('\n');
+    const formattedContent = lines.map(line => {
+        if (line.length > thermalPrintWidth) {
+            return line.substring(0, thermalPrintWidth);
+        }
+        return line;
+    }).join('\n');
+        // Crear una nueva ventana de impresión y mostrar el contenido
+        const printWindow = window.open('', '', 'width=600,height=600');
+        printWindow.document.open();
+        printWindow.document.write(`
+            <html>
+            <head>
+                <title>Tienda Tecnologica - Factura</title>
+                
+            </head>
+            <body>
+            <style>
+                    *{
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+                    body { font-size: ${fontSize}; }
+                </style>
+            <pre>${formattedContent}</pre>
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
     }
 
     return (
@@ -297,8 +384,12 @@ const New = () => {
                         onClick={handleSaveAction}
                         id="btnSavePartialPayment">Guardar y Hacer Pago Parcial</button>
                     <button
-                        onClick={() => handleSaveAction('fullPayment')}
-                        id="btnSaveFullPayment">Guardar y Hacer Pago Completo</button>
+                        onClick={() => {
+                            handleSaveAction('fullPayment');
+                        }}
+                        id="btnSaveFullPayment">
+                        Guardar y Hacer Pago Completo
+                        </button>
 
                 </div>
             </div>
