@@ -125,12 +125,9 @@ export default class InvoiceRepository {
             return data.map(invoice => ({
                 id: invoice.id,
                 nInvoice: invoice.attributes.noFactura,
-                date: new Date(invoice.attributes.createdAt)
-                    .toLocaleDateString('es-ES', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric'
-                    }),
+                date: `${new Date(invoice.attributes.createdAt).getDate()} /
+                        ${new Date(invoice.attributes.createdAt).getMonth() + 1} /
+                        ${new Date(invoice.attributes.createdAt).getFullYear()}`,
                 paymentMethod: invoice.attributes.metodoPago,
                 tax: invoice.attributes.detalleVentas.reduce((acc, value) => {
                     return acc + (value.cantidad * value.precio * value.isv)
@@ -237,36 +234,6 @@ export default class InvoiceRepository {
             else return null
         } catch (error) {
             console.error('Error al obtener invoice:', error)
-        }
-    }
-
-    async getBySellerId(id) {
-        try {
-            const { data } = await fetchDataFromAPI(`/ventas?populate=detalleVentas&filters[vendedor][id][$eq]=${id}&sort=noFactura:DESC&pagination[pageSize]=20`, 'GET',
-                sessionStorage.getItem('daiswadod'))
-            return data.map(invoice => ({
-                id: invoice.id,
-                nInvoice: invoice.attributes.noFactura,
-                date: new Date(invoice.attributes.createdAt)
-                    .toLocaleDateString('es-ES', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric'
-                    }),
-                paymentMethod: invoice.attributes.metodoPago,
-                tax: invoice.attributes.detalleVentas.reduce((acc, value) => {
-                    return acc + (value.cantidad * value.precio * value.isv)
-                }, 0).toFixed(2),
-                discount: invoice.attributes.detalleVentas.reduce((acc, value) => {
-                    return acc + (value.cantidad * value.precio * value.descuento)
-                }, 0).toFixed(2),
-                total: invoice.attributes.detalleVentas.reduce((acc, value) => {
-                    return acc + (value.cantidad * (value.precio * (1 + value.isv) - value.precio * value.descuento))
-                }, 0).toFixed(2),
-                status: invoice.attributes.estado
-            }))
-        } catch (error) {
-            console.error(error)
         }
     }
 }

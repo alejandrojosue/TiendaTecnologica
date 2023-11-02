@@ -140,9 +140,11 @@ const New = () => {
                     detalleVentas
                 }
             }
+            setIsLoading(false)
+            printInvoice()
+            return
             await correlativeUpdater.updateCorrelative(dataNewInvoice.data.noFactura)
             await createInvoiceHook.createInvoice(dataNewInvoice)
-            printInvoice(); // Llama a la función de impresión después de guardar
             invoiceItems.forEach(async (item) => await updateProduct(item.id, item.quantity))
             setTimeout(() => {
                 if (error === null) window.location.href = '/invoices'
@@ -154,7 +156,6 @@ const New = () => {
     }
 
     const printInvoice = () => {
-       
 
         const invoiceInfo = {
             rtnCustomer: rtnCustomer,
@@ -162,64 +163,60 @@ const New = () => {
             vendorId: sessionStorage.getItem('userID'),
             vendorName: sessionStorage.getItem('userName'),
             creationDate: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`,
-            subtotal: subtotalSummary.toFixed(2),   
+            subtotal: subtotalSummary.toFixed(2),
             taxTotal: taxSummary.toFixed(2),
             discountTotal: discountSummary.toFixed(2),
             total: totalSummary.toFixed(2),
         };
 
         // Crear un formato imprimible con la información recolectada
+        const thermalPrintWidth = 80;
         const printableContent = `
-            Nombre: ${dataCompany.dataName}
-            Direccion: ${dataCompany.address}
-            Correo: ${dataCompany.email}
-            Telefono: ${dataCompany.telphone}
-            Sitio Web: ${dataCompany.website}
-            Slogan: ${dataCompany.slogan}
-            CAI: ${dataCompany.CAI}
-            ----------------------------------------------------- 
-            RTN del Cliente: ${invoiceInfo.rtnCustomer}
-            Nombre del Cliente: ${invoiceInfo.customerName}
-            Nombre del Vendedor: ${invoiceInfo.vendorName}
-            Fecha Creada: ${invoiceInfo.creationDate}
-            Fecha de Vencimiento: ${dataCompany.invoiceDueDate}
-            -----------------------------------------------------
-            -----------------------------------------------------
-            Detalles de la Factura:
-            -----------------------------------------------------
-            ${invoiceItems.map((item) => {
-            return `
-            Codigo: ${item.sku}
-            ${item.product}
-            Cantidad: ${item.quantity} Precio: L. ${item.price}${item.tax===0 ? '':'*'}${item.discount===0 ? '':'**'} Subtotal: L. ${item.total}
-            -----------------------------------------------------
-            `;
-            }).join('')}
-            -----------------------------------------------------
-            Subtotal: ${invoiceInfo.subtotal}
-            Impuesto Total: ${invoiceInfo.taxTotal}
-            Descuento Total: ${invoiceInfo.discountTotal}
-            Monto Total: ${invoiceInfo.total}
-        `;
-        const thermalPrintWidth = 100;
-        const fontSize = '8x'
-
-        // Asegurarse de que el contenido se ajuste al ancho de impresión térmica
-    const lines = printableContent.split('\n');
-    const formattedContent = lines.map(line => {
-        if (line.length > thermalPrintWidth) {
-            return line.substring(0, thermalPrintWidth);
-        }
-        return line;
-    }).join('\n');
-        // Crear una nueva ventana de impresión y mostrar el contenido
-        const printWindow = window.open('', '', 'width=600,height=600');
+        <div style="width: 160px; display: flex; flex-direction:column; text-align: left;">
+            <div style="width: 100%; font-weight: bold; font-size:14px"><center>${dataCompany.dataName}</center></div>
+            <div>Dirección: ${dataCompany.address}</div>
+            <div>Correo: ${dataCompany.email}</div>
+            <div>Teléfono: ${dataCompany.telphone}</div>
+            <div>Sitio Web: ${dataCompany.website}</div>
+            <div>RTN: 0301-9014-31231</div>
+            <div>CAI: ${dataCompany.CAI}</div>
+            <hr>
+            <hr>
+            <div>RTN del Cliente: ${invoiceInfo.rtnCustomer}</div>
+            <div>Cliente: ${invoiceInfo.customerName}</div>
+            <div>Vendedor: ${invoiceInfo.vendorName}</div>
+            <div>Fecha de Emisión: ${invoiceInfo.creationDate}</div>
+            <div>Fecha de Vencimiento: ${dataCompany.invoiceDueDate}</div>
+            <div>Original* Copia</div>
+            <hr>
+            <hr>
+            ${invoiceItems
+                .map((item) => `
+            <div style="width: 100%;">
+                <div>${item.sku} ${item.product}</div>
+                <div>
+                    <span>Unds: ${item.quantity}</span>
+                    <span>P/U: ${item.price}${item.tax === 0 ? '' : '*'}${item.discount === 0 ? '' : '**'}</span>
+                    <span style="display: inline-block; float: right;">L. ${item.total}</span>
+                </div>
+            </div>
+            <hr>
+            `).join('')}
+            <hr>
+            <div style="width: 100%; text-align: right;">
+                <div>Subtotal: L. ${invoiceInfo.subtotal}</div>
+                <div>ISV: L. ${invoiceInfo.taxTotal}</div>
+                <div>Descuento: L. ${invoiceInfo.discountTotal}</div>
+                <div>Monto Total: L. ${invoiceInfo.total}</div>
+            </div>
+            <div style="text-align: center;">La factura es beneficio de todos "Exíjala"</div>
+      </div>
+      `;
+        const printWindow = window.open('', ' ', '');
         printWindow.document.open();
         printWindow.document.write(`
             <html>
             <head>
-                <title>Tienda Tecnologica - Factura</title>
-                
             </head>
             <body>
             <style>
@@ -227,10 +224,15 @@ const New = () => {
                         margin: 0;
                         padding: 0;
                         box-sizing: border-box;
+                        font-family: Arial;
+                        font-size: 8px;
                     }
-                    body { font-size: ${fontSize}; }
+                    div, hr{
+                        margin-top: 3px;
+                    }
+
                 </style>
-            <pre>${formattedContent}</pre>
+            <div>${printableContent}</div>
             </body>
             </html>
         `);
@@ -389,7 +391,7 @@ const New = () => {
                         }}
                         id="btnSaveFullPayment">
                         Guardar y Hacer Pago Completo
-                        </button>
+                    </button>
 
                 </div>
             </div>
