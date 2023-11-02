@@ -9,10 +9,11 @@ export default class ReturnsRepository {
 
     async getAll() {
         try {
-            const { data } = await fetchDataFromAPI('/devolucions?populate=vendedor,noFatura,detalleDevoluciones.producto&pagination[pageSize]=100', 'GET',
+            const { data } = await fetchDataFromAPI('/devolucions?populate=vendedor,noFactura,detalleDevoluciones.producto&pagination[pageSize]=100', 'GET',
                 sessionStorage.getItem('daiswadod'))
             return data.map(valueReturn => ({
                 id: valueReturn.id,
+                nInvoice: valueReturn.attributes.noFactura.data.attributes.noFactura,
                 status: valueReturn.attributes.estado,
                 date: new Date(valueReturn.attributes.createdAt)
                     .toLocaleDateString('es-ES', {
@@ -30,6 +31,36 @@ export default class ReturnsRepository {
                             poductName: value.producto.data.attributes.nombre,
                         })),
             }))
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    async getById(id) {
+        try {
+            const { data } = await fetchDataFromAPI(`/devolucions/${id}?populate=vendedor,noFactura,detalleDevoluciones.producto&pagination[pageSize]=100`, 'GET',
+                sessionStorage.getItem('daiswadod'))
+            return ({
+                id: data.id,
+                nInvoice: data.attributes.noFactura.data.attributes.noFactura,
+                status: data.attributes.estado,
+                date: new Date(data.attributes.createdAt)
+                    .toLocaleDateString('es-ES', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    }),
+                seller: `${data.attributes.vendedor.data.attributes.nombre} ${data.attributes.vendedor.data.attributes.apellido}`,
+                details:
+                    (data.attributes.detalleDevoluciones)
+                        .map(value => ({
+                            id: value.id,
+                            quantity: value.cantidad,
+                            reason: value.motivo,
+                            productSKU: value.producto.data.attributes.codigo,
+                            productName: value.producto.data.attributes.nombre,
+                        })),
+            })
         } catch (error) {
             console.error(error)
         }

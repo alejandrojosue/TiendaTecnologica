@@ -98,6 +98,43 @@ const InvoiceColumns = [
   }
 ]
 
+const ReturnColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "nInvoice",
+    headerName: "No. Factura",
+    width: 100
+  },
+  {
+    field: "date",
+    headerName: "Fecha (dd/MM/yyyy)",
+    width: 150
+  },
+  {
+    field: "seller",
+    headerName: "Vendedor",
+    width: 400
+  },
+  {
+    field: "status",
+    headerName: "Estado",
+    width: 120,
+    renderCell: (params) => {
+      const status = {
+        Entregada: 'Entregada',
+        Cancelada: 'Cancelada',
+        "En proceso": "En-Proceso"
+      }
+      return (
+        <div className={`cellWithStatus ${status[params.row.status]}`}>
+          {params.row.status}
+        </div>
+      )
+    }
+  }
+]
+
 export {
-  productColumns, categoryColumns, subCategoryColumns, InvoiceColumns
+  productColumns, categoryColumns, subCategoryColumns, InvoiceColumns,
+  ReturnColumns
 }

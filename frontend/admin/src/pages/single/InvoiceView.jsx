@@ -3,11 +3,11 @@ import Navbar from "../../components/navbar/Navbar"
 import Sidebar from "../../components/sidebar/Sidebar"
 import Table from '../../components/table/InvoiceDetails'
 import useInvoiceById from "../../hooks/useInvoiceById";
+import getIdUrl from "../../helpers/get-id-url";
 
 const InvoiceView = () => {
-    const queryString = window.location.search
-    const params = new URLSearchParams(queryString)
-    const id = params.get('id')
+
+    const id = getIdUrl()
     const { invoice } = useInvoiceById(id)
     const rows = invoice ? [...invoice.details] : []
     return (

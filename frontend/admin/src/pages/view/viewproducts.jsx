@@ -3,13 +3,13 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import "./view.scss";
 import { Link } from 'react-router-dom';
+import getIdUrl from "../../helpers/get-id-url";
 
 const FoundProduct = ({ inputs, title }) => {
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString);
-    const id = params.get('id');
+    const id = getIdUrl()
     const { data, loading } = useFetchProductsId(id)
 
+    if (loading) return (<div>Cargando...</div>)
     return (
         <div className="new1">
             <div className="sidebar">

@@ -53,7 +53,7 @@ const Sidebar = () => {
               <span onClick={() => { SessionValidate() }}>Facturas</span>
             </li>
           </Link>
-          <Link to={"/single"} style={{ textDecoration: "none" }}>
+          <Link to={"/returns"} style={{ textDecoration: "none" }}>
             <li>
               <AssignmentReturnIcon className="icon" />
               <span>Devoluciones</span>
