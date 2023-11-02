@@ -8,7 +8,6 @@ import Table from "../../components/table/Table";
 import dateFormatToSpanish from "../../helpers/date-format-to-spanish";
 import { useDashboard } from "../../hooks/useDashboard";
 import { useFetchShopping } from "../../hooks/useFetchShopping";
-import { useState } from "react";
 
 const Home = () => {
   const { data, loading, error, handleCurrentDate } = useDashboard()

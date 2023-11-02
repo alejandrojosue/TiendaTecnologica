@@ -23,12 +23,11 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/dashboard" style={{ textDecoration: "none" }}>
+        <Link to="/dashboard" className="" style={{ textDecoration: "none" }}>
           <span onClick={() => SessionValidate()}
             className="logo">Panel de Control</span>
         </Link>
       </div>
-      <hr />
       <div className="center">
         <ul>
           <p className="title">PRINCIPAL</p>

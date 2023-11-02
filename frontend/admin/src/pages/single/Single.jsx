@@ -3,8 +3,12 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import Chart from "../../components/chart/Chart";
 import List from "../../components/table/Table";
+import { useInvoiceBySeller } from "../../hooks/useInvoiceBySeller";
 
 const Single = () => {
+  const { data, loading, error } = useInvoiceBySeller(sessionStorage.getItem('userID'))
+  if (loading) return (<div>Cargando...</div>)
+  if (error) return (<div>Error al cargar datos</div>)
   return (
     <div className="single">
       <Sidebar />
@@ -30,8 +34,8 @@ const Single = () => {
           </div>
         </div>
         <div className="bottom">
-          <h1 className="title">Últimas Transacciones</h1>
-          <List />
+          <h1 className="title">Últimas 20 Transacciones</h1>
+          <List data={data} />
         </div>
       </div>
     </div>
