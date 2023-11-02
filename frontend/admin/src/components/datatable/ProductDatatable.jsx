@@ -1,5 +1,4 @@
 import './datatable.scss'
-import './otherstyle.scss'
 import { DataGrid } from "@mui/x-data-grid"
 import { Link } from "react-router-dom"
 import { productColumns } from "../../datatablesource"
@@ -96,40 +95,42 @@ const Datatable = () => {
       <div className="datatableTitle">
         Listado de Productos
       </div>
-      <select name="categoria" className='selectCategory' id="categoria" onChange={(e) => setSelectedCategory(e.target.value)}>
-        <option value="none">Seleccione una Categoria</option>
-        {
-          dataCategorias.map(data => (
-            <option key={data.id} value={data.name}>
-              {
-                data.name
-              }
-            </option>
-          ))
-        }
-      </select>
-      <select name="subcategoria" className='selectSubcategory' id="subcategoria" onChange={e => {
-        if (e.target.value === 'none') return
-        handleSubcategory(parseInt(e.target.value))
-      }}
-      >
-        <option value="none">Seleccione una subcategoría</option>
-        {
-          filteredSubcategories.map(data => (
-            <option key={data.id} value={data.id}>
-              {
-                data.name
-              }
-            </option>
-          ))
-        }
-      </select>
-      <button className='btnReload' onClick={handleReloadPage}>Actualizar</button>
-      <button className='btnReport' onClick={() => generateReport(transformedData)}>
-        Generar Informe
-      </button>
-      <br />
-      <br />
+      <div className="filters">
+        <select name="categoria" className='selectCategory' id="categoria" onChange={(e) => setSelectedCategory(e.target.value)}>
+          <option value="none">Seleccione una Categoria</option>
+          {
+            dataCategorias.map(data => (
+              <option key={data.id} value={data.name}>
+                {
+                  data.name
+                }
+              </option>
+            ))
+          }
+        </select>
+        <select name="subcategoria" className='selectSubcategory' id="subcategoria" onChange={e => {
+          if (e.target.value === 'none') return
+          handleSubcategory(parseInt(e.target.value))
+        }}
+        >
+          <option value="none">Seleccione una Subcategoría</option>
+          {
+            filteredSubcategories.map(data => (
+              <option key={data.id} value={data.id}>
+                {
+                  data.name
+                }
+              </option>
+            ))
+          }
+        </select>
+
+        <button className='btnReload'
+          onClick={handleReloadPage}>Actualizar</button>
+        <button className='btnReport'
+          onClick={() => generateReport(transformedData)}>
+          Generar Informe</button>
+      </div>
       <DataGrid
         className="datagrid"
         rows={data}

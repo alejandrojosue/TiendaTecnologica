@@ -11,7 +11,7 @@ const MuiDateRange = ({ onDateRangeChange }) => {
     };
 
     return (
-        <div className='dates' style={{ margin: '10px 0px' }}>
+        <div className='dates' style={{ margin: '0px 10px 0px 0px' }}>
             Rango de Fechas:&nbsp;
             <DateRangePicker onChange={handleDateRangeChange} value={dateRange} />
         </div>

@@ -1,3 +1,32 @@
+.filters {
+  display: flex;
+  width: auto;
+  padding: 10px 0;
+
+  button {
+    border-radius: 5px;
+    color: darkblue;
+    border: 1px solid rgba(0, 0, 139, 0.596);
+    background-color: white;
+    height: 35px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  button:hover {
+    color: #fff;
+    background-color: darkblue;
+  }
+
+  select {
+    width: 210px;
+    padding: 3px;
+    height: 35px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+}
+
 .datatable {
   height: 75%;
   padding: 20px;
@@ -10,6 +39,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
 
     .link {
       text-decoration: none;

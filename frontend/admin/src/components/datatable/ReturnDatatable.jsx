@@ -1,5 +1,4 @@
 import "./datatable.scss"
-import './invoiceDatatable.scss'
 import { DataGrid } from "@mui/x-data-grid"
 import { Link } from "react-router-dom"
 import MuiDateRange from '../DateRange/MuiDateRange'
@@ -7,7 +6,7 @@ import { ReturnColumns } from "../../datatablesource"
 import useFetchReturns from '../../hooks/useFetchReturns'
 
 const Datatable = () => {
-    const [data, loading, error, ...v] = useFetchReturns()
+    const [data, loading, error, handleDateRangeChange, ...v] = useFetchReturns()
     const actionColumn = [
         {
             field: "action",
@@ -35,8 +34,9 @@ const Datatable = () => {
                 </Link>
             </div>
             <div className="filters">
-                <button className="btnRefresh">Actualizar</button>
-                <button className="btnReport">Generar Report</button>
+                <MuiDateRange onDateRangeChange={handleDateRangeChange} />
+                <button className="btnRefresh" onClick={handleDateRangeChange}>Actualizar</button>
+                <button className="btnReport">Generar Reporte</button>
             </div>
             <DataGrid
                 className="datagrid"

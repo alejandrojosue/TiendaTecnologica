@@ -1,8 +1,10 @@
 .filters {
     display: flex;
-    width: 400px;
+    width: 600px;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: start;
+    padding: 10px 0px;
+    background-color: aliceblue;
 
     button {
         border-radius: 5px;
@@ -17,5 +19,19 @@
     button:hover {
         color: #fff;
         background-color: darkblue;
+    }
+
+    .selectCategory {
+        width: 200px;
+        padding: 3px;
+        border-radius: 5px;
+        height: 35px;
+    }
+
+    .selectSubcategory {
+        width: 200px;
+        padding: 3px;
+        height: 35px;
+        border-radius: 5px;
     }
 }

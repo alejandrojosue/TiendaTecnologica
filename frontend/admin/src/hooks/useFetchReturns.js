@@ -11,16 +11,7 @@ const useFetchReturns = (id) => {
     useEffect(() => {
         const abortController = new AbortController()
         setController(abortController);
-        if (!id)
-            (new ReturnsRepository()).getAll()
-                .then((result) => setData(result))
-                .catch((error) => {
-                    if (error.name === 'AbortError')
-                        console.log('Request Cancelled')
-                    else setError(error)
-                })
-                .finally(() => setLoading(false));
-        else
+        if (id)
             (new ReturnsRepository()).getById(id)
                 .then((result) => setData(result))
                 .catch((error) => {
@@ -29,15 +20,40 @@ const useFetchReturns = (id) => {
                     else setError(error)
                 })
                 .finally(() => setLoading(false));
+        else if (startDate && endDate) {
+            (new ReturnsRepository()).getByDateRange(startDate, endDate)
+                .then((result) => setData(result))
+                .catch((error) => {
+                    if (error.name === 'AbortError')
+                        console.log('Request Cancelled')
+                    else setError(error)
+                })
+                .finally(() => setLoading(false));
+        }
+        else
+            (new ReturnsRepository()).getAll()
+                .then((result) => setData(result))
+                .catch((error) => {
+                    if (error.name === 'AbortError')
+                        console.log('Request Cancelled')
+                    else setError(error)
+                })
+                .finally(() => setLoading(false));
         return () => abortController.abort()
-    }, [id])
+    }, [id, startDate, endDate])
     const handleCancelRequest = () => {
         if (controller) {
             controller.abort()
             setError('Request Cancelled')
         }
     }
-    return [data, loading, error, handleCancelRequest]
+    const handleDateRange = (selectedDateRange) => {
+        if (selectedDateRange) {
+            setStartDate(selectedDateRange[0])
+            setEndDate(selectedDateRange[1])
+        }
+    }
+    return [data, loading, error, handleDateRange, handleCancelRequest]
 }
 
 export default useFetchReturns
