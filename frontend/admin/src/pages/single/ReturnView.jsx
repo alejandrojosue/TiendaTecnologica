@@ -10,7 +10,6 @@ const ReturnView = () => {
     const id = getIdUrl()
     const [data, loading, error, ...v] = useFetchReturns(id)
     const rows = data ? data.details : []
-    if (loading && data) console.log(data)
     if (loading) return (<div>Cargando...</div>)
     if (error) return (<div>Error al cargar el producto...</div>)
     return (
