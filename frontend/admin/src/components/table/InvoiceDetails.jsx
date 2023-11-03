@@ -27,6 +27,7 @@ const List = ({ rows }) => {
               <TableCell className="tableCell">{row.productName}</TableCell>
               <TableCell className="tableCell">{row.quantity}</TableCell>
               <TableCell className="tableCell">{row.unitPrice}</TableCell>
+
             </TableRow>
           ))}
         </TableBody>

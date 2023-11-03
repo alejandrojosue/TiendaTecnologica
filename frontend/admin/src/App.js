@@ -2,6 +2,7 @@ import InvoiceList from "./pages/list/InvoiceList";
 import SubcategoryList from "./pages/list/SubcategoryList";
 import ProductList from "./pages/list/ProductList";
 import ReturnList from "./pages/list/ReturnList";
+import RIList from "./pages/list/RIList";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Single from "./pages/single/Single";
@@ -18,6 +19,7 @@ import NotFound from "./pages/notFound/NotFound";
 import InvoiceView from "./pages/single/InvoiceView";
 import View from "./pages/view/viewproducts";
 import ReturnView from "./pages/single/ReturnView";
+import NewReturn from "./pages/new/NewReturn";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -56,6 +58,8 @@ function App() {
             <Route path="returns">
               <Route index element={<ReturnList />} />
               <Route path="view" element={<ReturnView />} />
+              <Route path="select" element={<RIList />} />
+              <Route path="new" element={<NewReturn />} />
             </Route>
             <Route path="unauthorized" element={<Unauthorized />} />
             <Route path="*" element={<NotFound />} />

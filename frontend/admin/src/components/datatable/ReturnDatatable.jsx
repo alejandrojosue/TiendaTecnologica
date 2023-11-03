@@ -29,7 +29,7 @@ const Datatable = () => {
         <div className="datatable">
             <div className="datatableTitle">
                 Listado de Devoluciones
-                <Link to="/returns/new" className="link">
+                <Link to="/returns/select" className="link">
                     Crear Nueva
                 </Link>
             </div>

@@ -8,11 +8,13 @@ export const useFetchInvoices = () => {
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
     const [controller, setController] = useState(null)
+    const [rtn, setRtn] = useState('@#%^&^%$#@')
     useEffect(() => {
         const abortController = new AbortController()
+        const invoiceRepository = new InvoicesRepository()
         setController(abortController);
-        if (!startDate && !endDate)
-            (new InvoicesRepository()).getAll()
+        if (!startDate && !endDate && rtn === '@#%^&^%$#@')
+            invoiceRepository.getAll()
                 .then((result) => setData(result))
                 .catch((error) => {
                     if (error.name === 'AbortError')
@@ -20,7 +22,16 @@ export const useFetchInvoices = () => {
                     else setError(error)
                 })
                 .finally(() => setLoading(false));
-        else (new InvoicesRepository())
+        else if (rtn)
+            invoiceRepository.getByRTN(rtn)
+                .then((result) => setData(result))
+                .catch((error) => {
+                    if (error.name === 'AbortError')
+                        console.log('Request Cancelled')
+                    else setError(error)
+                })
+                .finally(() => setLoading(false));
+        else invoiceRepository
             .getByDateRange(startDate, endDate)
             .then((result) => setData(result))
             .catch((error) => {
@@ -30,7 +41,7 @@ export const useFetchInvoices = () => {
             })
             .finally(() => setLoading(false));
         return () => abortController.abort()
-    }, [startDate, endDate])
+    }, [startDate, endDate, rtn])
     const handleCancelRequest = () => {
         if (controller) {
             controller.abort()
@@ -44,5 +55,10 @@ export const useFetchInvoices = () => {
             setEndDate(selectedDateRange[1])
         }
     }
-    return { data, loading, error, handleDateRange, handleCancelRequest }
+    const handleRTN = (_rtn = null) => {
+        setRtn(_rtn)
+        console.log(rtn)
+        console.log(data)
+    }
+    return { data, loading, error, handleRTN, handleDateRange, handleCancelRequest }
 }

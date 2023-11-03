@@ -1,0 +1,22 @@
+.link {
+    text-decoration: none;
+    color: green;
+    font-size: 16px;
+    font-weight: 400;
+    border: 1px solid green;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: auto;
+}
+
+.link:hover {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    border: 1px solid green;
+    background-color: green;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}

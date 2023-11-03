@@ -193,7 +193,8 @@ const New = () => {
             ${invoiceItems
                 .map((item) => `
             <div style="width: 100%;">
-                <div>${item.sku} ${item.product}</div>
+                <div>${item.sku}</div>
+                <div>${(item.product).length > 63 ? (item.product).slice(0, 63) + '...' : item.product}</div>
                 <div>
                     <span>Unds: ${item.quantity}</span>
                     <span>P/U: ${item.price}${item.tax === 0 ? '' : '*'}${item.discount === 0 ? '' : '**'}</span>
@@ -217,6 +218,7 @@ const New = () => {
         printWindow.document.write(`
             <html>
             <head>
+                <title>&nbsp;</title>
             </head>
             <body>
             <style>
