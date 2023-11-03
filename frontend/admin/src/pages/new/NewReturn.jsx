@@ -1,4 +1,5 @@
 import "../single/invoiceView.scss";
+import "../../components/datatable/datatable.scss";
 import './newReturn.scss'
 import Navbar from "../../components/navbar/Navbar"
 import Sidebar from "../../components/sidebar/Sidebar"
@@ -76,7 +77,8 @@ const NewReturn = () => {
                                                 <TableCell className="tableCell"><b>Código</b></TableCell>
                                                 <TableCell className="tableCell"><b>Producto</b></TableCell>
                                                 <TableCell className="tableCell"><b>Cantidad</b></TableCell>
-                                                <TableCell className="tableCell"><b>Precio Unitario</b></TableCell>
+                                                <TableCell className="tableCell"><b>P/U</b></TableCell>
+                                                <TableCell className="tableCell"><b>Agregar</b></TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -87,7 +89,37 @@ const NewReturn = () => {
                                                     <TableCell className="tableCell">{row.quantity}</TableCell>
                                                     <TableCell className="tableCell">{row.unitPrice}</TableCell>
                                                     <TableCell className="tableCell">
-                                                        <a href="#" className="status Pagada">+</a>
+                                                        <div className="btnAdd"><span>+</span></div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </div>
+                            <div className="formInput" style={{ width: '100%', margin: '0px 40px' }}>
+                                <label>Productos a Devolver:</label><br />
+                                <TableContainer component={Paper} className="table">
+                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell className="tableCell"><b>Producto</b></TableCell>
+                                                <TableCell className="tableCell"><b>Cantidad</b></TableCell>
+                                                <TableCell className="tableCell w-300"><b>Motivo Devolución</b></TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {rows.map((row, index) => (
+                                                <TableRow key={index}>
+                                                    <TableCell className="tableCell">{row.productName}</TableCell>
+                                                    <TableCell className="tableCell">
+                                                        <input type="number" min={0}
+                                                            max={row.quantity}
+                                                            onKeyDown={e => e.preventDefault()}
+                                                            defaultValue={row.quantity} />
+                                                    </TableCell>
+                                                    <TableCell className="tableCell w-300">
+                                                        <textarea className="w-300"></textarea>
                                                     </TableCell>
                                                 </TableRow>
                                             ))}

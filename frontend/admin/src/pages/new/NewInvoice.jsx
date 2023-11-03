@@ -73,6 +73,7 @@ const New = () => {
                 sku: value,
                 product: product.name,
                 price: product.price,
+                quantity: product.quantity,
                 discount: product.discount,
                 total: 0
             };
@@ -142,7 +143,6 @@ const New = () => {
             }
             setIsLoading(false)
             printInvoice()
-            return
             await correlativeUpdater.updateCorrelative(dataNewInvoice.data.noFactura)
             await createInvoiceHook.createInvoice(dataNewInvoice)
             invoiceItems.forEach(async (item) => await updateProduct(item.id, item.quantity))
