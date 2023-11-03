@@ -99,11 +99,9 @@ export default class ReturnsRepository {
         try {
             const response = await fetchDataFromAPI('/devolucions', 'POST', token, data)
             if (!response) {
-                // La respuesta no contiene información de la nueva devolucion.
-                console.error('No se pudo obtener información del nuevo devolucion.')
+                console.error('No se pudo crear nueva devolucion.')
             }
         } catch (error) {
-            // Maneja errores de red o del servidor
             console.error(error)
 
         }

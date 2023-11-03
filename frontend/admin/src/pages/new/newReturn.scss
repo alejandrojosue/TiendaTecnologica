@@ -32,3 +32,19 @@ div.btnAdd:hover {
     justify-content: center;
     align-items: center;
 }
+
+.d-flex-0 {
+    display: flex;
+}
+
+button.btnDelete {
+    color: crimson;
+    background-color: #fff;
+    border-width: 0;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+button.btnDelete:hover {
+    color: rgb(121, 0, 0)
+}
