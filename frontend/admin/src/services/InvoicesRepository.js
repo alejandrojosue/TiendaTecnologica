@@ -84,7 +84,7 @@ export default class InvoiceRepository {
             return data.map(invoice => ({
                 id: invoice.id,
                 nInvoice: invoice.attributes.noFactura,
-                date: new Date(data.attributes.createdAt)
+                date: new Date(invoice.attributes.createdAt)
                     .toLocaleDateString('es-ES', {
                         day: '2-digit',
                         month: '2-digit',

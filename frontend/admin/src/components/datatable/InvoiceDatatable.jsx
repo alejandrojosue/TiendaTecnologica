@@ -1,5 +1,4 @@
 import "./datatable.scss"
-// import './invoiceDatatable.scss'
 import { DataGrid } from "@mui/x-data-grid"
 import { Link } from "react-router-dom"
 import MuiDateRange from '../DateRange/MuiDateRange'
@@ -84,7 +83,7 @@ const Datatable = () => {
       <div className="filters">
         <MuiDateRange onDateRangeChange={handleDateRangeChange} />
         <button className="btnRefresh" onClick={handleDateRangeChange}>Actualizar</button>
-        <button className="btnReport" onClick={generatePDFReport}>Generar Report</button>
+        <button className="btnReport" onClick={generatePDFReport}>Generar Reporte</button>
       </div>
       <DataGrid
         className="datagrid"

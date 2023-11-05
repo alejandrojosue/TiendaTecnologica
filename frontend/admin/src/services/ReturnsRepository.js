@@ -95,11 +95,12 @@ export default class ReturnsRepository {
         }
     }
 
-    async create(data, token) {
+    async create(data) {
         try {
-            const response = await fetchDataFromAPI('/devolucions', 'POST', token, data)
+            const response = await fetchDataFromAPI('/devolucions',
+                'POST', sessionStorage.getItem('daiswadod'), data)
             if (!response) {
-                console.error('No se pudo crear nueva devolucion.')
+                alert('No se pudo crear nueva devolucion.')
             }
         } catch (error) {
             console.error(error)

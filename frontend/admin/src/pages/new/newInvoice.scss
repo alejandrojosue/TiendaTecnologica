@@ -14,13 +14,14 @@ $purple: #7451f8;
   .header {
     display: flex;
     flex-direction: column;
-    padding: 0px 10px;
+    padding: 0px 0px;
 
     .top-right {
       background-color: $gray;
       display: flex;
       align-content: center;
       justify-content: end;
+      padding: 0px 10px;
 
       span {
         background-color: rgba(105, 105, 105, .1);
@@ -35,6 +36,7 @@ $purple: #7451f8;
       display: flex;
       background-color: $gray;
       justify-content: start;
+      padding: 0px 10px;
 
       .formInput {
         width: 220px;

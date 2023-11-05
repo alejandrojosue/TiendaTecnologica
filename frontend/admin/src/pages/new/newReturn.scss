@@ -1,3 +1,5 @@
+$blue: lightblue;
+
 div.btnAdd {
     padding: 2px 5px;
     border-radius: 5px;
@@ -47,4 +49,18 @@ button.btnDelete {
 
 button.btnDelete:hover {
     color: rgb(121, 0, 0)
+}
+
+button.btnSaveReturn {
+    width: 150px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.02em;
+    padding: 10px;
+    background-color: transparent;
+    border: 2px solid $blue;
+    color: $blue;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
 }

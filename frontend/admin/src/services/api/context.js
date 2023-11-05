@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:1337/api';
+const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:1337/api';
 
 /**
  * Realiza una solicitud a la API y devuelve los datos.

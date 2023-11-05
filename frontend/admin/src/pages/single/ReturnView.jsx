@@ -45,7 +45,6 @@ const ReturnView = () => {
                                 <label>Detalle Devolución:</label><br />
                                 <Table rows={rows} />
                             </div>
-
                             <a href="/returns">Regresar</a>
                         </form>
                     </div>

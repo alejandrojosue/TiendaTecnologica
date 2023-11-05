@@ -22,7 +22,7 @@ export const useFetchInvoices = () => {
                     else setError(error)
                 })
                 .finally(() => setLoading(false));
-        else if (rtn)
+        else if (rtn !== rtn === '@#%^&^%$#@' && !startDate && !endDate)
             invoiceRepository.getByRTN(rtn)
                 .then((result) => setData(result))
                 .catch((error) => {
@@ -31,15 +31,16 @@ export const useFetchInvoices = () => {
                     else setError(error)
                 })
                 .finally(() => setLoading(false));
-        else invoiceRepository
-            .getByDateRange(startDate, endDate)
-            .then((result) => setData(result))
-            .catch((error) => {
-                if (error.name === 'AbortError')
-                    console.log('Request Cancelled')
-                else setError(error)
-            })
-            .finally(() => setLoading(false));
+        else if (startDate && endDate)
+            invoiceRepository
+                .getByDateRange(startDate, endDate)
+                .then((result) => setData(result))
+                .catch((error) => {
+                    if (error.name === 'AbortError')
+                        console.log('Request Cancelled')
+                    else setError(error)
+                })
+                .finally(() => setLoading(false));
         return () => abortController.abort()
     }, [startDate, endDate, rtn])
     const handleCancelRequest = () => {
@@ -57,8 +58,6 @@ export const useFetchInvoices = () => {
     }
     const handleRTN = (_rtn = null) => {
         setRtn(_rtn)
-        console.log(rtn)
-        console.log(data)
     }
     return { data, loading, error, handleRTN, handleDateRange, handleCancelRequest }
 }

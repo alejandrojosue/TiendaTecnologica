@@ -1,5 +1,6 @@
-import { DateRangePicker } from 'rsuite';
+import './MuiDateRange.scss'
 import 'rsuite/dist/rsuite-rtl.css';
+import { DateRangePicker } from 'rsuite';
 import { useState } from 'react';
 
 const MuiDateRange = ({ onDateRangeChange }) => {

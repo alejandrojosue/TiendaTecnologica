@@ -6,14 +6,14 @@ const useCreateReturn = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
 
-    const createReturn = async (returnData) => {
+    const createReturn = (returnData) => {
         setLoading(true);
         setError(null);
 
         try {
             const returnRepo = new ReturnsRepository();
-            await returnRepo
-                .create(returnData, sessionStorage.getItem('daiswadod'))
+            returnRepo
+                .create(returnData)
             alert('Devolución guardada exitósamente!')
             window.location.href = '/returns'
             setSuccess(true);

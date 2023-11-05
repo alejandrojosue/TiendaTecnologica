@@ -12,8 +12,8 @@ const List = (data) => {
   return (
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} stickyHeader aria-label="simple table">
-        <TableHead>
-          <TableRow key={data.id}>
+        <TableHead >
+          <TableRow key={data.id} >
             <TableCell className="tableCell">ID Transacción</TableCell>
             <TableCell className="tableCell">Fecha</TableCell>
             <TableCell className="tableCell">Monto Total</TableCell>

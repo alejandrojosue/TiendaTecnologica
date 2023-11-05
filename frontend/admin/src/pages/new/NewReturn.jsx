@@ -102,7 +102,7 @@ const NewReturn = () => {
                 </div>
                 <div className="bottom" style={{ marginTop: 0 }}>
                     <div className="right">
-                        <form>
+                        <form onSubmit={e => e.preventDefault()}>
                             <div className="formInput">
                                 <label>Cliente:</label>
                                 <input type='text'
@@ -196,6 +196,7 @@ const NewReturn = () => {
                                                     </TableCell>
                                                     <TableCell className="tableCell w-300">
                                                         <textarea required
+                                                            minLength={1}
                                                             onChange={e => handleReasonChange(index, e.target.value)}
                                                             className="w-300"></textarea>
                                                     </TableCell>
@@ -210,10 +211,8 @@ const NewReturn = () => {
                                     </Table>
                                 </TableContainer>
                             </div>
-                            <a className="btnSaveReturn" href="#"
-                                onClick={e => {
-                                    saveReturn()
-                                }}>Guardar</a>
+                            <button className="btnSaveReturn" href="#"
+                                onClick={saveReturn}>Guardar</button>
                         </form>
                     </div>
                 </div>
