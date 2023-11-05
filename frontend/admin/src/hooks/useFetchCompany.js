@@ -6,6 +6,7 @@ export const useFetchCompany = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [controller, setController] = useState(null);
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -21,14 +22,13 @@ export const useFetchCompany = () => {
             .finally(() => setLoading(false))
 
         return () => abortController.abort()
-    }, []);
+    }, [reload]);
 
     const handleCancelRequest = () => {
         if (controller) {
             controller.abort();
             setError('Request Cancelled');
         }
-    };
-
+    }
     return { dataCompany, loading, error, handleCancelRequest };
 };

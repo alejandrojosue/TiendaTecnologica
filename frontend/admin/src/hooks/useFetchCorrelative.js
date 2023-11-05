@@ -6,6 +6,7 @@ const useFetchCorrelative = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [controller, setController] = useState(null);
+    const [reloadCorrelativeData, setReloadCorrelativeData] = useState(false);
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -21,7 +22,7 @@ const useFetchCorrelative = () => {
             .finally(() => setLoading(false))
 
         return () => abortController.abort()
-    }, []);
+    }, [reloadCorrelativeData]);
 
     const handleCancelRequest = () => {
         if (controller) {
