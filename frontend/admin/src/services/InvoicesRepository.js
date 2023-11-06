@@ -223,7 +223,7 @@ export default class InvoiceRepository {
     }
     async getBySellerId(id) {
         try {
-            const { data } = await fetchDataFromAPI(`/ventas?populate=detalleVentas&filters[vendedor][id][$eq]=${id}&sort=noFactura:DESC&pagination[pageSize]=20`, 'GET',
+            const { data } = await fetchDataFromAPI(`/ventas?populate=detalleVentas&filters[vendedor][id][$eq]=${id}&sort=noFactura:DESC&pagination[pageSize]=200`, 'GET',
                 sessionStorage.getItem('daiswadod'))
             return data.map(invoice => ({
                 id: invoice.id,
@@ -231,8 +231,8 @@ export default class InvoiceRepository {
                 date: new Date(invoice.attributes.createdAt)
                     .toLocaleDateString('es-ES', {
                         day: '2-digit',
+                        year: 'numeric',
                         month: '2-digit',
-                        year: 'numeric'
                     }),
                 paymentMethod: invoice.attributes.metodoPago,
                 tax: invoice.attributes.detalleVentas.reduce((acc, value) => {

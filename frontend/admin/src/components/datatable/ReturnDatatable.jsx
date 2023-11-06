@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import MuiDateRange from '../DateRange/MuiDateRange'
 import { ReturnColumns } from "../../datatablesource"
 import useFetchReturns from '../../hooks/useFetchReturns'
+import IsLoading from "../isLoading/IsLoading"
 
 const Datatable = () => {
     const [data, loading, error, handleDateRangeChange, ...v] = useFetchReturns()
@@ -23,7 +24,7 @@ const Datatable = () => {
             },
         },
     ]
-    if (loading) return <div>Cargando...</div>
+    if (loading) return <IsLoading />
     if (error) return <div>Error al cargar los datos.</div>;
     return (
         <div className="datatable">

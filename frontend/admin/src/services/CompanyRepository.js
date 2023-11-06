@@ -14,7 +14,7 @@ export default class CompanyRepository {
                 CAI: data.attributes.CAI,
                 initialInvoiceRange: data.attributes.RangoInicial,
                 finalInvoiceRange: data.attributes.RangoFinal,
-                invoiceDueDate: data.attributes.fechaVencimiento,
+                invoiceDueDate: `${('' + data.attributes.fechaVencimiento).split('-')[2]}/${('' + data.attributes.fechaVencimiento).split('-')[1]}/${('' + data.attributes.fechaVencimiento).split('-')[0]}`,
             }
         } catch (error) {
             console.error(error);

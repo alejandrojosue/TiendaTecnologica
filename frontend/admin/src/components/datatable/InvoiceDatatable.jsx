@@ -5,6 +5,7 @@ import MuiDateRange from '../DateRange/MuiDateRange'
 import { InvoiceColumns } from "../../datatablesource"
 import { useFetchInvoices } from '../../hooks/useFetchInvoices'
 import jsPDF from 'jspdf';
+import IsLoading from "../isLoading/IsLoading"
 
 const Datatable = () => {
   const { data, loading, error, handleDateRange } = useFetchInvoices()
@@ -70,7 +71,8 @@ const Datatable = () => {
       },
     },
   ]
-  if (loading) return <div>Cargando...</div>
+  if (loading) return <IsLoading />
+  // if (loading) return <div>Cargando...</div>
   if (error) return <div>Error al cargar los datos.</div>;
   return (
     <div className="datatable">

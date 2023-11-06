@@ -7,6 +7,7 @@ import { useFetchSubcategories } from '../../hooks/useFetchSubcategories'
 import { useFetchCategories } from '../../hooks/useFetchCategories'
 import filterSubcategoryByCategory from '../../helpers/subcategories-filter'
 import { useEffect, useState } from 'react'
+import IsLoading from "../isLoading/IsLoading"
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -88,7 +89,7 @@ const Datatable = () => {
     },
   ]
 
-  if (loading) return (<div>Cargando...</div>)
+  if (loading) return <IsLoading />
 
   return (
     <div className="datatable">
