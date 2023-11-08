@@ -5,7 +5,7 @@ import "./Category.scss";
 const Category = () => {
     const { id } = useParams();
     const { data } = useFetch(
-        `/api/products?populate=*&[filters][categories][id]=${id}`
+        `/api/productos?populate=deep&filters[subcategorias][categoria][id]=${id}&pagination[start]=0`
     );
     return (
         <div className="category-main-content">

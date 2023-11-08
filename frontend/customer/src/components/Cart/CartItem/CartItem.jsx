@@ -16,15 +16,10 @@ const CartItem = () => {
                     onClick={() => {}}
                 >
                     <div className="image-container">
-                        <img
-                            src={
-                                process.env.REACT_APP_STRIPE_APP_DEV_URL +
-                                item.attributes.image.data[0].attributes.url
-                            }
-                        />
+                    <img src={!(item.attributes.img.data.attributes.url ) ? process.env.REACT_APP_STRIPE_APP_DEV_URL +  item.attributes.img.data.attributes.formats?.thumbnail.url : process.env.REACT_APP_STRIPE_APP_DEV_URL +  item.attributes.img.data.attributes.url } alt="" />
                     </div>
                     <div className="prod-details">
-                        <span className="name">{item.attributes.title}</span>
+                        <span className="name">{item.attributes.nombre}</span>
                         <MdClose
                             className="close-btn"
                             onClick={() => handleRemoveFromCart(item)}
@@ -50,8 +45,8 @@ const CartItem = () => {
                             <span>{item.attributes.quantity}</span>
                             <span>x</span>
                             <span className="highlight">
-                                <span>&#8377;</span>
-                                {item.attributes.price *
+                                <span>&#76;&#46;</span>
+                                {item.attributes.precio_venta *
                                     item.attributes.quantity}
                             </span>
                         </div>

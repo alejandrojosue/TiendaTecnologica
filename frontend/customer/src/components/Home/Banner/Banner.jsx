@@ -8,15 +8,14 @@ const Banner = () => {
         <div className="hero-banner">
             <div className="content">
                 <div className="text-content">
-                    <h1>SALES</h1>
+                    <h1>NuraPhone 120B</h1>
                     <p>
-                        Convallis interdum purus adipiscing dis parturient
-                        posuere ac a quam a eleifend montes parturient posuere
-                        curae tempor
+                        Auriculares inalámbricos Bluetooth, perfil de sonido personalizado, 
+                        cancelación activa de ruido (ANC)0 y mucho mas.
                     </p>
                     <div className="ctas">
-                        <div className="banner-cta">Read More</div>
-                        <div className="banner-cta v2">Shop Now</div>
+                        <div className="banner-cta">LEER MAS.</div>
+                        <div className="banner-cta v2">COMPRAR AHORA</div>
                     </div>
                 </div>
                 <img className="banner-img" src={BannerImg} />

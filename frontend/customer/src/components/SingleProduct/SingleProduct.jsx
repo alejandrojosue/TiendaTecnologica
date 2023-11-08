@@ -17,7 +17,7 @@ const SingleProduct = () => {
     const [quantity, setQuantity] = useState(1);
     const { id } = useParams();
     const { handleAddToCart } = useContext(Context);
-    const { data } = useFetch(`/api/products?populate=*&[filters][id]=${id}`);
+    const { data } = useFetch(`/api/productos?populate=deep&[filters][id]=${id}`);
 
     const decrement = () => {
         setQuantity((prevState) => {
@@ -37,17 +37,12 @@ const SingleProduct = () => {
             <div className="layout">
                 <div className="single-product-page">
                     <div className="left">
-                        <img
-                            src={
-                                process.env.REACT_APP_STRIPE_APP_DEV_URL +
-                                product.image.data[0].attributes.url
-                            }
-                        />
+                    <img src={!(product.img.data.attributes.url ) ? process.env.REACT_APP_STRIPE_APP_DEV_URL +  product.img.data.attributes.formats?.thumbnail.url : process.env.REACT_APP_STRIPE_APP_DEV_URL +  product.img.data.attributes.url } alt="" />
                     </div>
                     <div className="right">
-                        <span className="name">{product.title}</span>
-                        <span className="price">&#8377;{product.price}</span>
-                        <span className="desc">{product.description}</span>
+                        <span className="name">{product.nombre}</span>
+                        <span className="price">&#76;&#46; {product.precio_venta} + ISV</span>
+                        <span className="desc">{product.descripcion}</span>
 
                         <div className="cart-buttons">
                             <div className="quantity-buttons">
@@ -73,8 +68,7 @@ const SingleProduct = () => {
                                 Category:{" "}
                                 <span>
                                     {
-                                        product.categories.data[0].attributes
-                                            .title
+                                        product.subcategorias.data[0].attributes.categoria.data.attributes.nombre
                                     }
                                 </span>
                             </span>
@@ -93,7 +87,7 @@ const SingleProduct = () => {
                 </div>
                 <RelatedProducts
                     productId={id}
-                    categoryId={product.categories.data[0].id}
+                    categoryId={product.subcategorias.data[0].attributes.categoria.data.id}
                 />
             </div>
         </div>

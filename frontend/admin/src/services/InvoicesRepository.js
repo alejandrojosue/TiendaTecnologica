@@ -150,7 +150,7 @@ export default class InvoiceRepository {
             const { data } = await fetchDataFromAPI(`/ventas?populate=cliente,vendedor,detalleVentas.producto&filters[cliente][RTN]=${rtn}`,
                 'GET', sessionStorage.getItem('daiswadod'))
             if (data)
-                return ({
+            return data.map(data => ({
                     nInvoice: data.attributes.noFactura,
                     status: data.attributes.estado,
                     date: new Date(data.attributes.createdAt)
@@ -184,7 +184,7 @@ export default class InvoiceRepository {
                     discount: data.attributes.detalleVentas.reduce((acc, value) => {
                         return acc + (value.cantidad * value.precio * value.descuento)
                     }, 0).toFixed(2),
-                })
+                })                )
             else return null
         } catch (error) {
             console.error('Error al obtener invoice:', error)
@@ -236,4 +236,4 @@ export default class InvoiceRepository {
             console.error('Error al obtener invoice:', error)
         }
     }
-}
+}	

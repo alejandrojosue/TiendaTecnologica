@@ -10,7 +10,7 @@ export const fetchDataFromApi = async (url) => {
     try {
         const { data } = await axios.get(
             process.env.REACT_APP_STRIPE_APP_DEV_URL + url,
-            params
+            // params
         );
         return data;
     } catch (err) {

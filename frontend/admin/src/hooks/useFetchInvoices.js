@@ -44,5 +44,23 @@ export const useFetchInvoices = () => {
             setEndDate(selectedDateRange[1])
         }
     }
-    return { data, loading, error, handleDateRange, handleCancelRequest }
+    
+    const handleRTNFilter = (rtn) => {
+        if (rtn) {
+          (new InvoicesRepository())
+            .getByRTN(rtn)
+            .then((result) => setData(result))
+            .catch((error) => {
+              if (error.name === 'AbortError') {
+                console.log('Request Cancelled');
+              } else {
+                setError(error);
+              }
+            })
+            .finally(() => setLoading(false));
+        }
+      };
+      
+
+    return { data, loading, error, handleDateRange, handleCancelRequest, handleRTNFilter }
 }

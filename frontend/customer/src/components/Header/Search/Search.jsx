@@ -13,7 +13,7 @@ const Search = ({ setSearchModal }) => {
     };
 
     let { data } = useFetch(
-        `/api/products?populate=*&filters[title][$contains]=${query}`
+        `/api/productos?populate=*&filters[nombre][$contains]=${query}`
     );
 
     if (!query.length) {
@@ -26,7 +26,7 @@ const Search = ({ setSearchModal }) => {
                 <input
                     autoFocus
                     type="text"
-                    placeholder="Search for products"
+                    placeholder="Buscar Producto"
                     value={query}
                     onChange={onChange}
                 />
@@ -38,7 +38,7 @@ const Search = ({ setSearchModal }) => {
             <div className="search-result-content">
                 {!data?.data?.length && (
                     <div className="start-msg">
-                        Start typing to see products you are looking for.
+                        Empieza a escribir para ver los productos que buscas.
                     </div>
                 )}
                 <div className="search-results">
@@ -52,21 +52,14 @@ const Search = ({ setSearchModal }) => {
                             }}
                         >
                             <div className="image-container">
-                                <img
-                                    src={
-                                        process.env
-                                            .REACT_APP_STRIPE_APP_DEV_URL +
-                                        item.attributes.image.data[0].attributes
-                                            .url
-                                    }
-                                />
+                            <img src={!(item.attributes.img.data?.attributes.url ) ? process.env.REACT_APP_STRIPE_APP_DEV_URL +  item.attributes.img.data?.attributes.formats?.thumbnail.url : process.env.REACT_APP_STRIPE_APP_DEV_URL +  item.attributes.img.data?.attributes.url } alt="" />
                             </div>
                             <div className="prod-details">
                                 <span className="name">
-                                    {item.attributes.title}
+                                    {item.attributes.nombre}
                                 </span>
                                 <span className="desc">
-                                    {item.attributes.description}
+                                    {item.attributes.descripcion}
                                 </span>
                             </div>
                         </div>

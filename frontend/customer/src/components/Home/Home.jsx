@@ -15,12 +15,12 @@ const Home = () => {
     }, []);
 
     const getProducts = () => {
-        fetchDataFromApi("/api/products?populate=*").then((res) => {
+        fetchDataFromApi("/api/productos?populate=*").then((res) => {
             setProducts(res);
         });
     };
     const getCategories = () => {
-        fetchDataFromApi("/api/categories?populate=*").then((res) => {
+        fetchDataFromApi("/api/categorias?populate=*").then((res) => {
             setCategories(res);
         });
     };
@@ -32,7 +32,7 @@ const Home = () => {
                 <div className="layout">
                     <Category categories={categories} />
                     <Products
-                        headingText="Popular Products"
+                        headingText="Productos Populares"
                         products={products}
                     />
                 </div>

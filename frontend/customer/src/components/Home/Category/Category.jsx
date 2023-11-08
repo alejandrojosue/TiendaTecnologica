@@ -15,12 +15,12 @@ const Category = ({ categories }) => {
                         <img
                             src={
                                 process.env.REACT_APP_STRIPE_APP_DEV_URL +
-                                item.attributes.img.data.attributes.url
+                                item.attributes.img.data.attributes.formats.thumbnail.url
                             }
                         />
                     </div>
                 ))}
-            </div>
+        </div>
         </div>
     );
 };

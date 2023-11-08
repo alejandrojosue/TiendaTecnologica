@@ -1,0 +1,14 @@
+.view{
+    display: flex;
+    width: 100%;
+
+    .viewContainer{
+        flex: 6;
+
+        .top {
+            font-size: 24px;
+            color: gray;
+            margin: 15px;
+        }
+    }
+}

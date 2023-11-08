@@ -17,13 +17,13 @@ const Cart = () => {
 
     const handlePayment = async () => {
         try {
-            const stripe = await stripePromise;
-            const res = await makePaymentRequest.post("/api/orders", {
+            // const stripe = await stripePromise;
+            const res = await makePaymentRequest.post("/api/ordens", {
                 products: cartItems,
             });
-            await stripe.redirectToCheckout({
-                sessionId: res.data.stripeSession.id,
-            });
+            // await stripe.redirectToCheckout({
+            //     sessionId: res.data.stripeSession.id,
+            // });
         } catch (err) {
             console.log(err);
         }
@@ -37,13 +37,13 @@ const Cart = () => {
             ></div>
             <div className="cart-content">
                 <div className="cart-header">
-                    <span className="heading">Shopping Cart</span>
+                    <span className="heading">Carrito de Compra</span>
                     <span
                         className="close-btn"
                         onClick={() => setShowCart(false)}
                     >
                         <MdClose className="close-btn" />
-                        <span className="text">close</span>
+                        <span className="text">Cerrar</span>
                     </span>
                 </div>
 
@@ -64,7 +64,7 @@ const Cart = () => {
                             <div className="subtotal">
                                 <span className="text">Subtotal:</span>
                                 <span className="text total">
-                                    &#8377;{cartSubTotal}
+                                &#76;&#46;{cartSubTotal}
                                 </span>
                             </div>
                             <div className="button">
@@ -72,7 +72,7 @@ const Cart = () => {
                                     className="checkout-cta"
                                     onClick={handlePayment}
                                 >
-                                    Checkout
+                                    Procesar Compra
                                 </button>
                             </div>
                         </div>

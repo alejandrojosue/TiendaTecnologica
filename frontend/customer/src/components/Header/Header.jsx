@@ -34,12 +34,12 @@ const Header = () => {
             >
                 <div className="header-content">
                     <ul className="left">
-                        <li onClick={() => navigate("/")}>Home</li>
-                        <li onClick={() => navigate("/about")}>About</li>
-                        <li>Categories</li>
+                        <li onClick={() => navigate("/")}>INICIO</li>
+                        <li onClick={() => navigate("/about")}>ACERCA DE</li>
+                        <li>CATEGORIAS</li>
                     </ul>
                     <div className="center" onClick={() => navigate("/")}>
-                        JSDEVSTORE.
+                        REDAX.
                     </div>
                     <div className="right">
                         <TbSearch onClick={() => setSearchModal(true)} />

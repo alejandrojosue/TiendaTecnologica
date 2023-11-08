@@ -7,56 +7,53 @@ const Footer = () => {
         <div className="footer">
             <div className="footer-content">
                 <div className="col">
-                    <div className="title">About</div>
+                    <div className="title">Acerca</div>
                     <div className="text">
-                        Voluptatem accusantium doloremque laudantium, totam rem
-                        aperiam, eaque ipsa quae ab illo inventore veritatis et
-                        quasi architecto beatae vitae dicta sunt explicabo eaque
-                        ipsa quae ab illo.
+                    Navega de manera fácil y segura en nuestra plataforma intuitiva, 
+                    y disfruta de entregas rápidas y atención al cliente excepcional. 
+                    Haz que la tecnología mejore tu vida con nuestras ofertas exclusivas y 
+                    descubre un mundo de posibilidades con nosotros.
                     </div>
                 </div>
                 <div className="col">
-                    <div className="title">Contact</div>
+                    <div className="title">Contáctanos</div>
                     <div className="c-item">
                         <FaLocationArrow />
                         <div className="text">
-                            Kayaloram Rd, Punnamada, Kottankulangara, Alappuzha,
-                            Kerala, 688006
+                            Comayagua, La Paz. Barrio los prados
                         </div>
                     </div>
                     <div className="c-item">
                         <FaMobileAlt />
-                        <div className="text">Phone: 0471 272 0261</div>
+                        <div className="text">Phone: 2771-9012</div>
                     </div>
                     <div className="c-item">
                         <FaEnvelope />
-                        <div className="text">Email: store@jsdev.com</div>
+                        <div className="text">Email: contability@radax.com</div>
                     </div>
                 </div>
                 <div className="col">
-                    <div className="title">Categories</div>
-                    <span className="text">Headphones</span>
-                    <span className="text">Smart Watches</span>
-                    <span className="text">Bluetooth Speakers</span>
-                    <span className="text">Wireless Earbuds</span>
-                    <span className="text">Home Theatre</span>
-                    <span className="text">Projectors</span>
+                    <div className="title">Categorías</div>
+                    <span className="text">Audios</span>
+                    <span className="text">Celulares y Accesorios</span>
+                    <span className="text">Computadoras y Tablets</span>
+                    <span className="text">Gaming</span>
+                    <span className="text">Televisores y Entretenimiento</span>
                 </div>
                 <div className="col">
-                    <div className="title">Pages</div>
-                    <span className="text">Home</span>
-                    <span className="text">About</span>
-                    <span className="text">Privacy Policy</span>
-                    <span className="text">Returns</span>
-                    <span className="text">Terms & Conditions</span>
-                    <span className="text">Contact Us</span>
+                    <div className="title">Pagina</div>
+                    <span className="text">Inicio</span>
+                    <span className="text">Acerca de.</span>
+                    <span className="text">Política y Privacidad</span>
+                    <span className="text">Retornos</span>
+                    <span className="text">Artículos & Condiciones</span>
+                    <span className="text">Contáctenos</span>
                 </div>
             </div>
             <div className="bottom-bar">
                 <div className="bottom-bar-content">
                     <span className="text">
-                        JSDEVSTORE 2022 CREATED BY JS DEV. PREMIUM E-COMMERCE
-                        SOLUTIONS.
+                        REDAX 2023 CREADO POR TEAM UJCV. GRUPO#1 SOFTWARE SOLUTIONS
                     </span>
                     <img src={Payment} />
                 </div>
