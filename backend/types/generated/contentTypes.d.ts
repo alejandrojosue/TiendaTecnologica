@@ -1175,30 +1175,31 @@ export interface ApiMarcaMarca extends Schema.CollectionType {
   };
 }
 
-export interface ApiOrdenOrden extends Schema.CollectionType {
-  collectionName: 'ordens';
+export interface ApiOrderOrder extends Schema.CollectionType {
+  collectionName: 'orders';
   info: {
-    singularName: 'orden';
-    pluralName: 'ordens';
-    displayName: 'orden';
+    singularName: 'order';
+    pluralName: 'orders';
+    displayName: 'order';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    stripeld: Attribute.Text;
-    productos: Attribute.JSON;
+    stripeld: Attribute.Text & Attribute.Required;
+    product: Attribute.JSON & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::orden.orden',
+      'api::order.order',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::orden.orden',
+      'api::order.order',
       'oneToOne',
       'admin::user'
     > &
@@ -1593,7 +1594,7 @@ declare module '@strapi/types' {
       'api::interaccion.interaccion': ApiInteraccionInteraccion;
       'api::log.log': ApiLogLog;
       'api::marca.marca': ApiMarcaMarca;
-      'api::orden.orden': ApiOrdenOrden;
+      'api::order.order': ApiOrderOrder;
       'api::producto.producto': ApiProductoProducto;
       'api::promocion.promocion': ApiPromocionPromocion;
       'api::proveedor.proveedor': ApiProveedorProveedor;
