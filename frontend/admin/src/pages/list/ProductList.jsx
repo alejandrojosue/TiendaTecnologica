@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar"
 import Navbar from "../../components/navbar/Navbar"
 import Datatable from "../../components/datatable/ProductDatatable"
 
-const ProductList = () => {
+const List = () => {
   return (
     <div className="list">
       <Sidebar />
@@ -15,4 +15,4 @@ const ProductList = () => {
   )
 }
 
-export default ProductList
+export default List

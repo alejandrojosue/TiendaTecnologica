@@ -20,6 +20,7 @@ import InvoiceView from "./pages/single/InvoiceView";
 import View from "./pages/view/viewproducts";
 import ReturnView from "./pages/single/ReturnView";
 import NewReturn from "./pages/new/NewReturn";
+import List from "./pages/list/List";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -28,6 +29,7 @@ function App() {
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
+          <Route path="/test" element={<List />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<ProtectedRouted />}>
             <Route path="single" element={<Single />} />
