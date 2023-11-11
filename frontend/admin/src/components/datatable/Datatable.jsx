@@ -12,6 +12,8 @@ const Datatable = ({
   error,
   handleDateRangeChange,
   redirectTo,
+  handleRTN,
+  redirectToNew
 }) => {
   if (loading) return <IsLoading />;
   if (error) return <div>Error al cargar los datos.</div>;
@@ -28,8 +30,10 @@ const Datatable = ({
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to={`/${redirectTo}/view?id=${params.row.id}`} style={{ textDecoration: "none" }}>
-              <div className="viewButton" style={{ padding: "5px" }}>Ver</div>
+            <Link to={`/${redirectToNew ? 'returns/new' : `${redirectTo}/view`}?id=${params.row.id}`} style={{ textDecoration: "none" }}>
+              <div className="viewButton" style={{ padding: "5px" }}>
+                {!handleRTN ? 'Ver' : 'Crear'}
+              </div>
             </Link>
           </div>
         )
@@ -41,18 +45,33 @@ const Datatable = ({
     <div className="datatable">
       <div className="datatableTitle">
         {title}
-        <Link to={`/${redirectTo}${title === 'Listado de Devoluciones' ? '/select' : '/new'}`} className="link">
-          Crear Nueva
-        </Link>
+        {!handleRTN &&
+          <>
+            <Link to={`/${redirectTo}/${redirectTo === 'returns' ? 'select' : 'new'}`} className="link">
+              Crear Nueva
+            </Link>
+          </>
+        }
       </div>
       <div className="filters">
         {handleDateRangeChange && <MuiDateRange onDateRangeChange={handleDateRangeChange} />}
-        <button className="btnRefresh" onClick={handleDateRangeChange}>
-          Actualizar
-        </button>
-        <button className="btnReport" onClick={generateReport}>
-          Generar Reporte
-        </button>
+        {!handleRTN ?
+          <>
+            <button className="btnRefresh" onClick={() => { handleDateRangeChange(null, null) }}>
+              Actualizar
+            </button>
+            <button className="btnReport" onClick={generateReport}>
+              Generar Reporte
+            </button>
+          </> :
+          <>
+            <input type="number"
+              className="textField"
+              placeholder="RTN Cliente"
+              onChange={e => { handleRTN(e.target.value) }} />
+          </>
+        }
+
       </div>
       <DataGrid
         className="datagrid"

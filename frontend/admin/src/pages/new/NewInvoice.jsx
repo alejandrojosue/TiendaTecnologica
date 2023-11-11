@@ -12,9 +12,6 @@ import LoadingModal from "../../components/modal/LoadingModal";
 import { beforeCreateInvoice, performInvoiceValidations } from '../../helpers/invoice-validation'
 import print from "../../helpers/print-invoice";
 
-
-
-
 const New = () => {
     const { data } = useFetchProducts()
     const [rtnCustomer, setRtnCustomer] = useState('')
@@ -31,7 +28,6 @@ const New = () => {
     const [taxSummary, setTaxSummary] = useState(0)
     const [discountSummary, setDiscountSummary] = useState(0)
     const [isLoading, setIsLoading] = useState(false);
-
 
     performInvoiceValidations(dataCompany, dataCorrelative)
     const handleRTN = (value) => setRtnCustomer(value)

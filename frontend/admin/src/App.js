@@ -1,5 +1,4 @@
 import InvoiceList from "./pages/list/InvoiceList";
-import SubcategoryList from "./pages/list/SubcategoryList";
 import ProductList from "./pages/list/ProductList";
 import ReturnList from "./pages/list/ReturnList";
 import RIList from "./pages/list/RIList";
@@ -10,8 +9,8 @@ import Unauthorized from "./pages/unauthorized/Unauthorized";
 import New from "./pages/new/New";
 import NewInvoice from "./pages/new/NewInvoice";
 import ProtectedRouted from "./auth/ProtectedRouted";
-import { BrowserRouter, Routes, Route, RouterProvider } from "react-router-dom";
-import { productInputs, userInputs } from "./formSource";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { productInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
@@ -34,7 +33,6 @@ function App() {
           <Route path="/" element={<ProtectedRouted />}>
             <Route path="single" element={<Single />} />
             <Route path="dashboard" element={<Home />} />
-            <Route path="subcategories" element={<SubcategoryList />} />
             <Route path="invoices">
               <Route index element={<InvoiceList />} />
               <Route path=":invoiceId" element={<Single />} />

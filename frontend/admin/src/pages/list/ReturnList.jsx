@@ -2,11 +2,13 @@ import "./list.scss"
 import Sidebar from "../../components/sidebar/Sidebar"
 import Navbar from "../../components/navbar/Navbar"
 import Datatable from "../../components/datatable/Datatable"
-import useFetchReturns from '../../hooks/useFetchReturns';
+import useReturn from '../../hooks/useReturn';
 import { ReturnColumns } from '../../datatablesource';
+import { useEffect } from "react";
 
 const List = () => {
-  const [data, loading, error, handleDateRange, handleCancelRequest] = useFetchReturns();
+  const { data, loading, error, handleGetAll, handleDateRange } = useReturn()
+  useEffect(() => handleGetAll(), [])
   return (
     <div className="list">
       <Sidebar />

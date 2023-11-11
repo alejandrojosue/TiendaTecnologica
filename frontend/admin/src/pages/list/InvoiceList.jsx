@@ -4,10 +4,12 @@ import "./list.scss"
 import Sidebar from "../../components/sidebar/Sidebar"
 import Navbar from "../../components/navbar/Navbar"
 import Datatable from "../../components/datatable/Datatable"
-import { useFetchInvoices } from '../../hooks/useFetchInvoices';
-import { InvoiceColumns } from '../../datatablesource';
+import { InvoiceColumns } from '../../datatablesource'
+import useInvoice from '../../hooks/useInvoice'
+import { useEffect } from "react"
 const List = () => {
-  const { data, loading, error, handleDateRange } = useFetchInvoices();
+  const { data, loading, error, handleDateRange, handleGetAll } = useInvoice()
+  useEffect(() => handleGetAll(), [])
   return (
     <div className="list">
       <Sidebar />

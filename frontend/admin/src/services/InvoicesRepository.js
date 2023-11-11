@@ -154,7 +154,7 @@ export default class InvoiceRepository {
 
     async getByRTN(rtn) {
         try {
-            const { data } = await fetchDataFromAPI(`/ventas?populate=cliente,detalleVentas.producto&filters[$and][0][cliente][RTN][$eq]=${rtn}&sort=noFactura:DESC&pagination[pageSize]=50`,
+            const { data } = await fetchDataFromAPI(`/ventas?populate=cliente,detalleVentas.producto&filters[$and][0][cliente][RTN][$eq]=${rtn}&sort=noFactura:DESC&pagination[pageSize]=50&filters[estado][$ne]=Anulada`,
                 'GET', sessionStorage.getItem('daiswadod'))
             return data.map(invoice => ({
                 id: invoice.id,
