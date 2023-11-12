@@ -23,6 +23,7 @@ const List = () => {
           error={error}
           handleDateRangeChange={handleDateRange}
           redirectTo={'invoices'}
+          handleGetAll={handleGetAll}
         />
       </div>
     </div>

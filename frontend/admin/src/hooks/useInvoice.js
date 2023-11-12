@@ -68,7 +68,7 @@ const useInvoice = () => {
 
     const handleCreate = async (data) => {
         try {
-            await invoiceRepository.create(data, sessionStorage.getItem('daiswadod'))
+            await invoiceRepository.create(data)
         } catch (error) {
             setError(error)
         }

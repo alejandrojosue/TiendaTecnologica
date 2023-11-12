@@ -10,16 +10,26 @@ const Datatable = ({
   data,
   loading,
   error,
+  handleGetAll,
   handleDateRangeChange,
   redirectTo,
   handleRTN,
-  redirectToNew
+  redirectToNew,
+  dataCategory,
+  dataSubcategory,
+  filteredSubcategories,
+  setFilteredSubcategories,
+  handleSubcategoryByCategory,
+  handleSubcategory
 }) => {
   if (loading) return <IsLoading />;
   if (error) return <div>Error al cargar los datos.</div>;
 
   const generateReport = () => {
-    generatePDFReport(title, columns, data); // Genera el informe PDF
+    const dataTransformed = title === 'Listado de Productos'
+      ? data.map(row => ({ ...row, status: row.status ? 'Activo' : 'Inactivo' }))
+      : data
+    generatePDFReport(title, columns, dataTransformed) // Genera el informe PDF
   };
 
   const actionColumn = [
@@ -45,7 +55,7 @@ const Datatable = ({
     <div className="datatable">
       <div className="datatableTitle">
         {title}
-        {!handleRTN &&
+        {(!handleRTN && !handleSubcategory) &&
           <>
             <Link to={`/${redirectTo}/${redirectTo === 'returns' ? 'select' : 'new'}`} className="link">
               Crear Nueva
@@ -55,9 +65,38 @@ const Datatable = ({
       </div>
       <div className="filters">
         {handleDateRangeChange && <MuiDateRange onDateRangeChange={handleDateRangeChange} />}
+        {dataCategory &&
+          <>
+            <select name="categoria" className='selectCategory' id="categoria" onChange={(e) => {
+              setFilteredSubcategories(handleSubcategoryByCategory(e.target.value, dataSubcategory))
+            }}>
+              <option value="none">Seleccione una Categoria</option>
+              {
+                dataCategory.map(data => (
+                  <option key={data.id} value={data.name}>
+                    {data.name}
+                  </option>
+                ))
+              }
+            </select>
+            <select name="subcategoria" className='selectSubcategory' id="subcategoria" onChange={e => {
+              if (e.target.value !== 'none')
+                handleSubcategory(parseInt(e.target.value))
+            }}>
+              <option value="none">Seleccione una Subcategoría</option>
+              {
+                filteredSubcategories.map(data => (
+                  <option key={data.id} value={data.id}>
+                    {data.name}
+                  </option>
+                ))
+              }
+            </select>
+          </>
+        }
         {!handleRTN ?
           <>
-            <button className="btnRefresh" onClick={() => { handleDateRangeChange(null, null) }}>
+            <button className="btnRefresh" onClick={handleGetAll}>
               Actualizar
             </button>
             <button className="btnReport" onClick={generateReport}>
@@ -71,7 +110,6 @@ const Datatable = ({
               onChange={e => { handleRTN(e.target.value) }} />
           </>
         }
-
       </div>
       <DataGrid
         className="datagrid"
@@ -82,7 +120,7 @@ const Datatable = ({
         checkboxSelection
       />
     </div>
-  );
-};
+  )
+}
 
 export default Datatable;

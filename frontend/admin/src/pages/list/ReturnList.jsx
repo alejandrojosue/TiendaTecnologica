@@ -22,6 +22,7 @@ const List = () => {
           error={error}
           handleDateRangeChange={handleDateRange}
           redirectTo={'returns'}
+          handleGetAll={handleGetAll}
         />
       </div>
     </div>

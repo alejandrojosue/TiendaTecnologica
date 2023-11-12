@@ -101,9 +101,10 @@ export default class InvoiceRepository {
         }
     }
 
-    async create(data, token) {
+    async create(data) {
         try {
-            const response = await fetchDataFromAPI('/ventas', 'POST', token, data)
+            const response = await fetchDataFromAPI('/ventas',
+                'POST', sessionStorage.getItem('daiswadod'), data)
 
             if (!response) {
                 // La respuesta no contiene información del nuevo invoiceo.

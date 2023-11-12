@@ -1,5 +1,10 @@
 import { fetchDataFromAPI } from './api/context'; // Asegúrate de importar tu función correctamente
 export default class SubcategoriesRepository {
+    constructor() {
+        if (!SubcategoriesRepository.instance)
+            SubcategoriesRepository.instance = this
+        return SubcategoriesRepository.instance
+    }
     async getAll() {
         try {
             const { data } = await fetchDataFromAPI('/subcategorias?populate=deep')

@@ -1,5 +1,10 @@
 import { fetchDataFromAPI } from './api/context'; // Asegúrate de importar tu función correctamente
 export default class ProductsRepository {
+    constructor() {
+        if (!ProductsRepository.instance)
+            ProductsRepository.instance = this
+        return ProductsRepository.instance
+    }
     async getAll() {
         try {
             const { data } = await fetchDataFromAPI('/productos?populate=deep')
