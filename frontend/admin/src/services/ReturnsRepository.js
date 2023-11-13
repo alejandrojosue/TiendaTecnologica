@@ -107,4 +107,35 @@ export default class ReturnsRepository {
 
         }
     }
+
+    async report() {
+        try {
+            const { data } = await fetchDataFromAPI('/devolucions?populate=vendedor,noFactura.cliente,detalleDevoluciones.producto&pagination[limit]=1000', 'GET',
+                sessionStorage.getItem('daiswadod'))
+            return data.flatMap(valueReturn => (
+                valueReturn.attributes.detalleDevoluciones)
+                .map(value => {
+                    return {
+                        id: valueReturn.id,
+                        "No. Factura": valueReturn.attributes.noFactura.data?.attributes.noFactura,
+                        'Estado': valueReturn.attributes.estado,
+                        'Fecha': new Date(valueReturn.attributes.createdAt)
+                            .toLocaleDateString('es-ES', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric'
+                            }),
+                        'Vendedor': `${valueReturn.attributes.vendedor.data.attributes.nombre} ${valueReturn.attributes.vendedor.data.attributes.apellido}`,
+                        'Nombre Cliente': valueReturn.attributes.noFactura.data?.attributes.cliente.data.attributes.nombre + " " +
+                            valueReturn.attributes.noFactura.data?.attributes.cliente.data.attributes.apellido,
+                        'Cantidad': value.cantidad,
+                        'Código Producto': "P" + value.producto.data.attributes.codigo,
+                        "Nombre Producto": value.producto.data.attributes.nombre,
+                    }
+                }
+                ))
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }

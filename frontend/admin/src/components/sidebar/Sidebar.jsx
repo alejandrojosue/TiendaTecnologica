@@ -1,16 +1,9 @@
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import BrandingIcon from "@mui/icons-material/Sell";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import StoreIcon from "@mui/icons-material/Store";
-import BrandingOutlineIcon from "@mui/icons-material/SellOutlined";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
-import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
@@ -56,6 +49,13 @@ const Sidebar = () => {
             <li>
               <AssignmentReturnIcon className="icon" />
               <span>Devoluciones</span>
+            </li>
+          </Link>
+          <p className="title">REPORTES</p>
+          <Link to="/report" style={{ textDecoration: "none" }}>
+            <li>
+              <InsertChartIcon className="icon" />
+              <span onClick={() => { SessionValidate() }}>Reportes</span>
             </li>
           </Link>
           <p className="title">USUARIO</p>

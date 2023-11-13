@@ -14,10 +14,23 @@ const productColumns = [
     field: "quantity",
     headerName: "Existencia",
     with: 70,
+    renderCell: (params) => {
+      return (
+        <div style={{
+          color: parseInt(params.row.quantity) < 10 ? 'red' : 'black',
+          fontWeight: parseInt(params.row.quantity) < 10 ? 'bold' : 'normal',
+          backgroundColor: parseInt(params.row.quantity) < 10 ? '#F5B7B1' : 'transparent',
+          padding: parseInt(params.row.quantity) < 10 ? '5px' : '0',
+          borderRadius: parseInt(params.row.quantity) < 10 ? '5px' : '0',
+        }}>
+          {params.row.quantity}
+        </div>
+      );
+    }
   },
   {
     field: "status",
-    headerName: "Activo",
+    headerName: "Estado",
     width: 75,
     renderCell: (params) => {
       return (

@@ -35,10 +35,20 @@ const useProduct = () => {
         }
     }
 
+    const handleProductId = async (id) => {
+        try {
+            setLoading(true)
+            setData(await productsRepository.getById(id))
+            setLoading(false)
+        } catch (error) {
+            setError(error)
+        }
+    }
+
     return {
         data, loading, error,
         handleGetAll, handleSubcategory,
-        handleProductSku
+        handleProductSku, handleProductId
     }
 }
 

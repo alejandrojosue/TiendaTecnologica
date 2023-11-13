@@ -251,4 +251,34 @@ export default class InvoiceRepository {
             console.error(error)
         }
     }
+
+    async report(max = 1000) {
+        try {
+            const { data } = await fetchDataFromAPI(`/ventas?populate=vendedor,cliente,detalleVentas.producto&pagination[limit]=${max}`, 'GET',
+                sessionStorage.getItem('daiswadod'))
+            return data.map(invoice => ({
+                id: invoice.id,
+                'No. Factura': invoice.attributes.noFactura,
+                "Fecha": new Date(invoice.attributes.createdAt)
+                    .toLocaleDateString('es-ES', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    }),
+                "Método de Pago": invoice.attributes.metodoPago,
+                'RTN Cliente': `R${invoice.attributes.cliente.data.attributes.RTN}`,
+                'Nombre Cliente': invoice.attributes.cliente.data.attributes.nombre,
+                'Apellido Cliente': invoice.attributes.cliente.data.attributes.apellido,
+                'ID de Vendedor': invoice.attributes.vendedor.data.id,
+                'Nombre Vendedor': invoice.attributes.vendedor.data.attributes.nombre,
+                'Apellido Vendedor': invoice.attributes.vendedor.data.attributes.apellido,
+                'Total': (invoice.attributes.detalleVentas.reduce((acc, value) => {
+                    return acc + (value.cantidad * (value.precio * (1 + value.isv) - value.precio * value.descuento))
+                }, 0).toFixed(2)).replace('.', ','),
+                'Estado': invoice.attributes.estado
+            }))
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }
