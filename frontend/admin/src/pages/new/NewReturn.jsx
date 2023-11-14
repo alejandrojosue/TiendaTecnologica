@@ -1,6 +1,6 @@
+import './newReturn.scss'
 import "../single/invoiceView.scss";
 import "../../components/datatable/datatable.scss";
-import './newReturn.scss'
 import Navbar from "../../components/navbar/Navbar"
 import Sidebar from "../../components/sidebar/Sidebar"
 import Table from "@mui/material/Table";
@@ -16,17 +16,21 @@ import useInvoiceById from "../../hooks/useInvoiceById";
 import getIdUrl from "../../helpers/get-id-url";
 import { useState } from "react";
 import useCreateReturn from "../../hooks/useCreateReturn";
+import ReturnDetail from "../../models/ReturnDetail";
+import Product from "../../models/Product";
+import Return from "../../models/Return";
+import User from "../../models/User";
 
 const NewReturn = () => {
-    const id = getIdUrl()
-    const { invoice } = useInvoiceById(id)
+    const idInvoice = getIdUrl()
+    const { invoice } = useInvoiceById(idInvoice)
     const [invoiceItems, setInvoiceItems] = useState([])
     const rows = invoice ? [...invoice.details] : []
     const createReturnHook = useCreateReturn()
 
-    const handleAddItem = ({ id, productName, quantity, unitPrice }, index) => {
+    const handleAddItem = ({ id, productID, productName, quantity, unitPrice }, index) => {
         const newItem = {
-            id, productName, quantity, quantityVal: quantity, unitPrice, reason: '', index
+            id, productID, productName, quantity, quantityVal: quantity, unitPrice, reason: '', index
         };
         if (!invoiceItems.find(value => value.index === index))
             setInvoiceItems([...invoiceItems, newItem]);
@@ -38,9 +42,6 @@ const NewReturn = () => {
     const handleQuantityChange = (index, value) => {
         if (value) {
             invoiceItems[index].quantity = parseInt(value)
-            // invoiceItems[index].total = calculateSubtotal(invoiceItems[index])
-        } else {
-            // invoiceItems[index].total = 0
         }
         setInvoiceItems([...invoiceItems])
         console.log(invoiceItems)
@@ -56,28 +57,17 @@ const NewReturn = () => {
             alert('Debe ingresar todos los motivos de devolución!')
             return
         }
-        const detalleDevoluciones = invoiceItems.map(value => {
-            return {
-                producto: {
-                    id: value.id
-                },
-                cantidad: value.quantity,
-                motivo: value.reason
-            }
-        })
+        const detalleDevoluciones =
+            invoiceItems.map(({ productID, quantity, reason }) =>
+                (new ReturnDetail(new Product(parseInt(productID)), parseFloat(quantity), reason)))
 
         const data = {
-            data: {
-                estado: 'Entregada',
-                vendedor: {
-                    id: parseInt(sessionStorage.getItem('userID'))
-                },
-                noFactura: {
-                    id: parseInt(id)
-                },
-                detalleDevoluciones
-            }
+            data: new Return(
+                'Entregada',
+                new User(parseInt(sessionStorage.getItem('userID'))),
+                { id: parseInt(idInvoice) }, detalleDevoluciones)
         }
+
         if (!(data.data.detalleDevoluciones.length) || !(data.data.noFactura.id) || !(data.data.vendedor.id)) {
             alert('No se puede crear la devolución sin todos los datos requeridos!')
             return

@@ -10,7 +10,11 @@ import { useUpdateProduct } from '../../hooks/useUpdateProduct'
 import useCreateInvoice from "../../hooks/useCreateInvoice";
 import LoadingModal from "../../components/modal/LoadingModal";
 import { beforeCreateInvoice, performInvoiceValidations } from '../../helpers/invoice-validation'
-import print from "../../helpers/print-invoice";
+import print from "../../helpers/print-invoice"
+import InvoiceDeatil from "../../models/InvoiceDeatil";
+import Product from "../../models/Product";
+import Invoice from "../../models/Invoice";
+import User from "../../models/User";
 
 const New = () => {
     const { data } = useFetchProducts()
@@ -106,7 +110,7 @@ const New = () => {
     const handleSaveAction = async (actionType) => {
         setIsLoading(true); // Muestra el modal de carga
         if (actionType === "fullPayment") {
-            const seller = sessionStorage.getItem('userID')
+            const sellerID = sessionStorage.getItem('userID')
             if (!dataUser) {
                 alert('No ha ingresado los datos de Cliente!')
                 setIsLoading(false)
@@ -125,35 +129,29 @@ const New = () => {
                 return
             }
             if (!beforeCreateInvoice(
-                seller, dataCompany, dataUser, invoiceItems
+                sellerID, dataCompany, dataUser, invoiceItems
             )) {
                 setIsLoading(false)
                 return
             }
 
-            const detalleVentas = invoiceItems.map(item => ({
-                cantidad: item.quantity,
-                precio: item.price,
-                isv: item.tax,
-                descuento: item.discount,
-                producto: {
-                    id: parseInt(item.id)
-                },
-            }));
+            const detalleVentas = invoiceItems.map(
+                ({ quantity, price, tax, discount, id }) =>
+                (new InvoiceDeatil(
+                    quantity, price, tax, discount,
+                    new Product(parseInt(id))
+                ))
+            )
 
             const dataNewInvoice = {
-                data: {
-                    noFactura: parseInt(dataCorrelative.nInvoice) + 1,
-                    medotoPago: "Efectivo",
-                    estado: "Pagada",
-                    vendedor: {
-                        id: parseInt(seller)
-                    },
-                    cliente: {
-                        id: parseInt(dataUser.id)
-                    },
+                data: new Invoice(
+                    parseInt(dataCorrelative.nInvoice) + 1,
+                    'Efectivo',
+                    'Pagada',
+                    new User(parseInt(sellerID)),
+                    new User(parseInt(dataUser.id)),
                     detalleVentas
-                }
+                )
             }
             printInvoice()
             await correlativeUpdater.updateCorrelative(dataNewInvoice.data.noFactura)

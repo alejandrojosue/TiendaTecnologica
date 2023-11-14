@@ -48,6 +48,7 @@ export default class InvoiceRepository {
                     details: data.attributes.detalleVentas
                         .map(detail => {
                             return {
+                                productID: detail.producto.data.id,
                                 productName: detail.producto.data.attributes.nombre,
                                 sku: detail.producto.data.attributes.codigo,
                                 quantity: detail.cantidad,
