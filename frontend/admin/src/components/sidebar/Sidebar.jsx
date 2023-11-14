@@ -52,7 +52,7 @@ const Sidebar = () => {
             </li>
           </Link>
           <p className="title">REPORTES</p>
-          <Link to="/report" style={{ textDecoration: "none" }}>
+          <Link to="/reports" style={{ textDecoration: "none" }}>
             <li>
               <InsertChartIcon className="icon" />
               <span onClick={() => { SessionValidate() }}>Reportes</span>

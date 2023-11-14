@@ -19,6 +19,7 @@ import "./style/dark.scss"
 import { useContext } from "react"
 import { DarkModeContext } from "./context/darkModeContext"
 import { useEffect } from "react"
+import CustomReport from "./pages/report/custom/CustomReport"
 function App() {
   const { darkMode } = useContext(DarkModeContext)
   // Rutas en las que se debe evitar la recarga o salida
@@ -68,9 +69,9 @@ function App() {
               <Route path="select" element={<RIList />} />
               <Route path="new" element={<NewReturn />} />
             </Route>
-            <Route path="report">
+            <Route path="reports">
               <Route index element={<Report />} />
-              <Route path="view" element={<ReturnView />} />
+              <Route path="custom" element={<CustomReport />} />
               <Route path="select" element={<RIList />} />
             </Route>
             <Route path="unauthorized" element={<Unauthorized />} />

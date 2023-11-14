@@ -40,6 +40,11 @@ const Report = () => {
                             <li>
                                 Generar Reporte por Cliente
                             </li>
+                            <li>
+                                <a href="/reports/custom?title=sales">
+                                    Generar Reporte Personalizado
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div>
@@ -55,7 +60,9 @@ const Report = () => {
                                 Generar Reporte de Todas las Devoluciones
                             </li>
                             <li>
-                                Generar Reporte Personalizado
+                                <a href="/reports/custom?title=returns">
+                                    Generar Reporte Personalizado
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -70,6 +77,11 @@ const Report = () => {
                                 reportProducts()
                             }}>
                                 Generar Reporte de Todos los Productos
+                            </li>
+                            <li>
+                                <a href="/reports/custom?title=products">
+                                    Generar Reporte Personalizado
+                                </a>
                             </li>
                         </ul>
                     </div>
