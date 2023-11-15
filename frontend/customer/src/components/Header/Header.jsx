@@ -7,11 +7,15 @@ import "./Header.scss";
 import Search from "./Search/Search";
 import { Context } from "../../utils/context";
 import Cart from "../Cart/Cart";
+import { useUser } from "../../services/UserContext";
 
 const Header = () => {
     const [scrolled, setScrolled] = useState(false);
     const [searchModal, setSearchModal] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
+    const { userName, setUserName } = useUser();
+
     const handleScroll = () => {
         const offset = window.scrollY;
         if (offset > 200) {
@@ -23,9 +27,37 @@ const Header = () => {
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
     }, []);
 
     const { cartCount, showCart, setShowCart } = useContext(Context);
+
+    const handleMenuClick = () => {
+        // Alternar el estado de visibilidad del menú
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const handleLogout = () => {
+        // Aquí puedes realizar las acciones necesarias para cerrar la sesión
+        // Por ejemplo, limpiar el estado y redirigir a la página de inicio de sesión
+        setTimeout(() => {
+            setUserName('');
+            navigate("/");
+            window.location.reload();
+        }, 100); // 100 milisegundos de espera
+    };
+
+    const handleLoginClick = () => {
+        if (userName) {
+            // Si hay un usuario autenticado, abre el menú
+            handleMenuClick();
+        } else {
+            // Si no hay un usuario autenticado, redirige a la página de inicio de sesión
+            navigate("/login");
+        }
+    };
 
     return (
         <>
@@ -51,6 +83,14 @@ const Header = () => {
                             <CgShoppingCart />
                             {!!cartCount && <span>{cartCount}</span>}
                         </span>
+                        <div style={{ cursor: "pointer" }} onClick={handleLoginClick}>
+                            {userName ? `Hola, ${userName}` : 'Iniciar Sesión'}
+                        </div>
+                        {isMenuOpen && userName && (
+                        <div className="boton">
+                        <button className="button" onClick={handleLogout}>Cerrar Sesión</button>
+                        </div>
+                        )}
                     </div>
                 </div>
             </header>

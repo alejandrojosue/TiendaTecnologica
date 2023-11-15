@@ -8,6 +8,8 @@ import Category from "./components/Category/Category";
 import SingleProduct from "./components/SingleProduct/SingleProduct";
 import Newsletter from "./components/Footer/Newsletter/Newsletter";
 import AppContext from "./utils/context";
+import Login from "./components/Login/Login";
+import Purchase from "./components/Cart/Purchase/Purchase";
 
 function App() {
     return (
@@ -18,6 +20,8 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/category/:id" element={<Category />} />
                     <Route path="/product/:id" element={<SingleProduct />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/purchase" element={<Purchase />} />
                 </Routes>
                 <Newsletter />
                 <Footer />

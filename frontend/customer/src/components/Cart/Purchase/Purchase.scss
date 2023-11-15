@@ -1,0 +1,115 @@
+.body1 {
+    position: relative;
+    text-align: center;
+    background: white;
+    color: black;
+    margin: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial;
+  
+    .container {
+      display: flex;
+      justify-content: right;
+      width: 70%;
+      margin: 3%;
+      border: 1px solid white;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+    }
+  
+    .left {
+      text-align: left;
+      margin-right: 200px;
+      white-space: nowrap;
+      font-size: 25px;
+    }
+  
+    .right {
+      width: 50%;
+      box-sizing: border-box;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .lab{
+        display: flex;
+        font-family: Arial;
+        padding: 3px;
+        margin-bottom: 10px;
+
+    }
+    .input1{
+        border: none;
+        outline: none;
+        background: none;
+        width: 290px;
+        font-size: 17px;
+        color: black;
+        border-bottom: 2px solid black;
+        margin-bottom: 10px;
+    }
+
+    ::-webkit-input-placeholder {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .slect{
+        border: none;
+        outline: none;
+        background: none;
+        width: 290px;
+        font-size: 17px;
+        color: black;
+        border-bottom: 2px solid black;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+    .buton{
+        border: none;
+        outline: none;
+        width: 290px;
+        margin-top: 25px;
+        padding: 10px 0;
+        font-size: 20px;
+        border-radius: 40px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        background: linear-gradient(45deg, #0ef, #c800ff);
+    }
+  }
+
+  .price{
+    padding: 10px;
+    font-size: 30px;
+    margin-top: 10px;
+  }
+
+  .confirmation-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+  
+  .modal-buttons button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  

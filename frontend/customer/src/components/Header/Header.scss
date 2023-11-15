@@ -82,6 +82,12 @@
                 border-radius: 10px;
             }
         }
+        .boton{
+            background: #212121;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+        }
     }
     &.sticky-header {
         background-color: #212121;
@@ -100,4 +106,14 @@
     100% {
         transform: translateY(0);
     }
+}
+
+.button{
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    outline: inherit;
+    padding: 0;
+    margin: 0;
 }
