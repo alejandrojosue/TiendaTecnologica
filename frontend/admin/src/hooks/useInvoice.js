@@ -56,7 +56,9 @@ const useInvoice = () => {
 
     const _handleSellerId = async (idSeller) => {
         try {
+            setLoading(true)
             setData(await invoiceRepository.getBySellerId(idSeller))
+            setLoading(false)
         } catch (error) {
             setError(error)
         }

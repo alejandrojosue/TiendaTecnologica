@@ -3,10 +3,12 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import Chart from "../../components/chart/Chart";
 import List from "../../components/table/Table";
-import { useInvoiceBySeller } from "../../hooks/useInvoiceBySeller";
 import IsLoading from '../../components/isLoading/IsLoading'
+import useInvoice from "../../hooks/useInvoice";
+import { useEffect } from "react";
 const Single = () => {
-  const { data, loading, error } = useInvoiceBySeller(sessionStorage.getItem('userID'))
+  const { data, loading, error, handleSellerId } = useInvoice()
+  useEffect(() => handleSellerId(sessionStorage.getItem('userID')), [])
   const months =
     [, 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
       'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
@@ -21,7 +23,6 @@ const Single = () => {
       .filter(value => value.status === 'Pagada')
       .forEach(invoice => {
         const month = parseInt(('' + invoice.date).split('/')[1])
-        console.log(month, currentMonth)
         if (month === currentMonth)
           currentMonthArr.push(parseFloat(invoice.total))
         else if (month === lastMonth)

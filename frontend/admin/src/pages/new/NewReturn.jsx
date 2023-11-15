@@ -12,21 +12,24 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import useInvoiceById from "../../hooks/useInvoiceById";
+// import useInvoiceById from "../../hooks/useInvoiceById";
 import getIdUrl from "../../helpers/get-id-url";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useCreateReturn from "../../hooks/useCreateReturn";
 import ReturnDetail from "../../models/ReturnDetail";
 import Product from "../../models/Product";
 import Return from "../../models/Return";
 import User from "../../models/User";
+import useInvoice from '../../hooks/useInvoice';
 
 const NewReturn = () => {
     const idInvoice = getIdUrl()
-    const { invoice } = useInvoiceById(idInvoice)
+    const { data, handleId } = useInvoice()
     const [invoiceItems, setInvoiceItems] = useState([])
-    const rows = invoice ? [...invoice.details] : []
     const createReturnHook = useCreateReturn()
+
+    useEffect(() => handleId(idInvoice), [])
+    const rows = data && data.details ? [...data.details] : []
 
     const handleAddItem = ({ id, productID, productName, quantity, unitPrice }, index) => {
         const newItem = {
@@ -83,7 +86,7 @@ const NewReturn = () => {
                 <div className="top" style={{ marginBottom: 0 }}>
                     <div className="datatable" style={{ width: '100%' }}>
                         <div className="datatableTitle">
-                            <span>Factura #{invoice ? invoice.nInvoice : ''}</span>
+                            <span>Factura #{data && data.nInvoice ? data.nInvoice : ''}</span>
                             <Link to="/returns" className="link">
                                 Regresar
                             </Link>
@@ -96,37 +99,37 @@ const NewReturn = () => {
                             <div className="formInput">
                                 <label>Cliente:</label>
                                 <input type='text'
-                                    value={invoice ? invoice.customer : ""}
+                                    value={data && data.customer ? data.customer : ""}
                                     readOnly />
                             </div>
                             <div className="formInput">
                                 <label>Vendedor:</label>
                                 <input type='text'
-                                    value={invoice ? invoice.seller : ''}
+                                    value={data && data.seller ? data.seller : ''}
                                     readOnly />
                             </div>
                             <div className="formInput">
                                 <label>Fecha de Emisión:</label>
                                 <input type='text'
-                                    value={invoice ? invoice.date : ''}
+                                    value={data && data.date ? data.date : ''}
                                     readOnly />
                             </div>
                             <div className="formInput">
                                 <label>Monto Total:</label>
                                 <input type='text'
-                                    value={`L. ${invoice ? invoice.total : 0}`}
+                                    value={`L. ${data && data.total ? data.total : 0}`}
                                     readOnly />
                             </div>
                             <div className="formInput">
                                 <label>Descuento Total:</label>
                                 <input type='text'
-                                    value={`L. ${invoice ? invoice.discount : 0}`}
+                                    value={`L. ${data && data.discount ? data.discount : 0}`}
                                     readOnly />
                             </div>
                             <div className="formInput">
                                 <label>Impuesto Total:</label>
                                 <input type='text'
-                                    value={`L. ${invoice ? invoice.tax : 0}`}
+                                    value={`L. ${data && data.tax ? data.tax : 0}`}
                                     readOnly />
                             </div>
                             <div className="formInput" style={{ width: '100%', margin: '0px 40px' }}>
@@ -143,7 +146,7 @@ const NewReturn = () => {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {rows.map((row, index) => (
+                                            {rows?.map((row, index) => (
                                                 <TableRow key={index}>
                                                     <TableCell className="tableCell">{row.sku}</TableCell>
                                                     <TableCell className="tableCell">{row.productName}</TableCell>
