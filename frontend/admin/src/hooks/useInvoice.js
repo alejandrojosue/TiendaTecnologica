@@ -70,7 +70,9 @@ const useInvoice = () => {
 
     const handleCreate = async (data) => {
         try {
-            await invoiceRepository.create(data)
+            await invoiceRepository
+                .create(data)
+                .finally(() => alert('Factura guardada exitósamente!'))
         } catch (error) {
             setError(error)
         }

@@ -7,7 +7,6 @@ import { useFetchCompany } from "../../hooks/useFetchCompany";
 import { useFetchCorrelative } from "../../hooks/useFetchCorrelative";
 import useCorrelativeUpdater from "../../hooks/useCorrelativeUpdater";
 import { useUpdateProduct } from '../../hooks/useUpdateProduct'
-import useCreateInvoice from "../../hooks/useCreateInvoice";
 import LoadingModal from "../../components/modal/LoadingModal";
 import { beforeCreateInvoice, performInvoiceValidations } from '../../helpers/invoice-validation'
 import print from "../../helpers/print-invoice"
@@ -15,6 +14,7 @@ import InvoiceDeatil from "../../models/InvoiceDeatil";
 import Product from "../../models/Product";
 import Invoice from "../../models/Invoice";
 import User from "../../models/User";
+import useInvoice from "../../hooks/useInvoice";
 
 const New = () => {
     const { data } = useFetchProducts()
@@ -24,14 +24,14 @@ const New = () => {
     const { dataCorrelative } = useFetchCorrelative()
     const { error, updateProduct } = useUpdateProduct();
     const correlativeUpdater = useCorrelativeUpdater()
-    const createInvoiceHook = useCreateInvoice()
+    const { handleCreate } = useInvoice()
 
     const [invoiceItems, setInvoiceItems] = useState([])
     const [totalSummary, setTotalSummary] = useState(0)
     const [subtotalSummary, setSubtotalSummary] = useState(0)
     const [taxSummary, setTaxSummary] = useState(0)
     const [discountSummary, setDiscountSummary] = useState(0)
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
 
     performInvoiceValidations(dataCompany, dataCorrelative)
     const handleRTN = (value) => setRtnCustomer(value)
@@ -125,7 +125,6 @@ const New = () => {
             if ((invoiceItems.filter(item => (item.sku).trim() === "" || item.quantity < 1 || item.quantity === '')).length > 0) {
                 alert('Uno de los productos no tiene lleno o no cumple con los parámetros el campo código y/o Cantidad!')
                 setIsLoading(false)
-                console.log(invoiceItems.filter(item => (item.sku).trim() === "" || item.quantity < 1 || item.quantity === ''))
                 return
             }
             if (!beforeCreateInvoice(
@@ -154,8 +153,8 @@ const New = () => {
                 )
             }
             printInvoice()
+            await handleCreate(dataNewInvoice)
             await correlativeUpdater.updateCorrelative(dataNewInvoice.data.noFactura)
-            await createInvoiceHook.createInvoice(dataNewInvoice)
             invoiceItems.forEach(async (item) => await updateProduct(item.id, item.quantity))
             setTimeout(() => {
                 if (error === null) window.location.href = '/invoices'
