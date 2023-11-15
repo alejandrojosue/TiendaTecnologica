@@ -8,7 +8,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 const List = ({ rows }) => {
-
   return (
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -21,12 +20,12 @@ const List = ({ rows }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
+          {rows?.map((row, index) => (
             <TableRow key={index}>
-              <TableCell className="tableCell">{row.sku}</TableCell>
-              <TableCell className="tableCell">{row.productName}</TableCell>
-              <TableCell className="tableCell">{row.quantity}</TableCell>
-              <TableCell className="tableCell">{row.unitPrice}</TableCell>
+              <TableCell className="tableCell">{row?.sku}</TableCell>
+              <TableCell className="tableCell">{row?.productName}</TableCell>
+              <TableCell className="tableCell">{row?.quantity}</TableCell>
+              <TableCell className="tableCell">{row?.unitPrice}</TableCell>
             </TableRow>
           ))}
         </TableBody>
