@@ -76,6 +76,7 @@ const NewReturn = () => {
             return
         }
         createReturnHook.createReturn(data)
+        setTimeout(() => window.location.href = '/returns', 1000)
     }
 
     return (

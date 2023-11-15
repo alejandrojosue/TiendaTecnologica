@@ -34,7 +34,7 @@ const Report = () => {
                             }}>
                                 Generar Reporte de Todas las Ventas
                             </li>
-                            <li>
+                            <li onClick={() => window.location.href = '/reports/reportSalesSeller'}>
                                 Generar Reporte por Vendedor
                             </li>
                             <li>

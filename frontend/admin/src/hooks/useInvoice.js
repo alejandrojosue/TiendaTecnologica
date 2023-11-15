@@ -1,10 +1,15 @@
 import InvoiceRepository from "../services/InvoicesRepository"
 import { useState } from 'react'
+import useCorrelative from "./useCorrelative"
+import useProduct from "./useProduct"
 const useInvoice = () => {
     const invoiceRepository = new InvoiceRepository()
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
+    const { update } = useCorrelative()
+    const { updateProduct } = useProduct()
+
 
     const handleRTN = async (rtn) => {
         try {
@@ -68,11 +73,16 @@ const useInvoice = () => {
         if (idSeller) _handleSellerId(idSeller)
     }
 
-    const handleCreate = async (data) => {
+    const handleCreate = async (data, invoiceItems) => {
         try {
-            await invoiceRepository
-                .create(data)
-                .finally(() => alert('Factura guardada exitósamente!'))
+            setLoading(true)
+            await invoiceRepository.create(data)
+            const promises = [
+                update(parseInt(data.data.noFactura)),
+                ...invoiceItems.map(async (item) => await updateProduct(item.id, item.quantity))
+            ]
+            await Promise.all(promises)
+                .finally(() => setLoading(false))
         } catch (error) {
             setError(error)
         }

@@ -15,7 +15,6 @@ const useCreateReturn = () => {
             returnRepo
                 .create(returnData)
                 .then(() => alert('Devolución guardada exitósamente!'))
-                .finally(() => window.location.href = '/returns')
             setSuccess(true);
         } catch (error) {
             setError(error);

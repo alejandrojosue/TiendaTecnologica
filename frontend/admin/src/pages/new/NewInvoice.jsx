@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import "./newInvoice.scss";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useFetchProducts } from "../../hooks/useFetchProducts";
-import "./newInvoice.scss";
 import { useFetchUsers } from "../../hooks/useFetchUsers";
 import { useFetchCompany } from "../../hooks/useFetchCompany";
 import { useFetchCorrelative } from "../../hooks/useFetchCorrelative";
-import useCorrelativeUpdater from "../../hooks/useCorrelativeUpdater";
-import { useUpdateProduct } from '../../hooks/useUpdateProduct'
 import LoadingModal from "../../components/modal/LoadingModal";
 import { beforeCreateInvoice, performInvoiceValidations } from '../../helpers/invoice-validation'
 import print from "../../helpers/print-invoice"
@@ -22,8 +20,6 @@ const New = () => {
     const { dataUser } = useFetchUsers(rtnCustomer)
     const { dataCompany } = useFetchCompany()
     const { dataCorrelative } = useFetchCorrelative()
-    const { error, updateProduct } = useUpdateProduct();
-    const correlativeUpdater = useCorrelativeUpdater()
     const { handleCreate } = useInvoice()
 
     const [invoiceItems, setInvoiceItems] = useState([])
@@ -108,7 +104,7 @@ const New = () => {
     }
 
     const handleSaveAction = async (actionType) => {
-        setIsLoading(true); // Muestra el modal de carga
+        setIsLoading(true)
         if (actionType === "fullPayment") {
             const sellerID = sessionStorage.getItem('userID')
             if (!dataUser) {
@@ -152,14 +148,10 @@ const New = () => {
                     detalleVentas
                 )
             }
+            await handleCreate(dataNewInvoice, invoiceItems)
             printInvoice()
-            await handleCreate(dataNewInvoice)
-            await correlativeUpdater.updateCorrelative(dataNewInvoice.data.noFactura)
-            invoiceItems.forEach(async (item) => await updateProduct(item.id, item.quantity))
-            setTimeout(() => {
-                if (error === null) window.location.href = '/invoices'
-                setIsLoading(false)
-            }, 2000)
+            alert('Factura Creada Exitósamente!')
+            setTimeout(() => window.location.href = '/invoices', 1000)
         } else if (actionType === "partialPayment") {
             // Lógica para guardar y hacer un pago parcial
         } else alert("Disponible Próximante");
@@ -344,7 +336,6 @@ const New = () => {
                             id="btnSaveFullPayment">
                             Guardar y Hacer Pago Completo
                         </button>
-
                     </div>
                 </div>
             </form>

@@ -45,10 +45,24 @@ const useProduct = () => {
         }
     }
 
+    const updateProduct = async (id, _quantity) => {
+        try {
+            const { quantity } = await productsRepository.getById(id)
+            await productsRepository.update({
+                data: {
+                    existencia: parseInt(quantity) - parseInt(_quantity)
+                }
+            }, id)
+        } catch (err) {
+            setError(err)
+        }
+    }
+
     return {
         data, loading, error,
         handleGetAll, handleSubcategory,
-        handleProductSku, handleProductId
+        handleProductSku, handleProductId,
+        updateProduct
     }
 }
 

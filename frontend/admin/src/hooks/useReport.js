@@ -18,6 +18,10 @@ const useReport = () => {
         setVisibleModal(true)
     }
 
+    const reportSalesOrderSeller = async () => {
+
+    }
+
     const reportReturns = async () => {
         await returnsRepository.report()
             .then(result => setData(result))

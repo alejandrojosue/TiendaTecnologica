@@ -20,6 +20,9 @@ import { useContext } from "react"
 import { DarkModeContext } from "./context/darkModeContext"
 import { useEffect } from "react"
 import CustomReport from "./pages/report/custom/CustomReport"
+import Layout from './pages/layout/Layout'
+import ReportSalesSeller from './pages/report/salesOrderSeller/ReportSalesSeller'
+
 function App() {
   const { darkMode } = useContext(DarkModeContext)
   // Rutas en las que se debe evitar la recarga o salida
@@ -72,7 +75,7 @@ function App() {
             <Route path="reports">
               <Route index element={<Report />} />
               <Route path="custom" element={<CustomReport />} />
-              <Route path="select" element={<RIList />} />
+              <Route path="reportSalesSeller" element={<Layout children={<ReportSalesSeller />} />} />
             </Route>
             <Route path="unauthorized" element={<Unauthorized />} />
             <Route path="*" element={<NotFound />} />

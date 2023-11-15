@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    width: 100%;
+
+    .reportContainer {
+        flex: 6;
+
+        .children {
+            width: 100%;
+        }
+    }
+}
