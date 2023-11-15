@@ -22,6 +22,7 @@ import { useEffect } from "react"
 import CustomReport from "./pages/report/custom/CustomReport"
 import Layout from './pages/layout/Layout'
 import ReportSalesSeller from './pages/report/salesOrderSeller/ReportSalesSeller'
+import ReportSalesCustomer from "./pages/report/salerOrderCustomer/ReportSalesCustomer"
 
 function App() {
   const { darkMode } = useContext(DarkModeContext)
@@ -76,6 +77,7 @@ function App() {
               <Route index element={<Report />} />
               <Route path="custom" element={<CustomReport />} />
               <Route path="reportSalesSeller" element={<Layout children={<ReportSalesSeller />} />} />
+              <Route path="reportSalesCustomer" element={<Layout children={<ReportSalesCustomer />} />} />
             </Route>
             <Route path="unauthorized" element={<Unauthorized />} />
             <Route path="*" element={<NotFound />} />

@@ -50,5 +50,23 @@ button.btnClose:hover {
             background-color: #fff;
             color: $gray;
         }
+
+        .bg-red {
+            color: rgba(255, 0, 0, 0.8);
+            border: 1px solid rgba(255, 0, 0, 0.8);
+        }
+
+        .bg-red:hover {
+            background-color: rgba(255, 0, 0, 0.8);
+        }
+
+        .bg-green {
+            color: #28B463;
+            border: 1px solid #28B463;
+        }
+
+        .bg-green:hover {
+            background-color: #28B463;
+        }
     }
 }

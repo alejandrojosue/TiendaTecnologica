@@ -7,14 +7,8 @@ import useReport from '../../../hooks/useReport'
 import { useEffect, useState } from 'react'
 import { CSVLink } from 'react-csv'
 import exportPDFReport from '../../../helpers/exportPDFReport'
+import deleteDuplicate from '../../../helpers/deleteDuplicate'
 
-const deleteDuplicate = (arr, key) => {
-    const seen = new Set();
-    return arr.filter(obj => {
-        const keyValue = key ? obj[key] : JSON.stringify(obj);
-        return seen.has(keyValue) ? false : seen.add(keyValue);
-    });
-}
 const CustomReport = () => {
     const title = getIdUrl('title')
     const date =

@@ -37,7 +37,7 @@ const Report = () => {
                             <li onClick={() => window.location.href = '/reports/reportSalesSeller'}>
                                 Generar Reporte por Vendedor
                             </li>
-                            <li>
+                            <li onClick={() => window.location.href = '/reports/reportSalesCustomer'}>
                                 Generar Reporte por Cliente
                             </li>
                             <li>
