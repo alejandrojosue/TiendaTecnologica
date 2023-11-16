@@ -119,14 +119,10 @@ export default class InvoiceRepository {
 
     async getForDashboard(currentDate = false) {
         try {
-            const date = new Date()
-            const currentMonth = date.getMonth()
-            const currentYear = date.getFullYear()
-            const startDate = currentDate ? date : new Date(`${currentYear}-${currentMonth + 1}-01`)
-            const endDate = currentDate ? startDate : new Date(`${currentYear}-${currentMonth + 2}-01`)
-            startDate.setDate(endDate.getDate())
+            const date = new Date(new Date().setDate(1)).setHours(0, 0, 0)
+            const startDate = currentDate ? new Date() : date
             const { data } =
-                await fetchDataFromAPI(`/ventas?populate=detalleVentas&filters[$and][0][createdAt][$gte]=${new Date(startDate).toISOString()}&filters[$and][1][createdAt][$lte]=${new Date(endDate).toISOString()}&sort=noFactura:DESC&pagination[pageSize]=200`,
+                await fetchDataFromAPI(`/ventas?populate=detalleVentas&filters[$and][0][createdAt][$gte]=${new Date(startDate).toISOString()}&sort=noFactura:DESC&pagination[pageSize]=200`,
                     'GET', sessionStorage.getItem('daiswadod'))
             return data.map(invoice => ({
                 id: invoice.id,

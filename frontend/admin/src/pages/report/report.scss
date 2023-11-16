@@ -1,13 +1,10 @@
 .container {
-    display: flex;
-    width: 100%;
 
     .reportContainer {
-        flex: 6;
 
         .options {
             display: grid;
-            grid-template-columns: repeat(3, minmax(200px, 1fr));
+            grid-template-columns: repeat(3, minmax(320px, 1fr));
             /* Ajusta el tamaño mínimo y máximo según tus necesidades */
             gap: 20px;
             /* Espaciado entre las cajas */

@@ -7,7 +7,7 @@
 
         .filters {
             display: grid;
-            grid-template-columns: repeat(5, minmax(100px, 1fr));
+            grid-template-columns: repeat(5, minmax(220px, 1fr));
 
             .form-control {
                 display: flex;

@@ -8,6 +8,7 @@ import Table from "../../components/table/Table";
 import dateFormatToSpanish from "../../helpers/date-format-to-spanish";
 import { useDashboard } from "../../hooks/useDashboard";
 import { useFetchShopping } from "../../hooks/useFetchShopping";
+import IsLoading from '../../components/isLoading/IsLoading'
 
 const Home = () => {
   const { data, loading, error, handleCurrentDate } = useDashboard()
@@ -33,16 +34,14 @@ const Home = () => {
     }, 0)
   }, 0)
 
-
-  if (loading || loadingShop) return (<div>Cargando...</div>)
-  if (error || errorShop) return (<div>{'Ha ocurrido un error...'}</div>)
-
   return (
     <div className="home">
       <Sidebar />
       <div className="homeContainer">
 
         <Navbar />
+        {(loading || loadingShop) && <IsLoading />}
+        {(loading || loadingShop) && <div>{'Ha ocurrido un error...'}</div>}
         <p className="textTime">
           Movimientos del <strong
             onClick={() => handleCurrentDate(false)}
@@ -56,10 +55,10 @@ const Home = () => {
           {/* <Widget type="earning" _value={'----'} /> */}
           <Widget type="tax" _value={data && salesTax} />
         </div>
-        {/* <div className="charts">
-          <Featured />
-          <Chart title="Últimos 6 meses (Ingresos)" aspect={2 / 1} />
-        </div> */}
+        <div className="charts">
+          {/* <Featured /> */}
+          {/* <Chart title="Últimos 6 meses (Ingresos)" aspect={6} /> */}
+        </div>
         <div className="listContainer">
           <div className="listTitle">Últimas 20 Transacciones</div>
           <Table data={data} />

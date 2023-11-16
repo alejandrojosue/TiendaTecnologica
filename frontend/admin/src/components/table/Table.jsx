@@ -12,8 +12,8 @@ const List = (data) => {
   return (
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} stickyHeader aria-label="simple table">
-        <TableHead >
-          <TableRow key={data.id} >
+        <TableHead className="tableHead">
+          <TableRow key={data.id} className="tableRow">
             <TableCell className="tableCell">ID Transacción</TableCell>
             <TableCell className="tableCell">Fecha</TableCell>
             <TableCell className="tableCell">Monto Total</TableCell>
@@ -24,7 +24,7 @@ const List = (data) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows?.map((row) => (
             <TableRow key={row.nInvoice}>
               <TableCell className="tableCell">{row.nInvoice}</TableCell>
               <TableCell className="tableCell">{row.date}</TableCell>

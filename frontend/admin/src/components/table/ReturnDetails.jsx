@@ -21,7 +21,7 @@ const List = ({ rows }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row, index) => (
+                    {rows?.map((row, index) => (
                         <TableRow key={index}>
                             <TableCell className="tableCell">{row.productSKU}</TableCell>
                             <TableCell className="tableCell">{row.productName}</TableCell>

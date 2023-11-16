@@ -1,11 +1,11 @@
 import './login.scss'
-import React, { useState } from 'react';
-import { fetchDataFromAPI } from '../../services/api/context';
+import { useState } from 'react'
+import { fetchDataFromAPI } from '../../services/api/context'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
-  const [identifier, setIdentifier] = useState('');
-  const [password, setPassword] = useState('');
+  const [identifier, setIdentifier] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const navigate = useNavigate()
   const handleLogin = async () => {
@@ -55,6 +55,6 @@ const Login = () => {
       <button onClick={handleLogin}>Acceder</button>
       {error && <div className="error">{error}</div>}
     </div>
-  );
-};
+  )
+}
 export default Login
