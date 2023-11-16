@@ -1,6 +1,9 @@
 .container {
+    display: flex;
+    width: 100%;
 
-    .reportContainer {
+    .layoutContainer {
+        flex: 6;
 
         .children {}
     }

@@ -1,10 +1,10 @@
 import Navbar from "../../components/navbar/Navbar"
 import Sidebar from "../../components/sidebar/Sidebar"
-
+import './layout.scss'
 const Layout = ({ children }) => {
     return (<div className="container">
         <Sidebar />
-        <div className="reportContainer">
+        <div className="layoutContainer">
             <Navbar />
             <div className="children">
                 {children}
