@@ -8,9 +8,9 @@ import { useFetchCorrelative } from "../../hooks/useFetchCorrelative";
 import LoadingModal from "../../components/modal/LoadingModal";
 import { beforeCreateInvoice, performInvoiceValidations } from '../../helpers/invoice-validation'
 import print from "../../helpers/print-invoice"
-import InvoiceDeatil from "../../models/InvoiceDeatil";
+import OrderDetail from "../../models/OrderDetail";
 import Product from "../../models/Product";
-import Invoice from "../../models/Invoice";
+import Order from "../../models/Order";
 import User from "../../models/User";
 import useInvoice from "../../hooks/useInvoice";
 
@@ -105,56 +105,52 @@ const New = () => {
 
     const handleSaveAction = async (actionType) => {
         setIsLoading(true)
-        if (actionType === "fullPayment") {
-            const sellerID = sessionStorage.getItem('userID')
-            if (!dataUser) {
-                alert('No ha ingresado los datos de Cliente!')
-                setIsLoading(false)
-                return
-            }
-            if (!invoiceItems.length) {
-                alert('No ha añadido ningún producto!')
-                setIsLoading(false)
-                return
-            }
+        const userID = sessionStorage.getItem('userID')
+        const supplierID = 1
+        if (!dataUser) {
+            alert('No ha ingresado los datos de Cliente!')
+            setIsLoading(false)
+            return
+        }
+        if (!invoiceItems.length) {
+            alert('No ha añadido ningún producto!')
+            setIsLoading(false)
+            return
+        }
 
-            if ((invoiceItems.filter(item => (item.sku).trim() === "" || item.quantity < 1 || item.quantity === '')).length > 0) {
-                alert('Uno de los productos no tiene lleno o no cumple con los parámetros el campo código y/o Cantidad!')
-                setIsLoading(false)
-                return
-            }
-            if (!beforeCreateInvoice(
-                sellerID, dataCompany, dataUser, invoiceItems
-            )) {
-                setIsLoading(false)
-                return
-            }
+        if ((invoiceItems.filter(item => (item.sku).trim() === "" || item.quantity < 1 || item.quantity === '')).length > 0) {
+            alert('Uno de los productos no tiene lleno o no cumple con los parámetros el campo código y/o Cantidad!')
+            setIsLoading(false)
+            return
+        }
+        if (!beforeCreateInvoice(
+            userID, dataCompany, dataUser, invoiceItems
+        )) {
+            setIsLoading(false)
+            return
+        }
 
-            const detalleVentas = invoiceItems.map(
-                ({ quantity, price, tax, discount, id }) =>
-                (new InvoiceDeatil(
-                    quantity, price, tax, discount,
-                    new Product(parseInt(id))
-                ))
+        const Ordenes = invoiceItems.map(
+            // ({ quantity, price, tax, discount, id }) =>
+            // (new InvoiceDeatil(
+            //     quantity, price, tax, discount,
+            //     new Product(parseInt(id))
+            // ))
+        )
+
+        const dataNewInvoice = {
+            data: new Order(
+                new User(parseInt(userID)),
+                new User(parseInt(supplierID)),
+                Ordenes,
+                resumen
             )
+        }
+        await handleCreate(dataNewInvoice, invoiceItems)
+        // printInvoice()
+        alert('Orden Creada Exitósamente!')
+        setTimeout(() => window.location.href = '/orders', 1000)
 
-            const dataNewInvoice = {
-                data: new Invoice(
-                    parseInt(dataCorrelative.nInvoice) + 1,
-                    'Efectivo',
-                    'Pagada',
-                    new User(parseInt(sellerID)),
-                    new User(parseInt(dataUser.id)),
-                    detalleVentas
-                )
-            }
-            await handleCreate(dataNewInvoice, invoiceItems)
-            printInvoice()
-            alert('Factura Creada Exitósamente!')
-            setTimeout(() => window.location.href = '/invoices', 1000)
-        } else if (actionType === "partialPayment") {
-            // Lógica para guardar y hacer un pago parcial
-        } else alert("Disponible Próximante");
         setIsLoading(false)
     }
 
@@ -326,16 +322,6 @@ const New = () => {
                         <button
                             onClick={handleSaveAction}
                             id="btnSave">Guardar</button>
-                        <button
-                            onClick={handleSaveAction}
-                            id="btnSavePartialPayment">Guardar y Hacer Pago Parcial</button>
-                        <button
-                            onClick={() => {
-                                handleSaveAction('fullPayment');
-                            }}
-                            id="btnSaveFullPayment">
-                            Guardar y Hacer Pago Completo
-                        </button>
                     </div>
                 </div>
             </form>

@@ -53,9 +53,30 @@ const useOrder = () => {
         }
     }
 
+    const handleCreate = async (data) => {
+        try {
+            setLoading(true)
+            await ordersPurchasesRepository.create(data)
+                .finally(() => setLoading(false))
+        } catch (error) {
+            setError(error)
+        }
+    }
+
+    const handleUpdate = async (id, data) => {
+        try {
+            setLoading(true)
+            await ordersPurchasesRepository.update(id, data)
+                .finally(() => setLoading(false))
+        } catch (error) {
+            setError(error)
+        }
+    }
+
     return {
         data, loading, error,
-        handleGetAll, handleId, handleDateRange
+        handleGetAll, handleId, handleDateRange,
+        handleCreate, handleUpdate
     }
 }
 

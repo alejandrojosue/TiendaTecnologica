@@ -109,4 +109,34 @@ export default class OrdersPurchasesRepository {
             console.log('Error al obtener ordenes de compra', error);
         }
     }
+
+    async create(data) {
+        try {
+            const response = await fetchDataFromAPI('/ordens',
+                'POST', sessionStorage.getItem('daiswadod'), data)
+
+            if (!response) {
+                // La respuesta no contiene información del nuevo invoiceo.
+                console.error('No se pudo obtener información del nuevo orden.')
+            }
+        } catch (error) {
+            // Maneja errores de red o del servidor
+            console.error('Error al crear el orden:', error.message)
+        }
+    }
+
+    async update(id, data) {
+        try {
+            const response = await fetchDataFromAPI('/ordens/' + id,
+                'PUT', sessionStorage.getItem('daiswadod'), data)
+
+            if (!response) {
+                // La respuesta no contiene información del nuevo invoiceo.
+                console.error('No se pudo obtener información del nuevo orden.')
+            }
+        } catch (error) {
+            // Maneja errores de red o del servidor
+            console.error('Error al actualizar el orden:', error.message)
+        }
+    }
 }
