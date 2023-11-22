@@ -147,7 +147,43 @@ const ReturnColumns = [
   }
 ]
 
+const orderColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "date",
+    headerName: "Fecha (dd/MM/yyyy)",
+    width: 150
+  },
+  {
+    field: "agent",
+    headerName: "Encargado de Compras",
+    width: 300
+  },
+  {
+    field: "supplier",
+    headerName: "Proveedor  ",
+    width: 300
+  },
+  {
+    field: "status",
+    headerName: "Estado",
+    width: 120,
+    renderCell: (params) => {
+      const status = {
+        Entregada: 'Recibida',
+        Cancelada: 'Cancelada',
+        "EN PROCESO": "En-Proceso"
+      }
+      return (
+        <div className={`cellWithStatus ${status[params.row.status]}`}>
+          {params.row.status}
+        </div>
+      )
+    }
+  }
+]
+
 export {
   productColumns, categoryColumns, subCategoryColumns, InvoiceColumns,
-  ReturnColumns
+  ReturnColumns, orderColumns
 }

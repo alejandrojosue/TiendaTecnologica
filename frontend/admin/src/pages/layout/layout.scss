@@ -5,6 +5,8 @@
     .layoutContainer {
         flex: 6;
 
-        .children {}
+        .children {
+            height: 100%;
+        }
     }
 }

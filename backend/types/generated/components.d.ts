@@ -60,11 +60,27 @@ export interface DetallesDevoluciones extends Schema.Component {
   };
 }
 
+export interface DetallesOrdenes extends Schema.Component {
+  collectionName: 'components_detalles_ordenes';
+  info: {
+    displayName: 'Ordenes';
+  };
+  attributes: {
+    producto: Attribute.Relation<
+      'detalles.ordenes',
+      'oneToOne',
+      'api::producto.producto'
+    >;
+    cantidad: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<1>;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
       'detalles.detalles': DetallesDetalles;
       'detalles.devoluciones': DetallesDevoluciones;
+      'detalles.ordenes': DetallesOrdenes;
     }
   }
 }

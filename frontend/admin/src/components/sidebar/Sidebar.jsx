@@ -27,7 +27,7 @@ const Sidebar = () => {
           <Link to="/dashboard" style={{ textDecoration: "none" }}>
             <li>
               <DashboardIcon className="icon" />
-              <span onClick={() => { SessionValidate() }}>Tablero</span>
+              <span >Tablero</span>
             </li>
           </Link>
           <p className="title">LISTAS</p>
@@ -36,13 +36,13 @@ const Sidebar = () => {
             <li>
               <StoreIcon className="icon" />
               <span
-                onClick={() => { SessionValidate() }}>Inventario</span>
+              >Productos</span>
             </li>
           </Link>
           <Link to="/invoices" style={{ textDecoration: "none" }}>
             <li>
               <CreditCardIcon className="icon" />
-              <span onClick={() => { SessionValidate() }}>Facturas</span>
+              <span >Facturas</span>
             </li>
           </Link>
           <Link to={"/returns"} style={{ textDecoration: "none" }}>
@@ -51,23 +51,29 @@ const Sidebar = () => {
               <span>Devoluciones</span>
             </li>
           </Link>
+          <Link to={"/orders"} style={{ textDecoration: "none" }}>
+            <li>
+              <AssignmentReturnIcon className="icon" />
+              <span>Ordenes Compra</span>
+            </li>
+          </Link>
           <p className="title">REPORTES</p>
           <Link to="/reports" style={{ textDecoration: "none" }}>
             <li>
               <InsertChartIcon className="icon" />
-              <span onClick={() => { SessionValidate() }}>Reportes</span>
+              <span >Reportes</span>
             </li>
           </Link>
           <p className="title">USUARIO</p>
           <Link to={"/single"} style={{ textDecoration: "none" }}>
             <li>
               <AccountCircleOutlinedIcon className="icon" />
-              <span onClick={SessionValidate}>Perfil</span>
+              <span>Perfil</span>
             </li></Link>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <li>
               <ExitToAppIcon className="icon" />
-              <span onClick={() => { sessionStorage.clear() }}
+              <span
               >Cerrar Sesión</span>
             </li>
           </Link>
