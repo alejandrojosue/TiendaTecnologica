@@ -3,13 +3,22 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import Chart from "../../components/chart/Chart";
 import List from "../../components/table/Table";
-
+import IsLoading from '../../components/isLoading/IsLoading'
+import useInvoice from "../../hooks/useInvoice";
+import { useEffect } from "react";
+import dataChartValues from "../../helpers/dataChart";
 const Single = () => {
+  const { data, loading, error, handleSellerId } = useInvoice()
+  useEffect(() => handleSellerId(sessionStorage.getItem('userID')), [])
+  let dataChart = dataChartValues(data && data)
+
   return (
     <div className="single">
       <Sidebar />
       <div className="singleContainer">
         <Navbar />
+        {loading && <IsLoading />}
+        {error && <div>Error al cargar datos</div>}
         <div className="top">
           <div className="left">
             <div className="editButton">Más</div>
@@ -26,12 +35,12 @@ const Single = () => {
             </div>
           </div>
           <div className="right">
-            <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
+            <Chart aspect={3 / 1} title="Mis Ventas Totales ( Últimos 4 meses)" data={dataChart} />
           </div>
         </div>
         <div className="bottom">
-          <h1 className="title">Últimas Transacciones</h1>
-          <List />
+          <h1 className="title">Últimas 20 Transacciones</h1>
+          <List data={data} />
         </div>
       </div>
     </div>

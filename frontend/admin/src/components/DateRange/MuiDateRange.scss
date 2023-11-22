@@ -1,7 +1,11 @@
 .rs-picker-default .rs-picker-toggle.rs-btn {
     padding-top: 7px;
     padding-bottom: 7px;
-    width: 282px;
+    background-color: transparent;
+}
+
+.bg-0 {
+    background-color: transparent;
 }
 
 /* picked date align */

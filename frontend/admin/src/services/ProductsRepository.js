@@ -1,8 +1,13 @@
 import { fetchDataFromAPI } from './api/context'; // Asegúrate de importar tu función correctamente
 export default class ProductsRepository {
+    constructor() {
+        if (!ProductsRepository.instance)
+            ProductsRepository.instance = this
+        return ProductsRepository.instance
+    }
     async getAll() {
         try {
-            const { data } = await fetchDataFromAPI('/productos?populate=deep')
+            const { data } = await fetchDataFromAPI('/productos?populate=deep&sort[0]=existencia:asc')
             return data.map(product => ({
                 id: product.id,
                 sku: product.attributes.codigo,
@@ -68,6 +73,27 @@ export default class ProductsRepository {
         } catch (error) {
             // Maneja errores de red o del servidor
             console.error('Error al actualizar el producto:', error.message);
+        }
+    }
+
+    async report(max = 1000) {
+        try {
+            const { data } = await fetchDataFromAPI(`/productos?pagination[limit]=${max}`)
+            return data.map(product => ({
+                id: product.id,
+                'Código Producto': 'P' + product.attributes.codigo,
+                'Nombre Producto': product.attributes.nombre,
+                'Descripción': product.attributes.descripcion,
+                Descuento: product.attributes.descuento,
+                ISV: product.attributes.isv,
+                'Existencia Actual': product.attributes.existencia,
+                'Precio Unitario': parseFloat(product.attributes.precio_venta).toFixed(2).replace('.', ','),
+                'Precio Compra': parseFloat(product.attributes.precio_compra).toFixed(2).replace('.', ','),
+                Modelo: product.attributes.modelo,
+                Estado: product.attributes.activo ? 'Activo' : 'Inactivo',
+            }))
+        } catch (error) {
+            console.error('Error al obtener productos:', error);
         }
     }
 }

@@ -22,7 +22,6 @@ const useFetchProducts = () => {
 
     const handleDelete = (id) => { setData(data.filter((item) => item.id !== id)) }
     const handleSubcategory = (id) => {
-        console.log(originalData)
         setData(originalData.filter(product => product.subcategory.some(sub => sub.id === parseInt(id))))
     }
 

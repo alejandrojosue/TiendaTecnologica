@@ -1,0 +1,66 @@
+$blue: lightblue;
+
+div.btnAdd {
+    padding: 2px 5px;
+    border-radius: 5px;
+    color: darkblue;
+    border: 1px dotted rgba(0, 0, 139, 0.596);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    margin: auto;
+
+    span {
+        margin: auto;
+    }
+
+}
+
+div.btnAdd:hover {
+    padding: 2px 5px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: darkblue;
+    border: 1px dotted rgba(0, 0, 139, 0.596);
+    cursor: pointer;
+}
+
+.w-300 {
+    width: 300px;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.d-flex-0 {
+    display: flex;
+}
+
+button.btnDelete {
+    color: crimson;
+    background-color: #fff;
+    border-width: 0;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+button.btnDelete:hover {
+    color: rgb(121, 0, 0)
+}
+
+button.btnSaveReturn {
+    width: 150px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.02em;
+    padding: 10px;
+    background-color: transparent;
+    border: 2px solid $blue;
+    color: $blue;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}

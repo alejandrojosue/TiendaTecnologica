@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ordens",
+  "info": {
+    "singularName": "orden",
+    "pluralName": "ordens",
+    "displayName": "Orden",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Ordenes": {
+      "displayName": "Ordenes",
+      "type": "component",
+      "repeatable": true,
+      "component": "detalles.ordenes",
+      "required": true
+    },
+    "encargado": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "required": true
+    },
+    "proveedor": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::proveedor.proveedor",
+      "required": true
+    },
+    "resumen": {
+      "type": "text"
+    },
+    "estado": {
+      "type": "enumeration",
+      "enum": [
+        "Recibida",
+        "Cancelada",
+        "EN PROCESO"
+      ],
+      "default": "EN PROCESO",
+      "required": true
+    }
+  }
+}

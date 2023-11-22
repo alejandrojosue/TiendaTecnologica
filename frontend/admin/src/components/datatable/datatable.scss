@@ -1,3 +1,34 @@
+.filters {
+  display: flex;
+  width: auto;
+  padding: 10px 0;
+
+  button {
+    border-radius: 5px;
+    color: darkblue;
+    border: 1px solid rgba(0, 0, 139, 0.596);
+    background-color: transparent;
+    height: 35px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  button:hover {
+    color: #fff;
+    background-color: darkblue;
+  }
+
+  select,
+  .textField {
+    width: 210px;
+    padding: 3px;
+    height: 35px;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: transparent;
+  }
+}
+
 .datatable {
   height: 75%;
   padding: 20px;
@@ -10,6 +41,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
 
     .link {
       text-decoration: none;
@@ -71,17 +103,20 @@
       color: green;
     }
 
-    &.Parcialmente-Pagada {
+    &.Parcialmente-Pagada,
+    &.Entregada {
       background-color: rgba(52, 152, 219, .05);
       color: #3498DB;
     }
 
-    &.No-Pagada {
+    &.No-Pagada,
+    &.En-Proceso {
       background-color: rgba(255, 217, 0, 0.05);
       color: goldenrod;
     }
 
-    &.Anulada {
+    &.Anulada,
+    &.Cancelada {
       background-color: rgba(255, 0, 0, 0.05);
       color: crimson;
     }

@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    width: 100%;
+
+    .layoutContainer {
+        flex: 6;
+
+        .children {
+            height: 100%;
+        }
+    }
+}

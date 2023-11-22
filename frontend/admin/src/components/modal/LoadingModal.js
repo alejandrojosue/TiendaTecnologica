@@ -1,4 +1,3 @@
-import React from "react";
 import "./LoadingModal.scss"; // Agrega estilos CSS para el modal
 
 const LoadingModal = () => {

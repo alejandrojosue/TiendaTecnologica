@@ -1175,6 +1175,52 @@ export interface ApiMarcaMarca extends Schema.CollectionType {
   };
 }
 
+export interface ApiOrdenOrden extends Schema.CollectionType {
+  collectionName: 'ordens';
+  info: {
+    singularName: 'orden';
+    pluralName: 'ordens';
+    displayName: 'Orden';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    Ordenes: Attribute.Component<'detalles.ordenes', true> & Attribute.Required;
+    encargado: Attribute.Relation<
+      'api::orden.orden',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    > &
+      Attribute.Required;
+    proveedor: Attribute.Relation<
+      'api::orden.orden',
+      'oneToOne',
+      'api::proveedor.proveedor'
+    > &
+      Attribute.Required;
+    resumen: Attribute.Text;
+    estado: Attribute.Enumeration<['Recibida', 'Cancelada', 'EN PROCESO']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'EN PROCESO'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::orden.orden',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::orden.orden',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiProductoProducto extends Schema.CollectionType {
   collectionName: 'productos';
   info: {
@@ -1562,6 +1608,7 @@ declare module '@strapi/types' {
       'api::interaccion.interaccion': ApiInteraccionInteraccion;
       'api::log.log': ApiLogLog;
       'api::marca.marca': ApiMarcaMarca;
+      'api::orden.orden': ApiOrdenOrden;
       'api::producto.producto': ApiProductoProducto;
       'api::promocion.promocion': ApiPromocionPromocion;
       'api::proveedor.proveedor': ApiProveedorProveedor;

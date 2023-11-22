@@ -1,16 +1,9 @@
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import BrandingIcon from "@mui/icons-material/Sell";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import StoreIcon from "@mui/icons-material/Store";
-import BrandingOutlineIcon from "@mui/icons-material/SellOutlined";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
-import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
@@ -23,19 +16,18 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/dashboard" style={{ textDecoration: "none" }}>
+        <Link to="/dashboard" className="" style={{ textDecoration: "none" }}>
           <span onClick={() => SessionValidate()}
             className="logo">Panel de Control</span>
         </Link>
       </div>
-      <hr />
       <div className="center">
         <ul>
           <p className="title">PRINCIPAL</p>
           <Link to="/dashboard" style={{ textDecoration: "none" }}>
             <li>
               <DashboardIcon className="icon" />
-              <span onClick={() => { SessionValidate() }}>Tablero</span>
+              <span >Tablero</span>
             </li>
           </Link>
           <p className="title">LISTAS</p>
@@ -44,19 +36,32 @@ const Sidebar = () => {
             <li>
               <StoreIcon className="icon" />
               <span
-                onClick={() => { SessionValidate() }}>Inventario</span>
+              >Productos</span>
             </li>
           </Link>
           <Link to="/invoices" style={{ textDecoration: "none" }}>
             <li>
               <CreditCardIcon className="icon" />
-              <span onClick={() => { SessionValidate() }}>Facturas</span>
+              <span >Facturas</span>
             </li>
           </Link>
-          <Link to={"/single"} style={{ textDecoration: "none" }}>
+          <Link to={"/returns"} style={{ textDecoration: "none" }}>
             <li>
               <AssignmentReturnIcon className="icon" />
               <span>Devoluciones</span>
+            </li>
+          </Link>
+          <Link to={"/orders"} style={{ textDecoration: "none" }}>
+            <li>
+              <AssignmentReturnIcon className="icon" />
+              <span>Ordenes Compra</span>
+            </li>
+          </Link>
+          <p className="title">REPORTES</p>
+          <Link to="/reports" style={{ textDecoration: "none" }}>
+            <li>
+              <InsertChartIcon className="icon" />
+              <span >Reportes</span>
             </li>
           </Link>
           <p className="title">USUARIO</p>
@@ -68,7 +73,7 @@ const Sidebar = () => {
           <Link to="/login" style={{ textDecoration: "none" }}>
             <li>
               <ExitToAppIcon className="icon" />
-              <span onClick={() => { sessionStorage.clear() }}
+              <span
               >Cerrar Sesión</span>
             </li>
           </Link>
