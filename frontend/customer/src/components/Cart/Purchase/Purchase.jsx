@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 
 const Purchase = () => {
   const [selectedOption, setSelectedOption] = useState("");
-  const [cartSubTotal, setCartSubTotal] = useState("");
+  // const [setCartSubTotal] = useState("");
   const { userName } = useUser();
-  const { cartItems } = useContext(Context);
+  const { cartItems, cartSubTotal} = useContext(Context);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -25,10 +25,11 @@ const Purchase = () => {
 
   useEffect(() => {
     const storedCartSubTotal = sessionStorage.getItem("cartSubTotal");
-    setCartSubTotal(storedCartSubTotal);
+    // Usa setCartSubTotal para actualizar el estado
+    // Solo deberías usar cartSubTotal aquí
+    // setCartSubTotal(storedCartSubTotal);
     sessionStorage.removeItem("cartSubTotal");
-  }, []);
-
+  }, [cartItems, cartSubTotal]);
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
   };

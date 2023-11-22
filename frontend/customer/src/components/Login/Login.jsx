@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import { fetchDataFromAPI } from "../../services/context";
 import { useNavigate } from 'react-router-dom'
 import { useUser } from "../../services/UserContext";
+import { Link } from 'react-router-dom';
 
 
 const Login = () =>{
@@ -51,7 +52,12 @@ const Login = () =>{
                     </div>
                     <div>  
                     <button className="submit" onClick={handleLogin}>Iniciar Sesion</button>
-                    {/* <p className="footer">¿No tienes cuenta?<a href="#" className="link">Por favor, Registrate</a></p> */}
+                    <p className="footer">
+                         ¿No tienes cuenta?{' '}
+                         <Link to="/register" className="link">
+                         Por favor, Registrate
+                         </Link>
+                    </p>
                     </div>
                 </div>
                 <div></div>

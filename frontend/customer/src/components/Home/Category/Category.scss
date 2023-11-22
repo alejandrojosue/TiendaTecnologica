@@ -11,6 +11,7 @@
         gap: 10px;
         .category {
             position: relative;
+            display: flex;
             background-color: black;
             width: calc(50% - 5px);
             cursor: pointer;

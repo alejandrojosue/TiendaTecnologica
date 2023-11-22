@@ -10,6 +10,8 @@ import Newsletter from "./components/Footer/Newsletter/Newsletter";
 import AppContext from "./utils/context";
 import Login from "./components/Login/Login";
 import Purchase from "./components/Cart/Purchase/Purchase";
+import Subcategorys from "./components/Subcategory/Subcategorys";
+import Register from "./components/Login/Register/Register";
 
 function App() {
     return (
@@ -22,6 +24,8 @@ function App() {
                     <Route path="/product/:id" element={<SingleProduct />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/purchase" element={<Purchase />} />
+                    <Route path="/subcategorys/:id" element={<Subcategorys />} />
+                    <Route path="/register" element={<Register />} />
                 </Routes>
                 <Newsletter />
                 <Footer />

@@ -25,7 +25,7 @@ const Cart = () => {
             setShowCart(false)
         }
     }
-
+    
     return (
         <div className="cart-panel">
             <div

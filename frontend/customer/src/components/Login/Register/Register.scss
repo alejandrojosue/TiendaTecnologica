@@ -1,0 +1,114 @@
+.body11 {
+  position: relative;
+  text-align: center;
+  background: white;
+  color: black;
+  margin: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial;
+
+  .container1 {
+    display: flex;
+    flex-wrap: wrap; /* Permitir envoltura de elementos cuando no hay suficiente espacio */
+    justify-content: space-between; /* Distribuir los elementos en el espacio disponible */
+    width: 70%;
+    margin: 3%;
+    border: 1px solid white;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+
+    @media (max-width: 768px) {
+      /* Estilos específicos para pantallas más pequeñas */
+      flex-direction: column; /* Apilar elementos en pantallas más pequeñas */
+      align-items: center; /* Centrar elementos en pantallas más pequeñas */
+    }
+  }
+
+  .left1 {
+    text-align: left;
+    white-space: nowrap;
+    padding: 10px;
+
+    @media (max-width: 768px) {
+      /* Ajustes adicionales para pantallas más pequeñas */
+      margin-right: 0;
+    }
+  }
+
+  .right1 {
+    width: 50%;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: left;
+
+    @media (max-width: 768px) {
+      /* Ajustes adicionales para pantallas más pequeñas */
+      width: 100%; /* Utilizar el ancho completo en pantallas más pequeñas */
+    }
+  }
+  
+    .lab1{
+        display: flex;
+        font-family: Arial;
+        padding: 3px;
+        margin-bottom: 10px;
+
+    }
+    .input11{
+        border: none;
+        outline: none;
+        background: none;
+        width: 290px;
+        font-size: 17px;
+        color: black;
+        border-bottom: 2px solid black;
+        margin-bottom: 10px;
+    }
+
+    ::-webkit-input-placeholder {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .slect1{
+        border: none;
+        outline: none;
+        background: none;
+        width: 290px;
+        font-size: 17px;
+        color: black;
+        border-bottom: 2px solid black;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+
+    .buton1{
+        border: none;
+        outline: none;
+        width: 290px;
+        margin-top: 25px;
+        padding: 10px 0;
+        font-size: 20px;
+        border-radius: 40px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        background: linear-gradient(45deg, #0ef, #c800ff);
+    }
+  }
+
+  .show-password-button {
+    border: none;
+    outline: none;
+    width: 4vw;
+    padding: 9px 0;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    margin-left: 10px;
+    cursor: pointer;
+    background: linear-gradient(45deg, #0ef, #c800ff);
+  
+  }
+
+  
+  
