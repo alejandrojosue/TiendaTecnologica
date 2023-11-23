@@ -27,6 +27,7 @@ import ReportSalesSeller from './pages/report/salesOrderSeller/ReportSalesSeller
 import ReportSalesCustomer from "./pages/report/salerOrderCustomer/ReportSalesCustomer"
 import Test from "./pages/tests/test"
 import OrderView from "./pages/single/OrderView"
+import EditOrder from "./pages/edit/editOrder"
 
 function App() {
   const { darkMode } = useContext(DarkModeContext)
@@ -88,6 +89,7 @@ function App() {
               <Route index element={<Layout children={<OrderList />} />} />
               <Route path="view" element={<OrderView />} />
               <Route path="new" element={<NewOrder />} />
+              <Route path="edit" element={<EditOrder />} />
             </Route>
             <Route path="unauthorized" element={<Unauthorized />} />
             <Route path="*" element={<NotFound />} />

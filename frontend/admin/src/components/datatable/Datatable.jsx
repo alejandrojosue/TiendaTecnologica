@@ -20,7 +20,8 @@ const Datatable = ({
   filteredSubcategories,
   setFilteredSubcategories,
   handleSubcategoryByCategory,
-  handleSubcategory
+  handleSubcategory,
+  isEditable
 }) => {
   if (loading) return <IsLoading />;
   if (error) return <div>Error al cargar los datos.</div>;
@@ -36,7 +37,7 @@ const Datatable = ({
     {
       field: "action",
       headerName: "Acción",
-      width: 70,
+      width: isEditable ? 115 : 70,
       renderCell: (params) => {
         return (
           <div className="cellAction">
@@ -45,6 +46,13 @@ const Datatable = ({
                 {!handleRTN ? 'Ver' : 'Crear'}
               </div>
             </Link>
+            {isEditable &&
+              <Link to={`/${redirectTo}/edit?id=${params.row.id}`} style={{ textDecoration: "none" }}>
+                <div className="editButton" style={{ padding: "5px" }}>
+                  Editar
+                </div>
+              </Link>
+            }
           </div>
         )
       },
