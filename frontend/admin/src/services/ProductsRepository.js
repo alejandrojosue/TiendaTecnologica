@@ -58,6 +58,7 @@ export default class ProductsRepository {
                 name: data[0].attributes.nombre,
                 discount: data[0].attributes.descuento,
                 price: data[0].attributes.precio_venta,
+                cost: data[0].attributes.precio_compra,
                 status: data[0].attributes.activo,
             })
         } catch (error) {

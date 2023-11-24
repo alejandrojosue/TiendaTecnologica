@@ -17,6 +17,7 @@ const List = () => {
                 redirectTo={'orders'}
                 handleGetAll={handleGetAll}
                 handleDateRangeChange={handleDateRange}
+                isEditable={true}
             /></>
     )
 }
