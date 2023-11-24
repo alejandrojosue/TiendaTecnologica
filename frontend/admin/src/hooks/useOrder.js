@@ -26,6 +26,7 @@ const useOrder = () => {
     const _handleId = async (id) => {
         try {
             setData(await ordersPurchasesRepository.getById(id))
+            setLoading(true)
         } catch (error) {
             setError(error)
         }

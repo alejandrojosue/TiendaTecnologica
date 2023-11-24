@@ -1,11 +1,8 @@
 import './edit.scss'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../new/newInvoice.scss";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useFetchProducts } from "../../hooks/useFetchProducts";
-// import { useFetchUsers } from "../../hooks/useFetchUsers";
-// import { useFetchCompany } from "../../hooks/useFetchCompany";
-// import { useFetchCorrelative } from "../../hooks/useFetchCorrelative";
 import LoadingModal from "../../components/modal/LoadingModal";
 import { beforeCreateInvoice, performInvoiceValidations } from '../../helpers/invoice-validation'
 import print from "../../helpers/print-invoice"
@@ -15,42 +12,58 @@ import Order from "../../models/Order";
 import User from "../../models/User";
 import useOrder from "../../hooks/useOrder";
 import Supplier from "../../models/Supplier";
+import getIdUrl from '../../helpers/get-id-url';
 
 const EditOrder = () => {
-    const { data } = useFetchProducts()
-    const [rtnCustomer, setRtnCustomer] = useState('')
-    // const { dataUser } = useFetchUsers(rtnCustomer)
-    // const { dataCompany } = useFetchCompany()
-    // const { dataCorrelative } = useFetchCorrelative()
-    const { handleUpdate } = useOrder()
+    const id = getIdUrl()
+    const { data, loading, handleId, handleUpdate, handleLoading } = useOrder()
+    const productData = useFetchProducts()
 
-    const [orderItems, setInvoiceItems] = useState([])
+    const [orderItems, setOrderItems] = useState([])
     const [totalSummary, setTotalSummary] = useState(0)
     const [subtotalSummary, setSubtotalSummary] = useState(0)
     const [taxSummary, setTaxSummary] = useState(0)
     const [discountSummary, setDiscountSummary] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
 
-    // performInvoiceValidations(dataCompany, dataCorrelative)
-    const handleRTN = (value) => setRtnCustomer(value)
+    const handleProductList = () => {
+        if (Array.isArray(data)) return;
+
+        setOrderItems([...data?.details?.map(
+            ({ quantity, productID, sku, productName, unitPrice }) => ({
+                id: productID,
+                sku,
+                product: productName,
+                quantity,
+                price: unitPrice,
+                tax: 0.15,
+                discount: 0,
+                total: (quantity * unitPrice * (1 + 0.15 - 0)).toFixed(2)
+            }))])
+    }
+
+    useEffect(() => {
+        handleId(id)
+        handleProductList()
+    }, [loading])
 
     const handleAddItem = () => {
         const newItem = {
             id: 0,
             sku: "", // Agregar un campo SKU
             product: "",
-            quantity: 2,
+            quantity: 0,
             price: 0,
             tax: 0.15,
             discount: 0,
             total: 0
         };
-        setInvoiceItems([...orderItems, newItem]);
+        setOrderItems([...orderItems, newItem]);
     };
 
     const handleDeleteItem = (index) => {
         orderItems.splice(index, 1)
-        setInvoiceItems([...orderItems])
+        setOrderItems([...orderItems])
         updateTotalSumary()
     }
 
@@ -63,7 +76,7 @@ const EditOrder = () => {
 
     const handleSkuChange = (index, value) => {
         // Buscar el producto en base al SKU
-        const product = data.find((product) => product.sku === value && product.status);
+        const product = productData.data.find((product) => product.sku === value && product.status);
         if (product) {
             const updatedItems = [...orderItems];
             updatedItems[index] = {
@@ -73,11 +86,10 @@ const EditOrder = () => {
                 product: product.name,
                 price: product.price,
                 quantity: 0,
-                stock: product.quantity,
                 discount: product.discount,
                 total: 0
             };
-            setInvoiceItems(updatedItems);
+            setOrderItems(updatedItems);
         }
     }
 
@@ -85,31 +97,23 @@ const EditOrder = () => {
         return ((item.price * ((1 + item.tax) - item.discount)) * item.quantity).toFixed(2)
     }
 
-    const handleQuantityChange = (index, value, isReturnable = true) => {
+    const handleQuantityChange = (index, value) => {
         if (value) {
-            if (parseInt(value) > orderItems[index].stock) {
-                if (isReturnable) {
-                    alert('La cantidad de productos ingresada es superior a la cantidad de existencia!')
-                    document.getElementById(`inputQuantity${index}`).value = 1
-                    handleQuantityChange(index, 1, false)
-                    return
-                }
-            }
             orderItems[index].quantity = parseInt(value)
             orderItems[index].total = calculateSubtotal(orderItems[index])
         } else {
             orderItems[index].quantity = 0
             orderItems[index].total = 0.00
         }
-        setInvoiceItems([...orderItems])
+        setOrderItems([...orderItems])
         updateTotalSumary()
     }
 
-    const handleSaveAction = async (actionType) => {
+    const handleSaveAction = async () => {
         setIsLoading(true)
         const agentID = sessionStorage.getItem('userID')
         // if (!dataUser) {
-        //     alert('No ha ingresado los datos de Cliente!')
+        //     alert('No ha ingresado los datos de Proveedor!')
         //     setIsLoading(false)
         //     return
         // }
@@ -140,15 +144,15 @@ const EditOrder = () => {
         const dataNewInvoice = {
             data: new Order(
                 new User(parseInt(agentID)),
-                new Supplier('1'),
+                new Supplier(document.querySelector('#selectSupplier').value),
                 Ordenes,
                 'Resumen ...',
-                'ESTADO ...'
+                document.querySelector('#selectSummary').value
             )
         }
         await handleUpdate(dataNewInvoice, orderItems)
         printInvoice()
-        alert('Orden Modificada Exitósamente!')
+        alert('Orden de Compra Modificada Exitósamente!')
         setTimeout(() => window.location.href = '/orders', 1000)
         // Lógica para guardar y hacer un pago parcial
         setIsLoading(false)
@@ -156,8 +160,6 @@ const EditOrder = () => {
 
     const printInvoice = () => {
         const invoiceInfo = {
-            rtnCustomer: rtnCustomer,
-            // // customerName: dataUser ? dataUser.name : '',
             vendorId: sessionStorage.getItem('userID'),
             vendorName: sessionStorage.getItem('userName'),
             creationDate: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`,
@@ -166,7 +168,6 @@ const EditOrder = () => {
             discountTotal: discountSummary.toFixed(2),
             total: totalSummary.toFixed(2),
         }
-        // print(dataCompany, orderItems, invoiceInfo)
     }
 
     return (
@@ -187,13 +188,21 @@ const EditOrder = () => {
                         {/* Input fields for Customer and Vendor */}
                         <div className="formInput">
                             <label>Proveedor:</label>
-                            <select>
+                            <select id='selectSupplier'>
                                 <option value="1" selected>DELL CORPORATION</option>
                             </select>
                         </div>
                         <div className="formInput">
                             <label>Encargado:</label>
                             <input type="text" value={sessionStorage.getItem('userName')} readOnly />
+                        </div>
+                        <div className="formInput">
+                            <label>Estado de Compra:</label>
+                            <select id='selectSummary'>
+                                <option value="EN PROCESO">EN PROCESO</option>
+                                <option value="Recibida">Recibida</option>
+                                <option value="Cancelada">Cancelada</option>
+                            </select>
                         </div>
                         <a href="/orders" className="btnRegresar">Regresar</a>
                     </div>
@@ -213,12 +222,13 @@ const EditOrder = () => {
                             </tr>
                         </thead>
                         <tbody >
-                            {orderItems.map((item, index) => (
+                            {orderItems?.map((item, index) => (
                                 <tr key={index}>
                                     <td>
                                         <input
                                             type="number"
                                             required
+                                            defaultValue={item.sku}
                                             onChange={(e) => handleSkuChange(index, e.target.value)}
                                         />
                                     </td>
@@ -236,7 +246,7 @@ const EditOrder = () => {
                                             type="number"
                                             required
                                             min={1}
-                                            max={item.stock}
+                                            defaultValue={item.quantity}
                                             style={{ width: "100px" }}
                                             onChange={(e) => handleQuantityChange(index, e.target.value)}
                                         />
