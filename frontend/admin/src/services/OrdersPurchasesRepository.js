@@ -20,7 +20,7 @@ export default class OrdersPurchasesRepository {
                     }),
                 agent: `${order.attributes.encargado?.data?.attributes?.nombre} ${order.attributes.encargado?.data?.attributes?.apellido}`,
                 supplier: order.attributes.proveedor?.data?.attributes?.nombre,
-                supplierID: order.attributes.encargado?.data?.id,
+                supplierID: order.attributes.proveedor?.data?.id,
                 orderDetails: (order.attributes.Ordenes)?.map(detail => ({
                     quantity: detail.cantidad,
                     productID: detail.producto?.data?.id,
@@ -42,6 +42,7 @@ export default class OrdersPurchasesRepository {
                 return ({
                     id: data.id,
                     status: data.attributes.estado,
+                    summary: data.attributes.resumen,
                     date: new Date(data.attributes.createdAt)
                         .toLocaleDateString('es-ES', {
                             day: '2-digit',
@@ -51,6 +52,7 @@ export default class OrdersPurchasesRepository {
                     agent: data.attributes.encargado.data.attributes.nombre + ' ' + data.attributes.encargado.data.attributes.apellido,
                     supplierRTN: data.attributes.proveedor.data.attributes.RTN,
                     supplier: data.attributes.proveedor.data.attributes.nombre,
+                    supplierID: data.attributes.proveedor.data.id,
                     contactName: data.attributes.proveedor.data.attributes.contactoVendedor,
                     phone: data.attributes.proveedor.data.attributes.telefono,
                     details: data.attributes.Ordenes

@@ -170,7 +170,7 @@ const orderColumns = [
     width: 120,
     renderCell: (params) => {
       const status = {
-        Entregada: 'Recibida',
+        Recibida: 'Entregada',
         Cancelada: 'Cancelada',
         "EN PROCESO": "En-Proceso"
       }

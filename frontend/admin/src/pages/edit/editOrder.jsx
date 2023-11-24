@@ -13,6 +13,7 @@ import User from "../../models/User";
 import useOrder from "../../hooks/useOrder";
 import Supplier from "../../models/Supplier";
 import getIdUrl from '../../helpers/get-id-url';
+import useProvider from '../../hooks/useProvider';
 
 const EditOrder = () => {
     const id = getIdUrl()
@@ -25,10 +26,17 @@ const EditOrder = () => {
     const [taxSummary, setTaxSummary] = useState(0)
     const [discountSummary, setDiscountSummary] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
+    const { providers } = useProvider();
+    const [supplierID, setSupplierID] = useState(0)
+    const [status, setStatus] = useState('')
+    const [summaryText, setSummaryText] = useState('')
+
+    const handleSummaryText = (value) => setSummaryText(value)
+    const handleStatus = (value) => setStatus(value)
+    const handleSupplierID = (value) => setSupplierID(value)
 
     const handleProductList = () => {
         if (Array.isArray(data)) return;
-
         setOrderItems([...data?.details?.map(
             ({ quantity, productID, sku, productName, unitPrice }) => ({
                 id: productID,
@@ -45,6 +53,9 @@ const EditOrder = () => {
     useEffect(() => {
         handleId(id)
         handleProductList()
+        handleStatus(data.status)
+        handleSupplierID(data.supplierID)
+        handleSummaryText(data.summary ? data.summary : '')
     }, [loading])
 
     const handleAddItem = () => {
@@ -128,30 +139,21 @@ const EditOrder = () => {
             setIsLoading(false)
             return
         }
-        if (!beforeCreateInvoice(
-            // agentID, 'dataCompany', 'dataUser', orderItems
-        )) {
-            setIsLoading(false)
-            return
-        }
 
         const Ordenes = orderItems.map(
-            ({ quantity, id }) =>
-            (new OrderDetail(new Product(parseInt(id), quantity)
-            ))
-        )
+            ({ quantity, id }) => new OrderDetail(id, quantity))
 
-        const dataNewInvoice = {
+        const dataNewOrder = {
             data: new Order(
                 new User(parseInt(agentID)),
-                new Supplier(document.querySelector('#selectSupplier').value),
+                new Supplier(supplierID),
                 Ordenes,
-                'Resumen ...',
-                document.querySelector('#selectSummary').value
+                summaryText,
+                status
             )
         }
-        await handleUpdate(dataNewInvoice, orderItems)
-        printInvoice()
+        await handleUpdate(id, dataNewOrder)
+        // printInvoice()
         alert('Orden de Compra Modificada Exitósamente!')
         setTimeout(() => window.location.href = '/orders', 1000)
         // Lógica para guardar y hacer un pago parcial
@@ -185,11 +187,24 @@ const EditOrder = () => {
                         </span>
                     </div>
                     <div className="customer-vendor">
-                        {/* Input fields for Customer and Vendor */}
                         <div className="formInput">
                             <label>Proveedor:</label>
-                            <select id='selectSupplier'>
-                                <option value="1" selected>DELL CORPORATION</option>
+                            <select
+                                value={supplierID}
+                                onChange={e => handleSupplierID(parseInt(e.target.value))}>
+                                {providers?.map(provider => (
+                                    <option key={provider.id} value={provider.id}>
+                                        {provider.name}
+                                    </option>
+                                ))}
+                            </select>
+                            <label style={{ marginTop: "6px" }}>Estado de Orden:</label>
+                            <select
+                                value={status}
+                                onChange={e => handleStatus(e.target.value)}>
+                                <option value="EN PROCESO">EN PROCESO</option>
+                                <option value="Recibida">Recibida</option>
+                                <option value="Cancelada">Cancelada</option>
                             </select>
                         </div>
                         <div className="formInput">
@@ -197,13 +212,20 @@ const EditOrder = () => {
                             <input type="text" value={sessionStorage.getItem('userName')} readOnly />
                         </div>
                         <div className="formInput">
-                            <label>Estado de Compra:</label>
-                            <select id='selectSummary'>
-                                <option value="EN PROCESO">EN PROCESO</option>
-                                <option value="Recibida">Recibida</option>
-                                <option value="Cancelada">Cancelada</option>
-                            </select>
+                            <label>Resumen:</label>
+                            <textarea id='txtSummary'
+                                style={{
+                                    padding: "5px",
+                                    border: "1px solid gray",
+                                    borderRadius: "4px",
+                                }}
+                                value={summaryText}
+                                onChange={e => handleSummaryText(e.target.value)}
+                                rows={4}
+                                cols={50}
+                            />
                         </div>
+
                         <a href="/orders" className="btnRegresar">Regresar</a>
                     </div>
                 </div>
