@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import CorrelativeRepository from '../services/CorrelativeRepository' // Asegúrate de importar tu repositorio correctamente
+import CorrelativeRepository from '../services/CorrelativeRepository'
 
 const useCorrelativeUpdater = () => {
     const correlativeRepo = new CorrelativeRepository()
