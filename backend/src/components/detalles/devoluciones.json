@@ -10,6 +10,7 @@
     "producto": {
       "type": "relation",
       "relation": "oneToOne",
+      "required": true,
       "target": "api::producto.producto"
     },
     "cantidad": {

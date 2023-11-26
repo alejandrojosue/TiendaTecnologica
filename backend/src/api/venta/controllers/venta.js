@@ -9,7 +9,7 @@ const { createCoreController } = require('@strapi/strapi').factories;
 module.exports = createCoreController('api::venta.venta', ({ strapi }) => ({
     async report(ctx) {
         try {
-            ctx.query = { ...ctx.query, populate: 'cliente,detalleVentas.producto,vendedor' }
+            ctx.query = { ...ctx.query, populate: 'cliente,detalleVentas,vendedor' }
 
             const response = await super.find(ctx)
             response.data = response.data?.map(sale => ({
@@ -28,7 +28,16 @@ module.exports = createCoreController('api::venta.venta', ({ strapi }) => ({
                 'ID de Vendedor': sale.attributes.vendedor.data.id,
                 'Nombre Vendedor': sale.attributes.vendedor.data.attributes.nombre,
                 'Apellido Vendedor': sale.attributes.vendedor.data.attributes.apellido,
-                'Total': (sale.attributes.detalleVentas.reduce((acc, value) => {
+                'SubTotal': (sale.attributes.detalleVentas.reduce((acc, value) => {
+                    return acc + (value.cantidad * value.precio)
+                }, 0).toFixed(2)).replace('.', ','),
+                'ISV': (sale.attributes.detalleVentas.reduce((acc, value) => {
+                    return acc + (value.cantidad * value.precio * value.isv)
+                }, 0).toFixed(2)).replace('.', ','),
+                'Descuento': (sale.attributes.detalleVentas.reduce((acc, value) => {
+                    return acc + (value.cantidad * value.precio * value.descuento)
+                }, 0).toFixed(2)).replace('.', ','),
+                'Monto Total': (sale.attributes.detalleVentas.reduce((acc, value) => {
                     return acc + (value.cantidad * (value.precio * (1 + value.isv) - value.precio * value.descuento))
                 }, 0).toFixed(2)).replace('.', ','),
                 'Estado': sale.attributes.estado
@@ -37,13 +46,5 @@ module.exports = createCoreController('api::venta.venta', ({ strapi }) => ({
         } catch (error) {
             ctx.body = error
         }
-    },
-
-    // async find(ctx) {
-    //     // ctx.body = ctx.query
-    //     // ctx.query = { ...ctx.query }
-    //     // const { data, meta } = await super.find(ctx)
-    //     // meta.date = Date.now()
-    //     // return { data, meta }
-    // }
+    }
 }));

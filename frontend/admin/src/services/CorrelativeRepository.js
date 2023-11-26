@@ -1,5 +1,10 @@
 import { fetchDataFromAPI } from './api/context'; // Asegúrate de importar tu función correctamente
 export default class CorrelativeRepository {
+    constructor() {
+        if (!CorrelativeRepository.instance)
+            CorrelativeRepository.instance = this
+        return CorrelativeRepository.instance
+    }
     async get() {
         try {
             const { data } = await fetchDataFromAPI('/correlativo', 'GET',

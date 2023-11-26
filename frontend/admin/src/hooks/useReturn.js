@@ -17,6 +17,17 @@ const useReturn = () => {
         }
     }
 
+    const _handleId = async (id) => {
+        setLoading(true)
+        setData(await returnsRepository.getById(id))
+        setLoading(false)
+    }
+
+    const handleId = async (id) => {
+        if (id) _handleId(id)
+        else window.location.href = '/orders'
+    }
+
     const _handleDateRange = async (startDate, endDate) => {
         try {
             setData(await returnsRepository.getByDateRange(startDate, endDate))
@@ -34,9 +45,24 @@ const useReturn = () => {
         }
     }
 
-    const handleCreate = () => { }
+    const handleCreate = (data) => {
+        setLoading(false)
+        try {
+            returnsRepository
+                .create(data)
+                .then(() => alert('Devolución guardada exitósamente!'))
+        } catch (error) {
+            setError(error)
+        } finally {
+            setLoading(false)
+        }
+    }
 
-    return { data, loading, error, handleGetAll, handleCreate, handleDateRange }
+    return {
+        data, loading, error,
+        handleGetAll, handleCreate, handleDateRange,
+        handleId
+    }
 }
 
 export default useReturn

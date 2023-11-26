@@ -7,7 +7,7 @@ export default class InvoiceRepository {
     }
     async getAll() {
         try {
-            const { data } = await fetchDataFromAPI('/ventas?populate=deep&pagination[pageSize]=80', 'GET',
+            const { data } = await fetchDataFromAPI('/ventas?populate=detalleVentas&pagination[pageSize]=80', 'GET',
                 sessionStorage.getItem('daiswadod'))
             return data.map(invoice => ({
                 id: invoice.id,
@@ -19,9 +19,10 @@ export default class InvoiceRepository {
                         year: 'numeric'
                     }),
                 paymentMethod: invoice.attributes.metodoPago,
-                total: `L. ${invoice.attributes.detalleVentas.reduce((acc, value) => {
-                    return acc + (value.cantidad * (value.precio * (1 + value.isv) - value.precio * value.descuento))
-                }, 0).toFixed(2)}`,
+                total: `L. ${invoice.attributes.detalleVentas
+                    .reduce((acc, value) => {
+                        return acc + (value.cantidad * value.precio * (1 + value.isv - value.descuento))
+                    }, 0).toFixed(2)}`,
                 status: invoice.attributes.estado
             }))
         } catch (error) {
@@ -62,7 +63,7 @@ export default class InvoiceRepository {
                         return acc + (value.cantidad * value.precio)
                     }, 0).toFixed(2),
                     total: data.attributes.detalleVentas.reduce((acc, value) => {
-                        return acc + (value.cantidad * (value.precio * (1 + value.isv) - value.precio * value.descuento))
+                        return acc + (value.cantidad * value.precio * (1 + value.isv - value.descuento))
                     }, 0).toFixed(2),
                     tax: data.attributes.detalleVentas.reduce((acc, value) => {
                         return acc + (value.cantidad * value.precio * value.isv)
@@ -77,7 +78,9 @@ export default class InvoiceRepository {
         }
     }
 
-    async getByDateRange(startDate, endDate) {
+    async getByDateRange(_startDate, _endDate) {
+        const startDate = new Date(_startDate).setHours(0, 0, 0)
+        const endDate = new Date(_endDate).setHours(23, 59, 59)
         try {
             const { data } =
                 await fetchDataFromAPI(`/ventas?populate=deep&filters[$and][0][createdAt][$gte]=${new Date(startDate).toISOString()}&filters[$and][1][createdAt][$lte]=${new Date(endDate).toISOString()}`, 'GET',
@@ -120,7 +123,7 @@ export default class InvoiceRepository {
     async getForDashboard(currentDate = false) {
         try {
             const date = new Date(new Date().setDate(1)).setHours(0, 0, 0)
-            const startDate = currentDate ? new Date() : date
+            const startDate = currentDate ? new Date().setHours(0, 0, 0) : date
             const { data } =
                 await fetchDataFromAPI(`/ventas?populate=detalleVentas&filters[$and][0][createdAt][$gte]=${new Date(startDate).toISOString()}&sort=noFactura:DESC&pagination[pageSize]=200`,
                     'GET', sessionStorage.getItem('daiswadod'))

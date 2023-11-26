@@ -1,18 +1,19 @@
-import "./sidebar.scss";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import StoreIcon from "@mui/icons-material/Store";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { Link } from "react-router-dom";
-import { DarkModeContext } from "../../context/darkModeContext";
-import { useContext } from "react";
-import { SessionValidate } from "../../middlewares/SessionValidate";
+import "./sidebar.scss"
+import DashboardIcon from "@mui/icons-material/Dashboard"
+import CreditCardIcon from "@mui/icons-material/CreditCard"
+import StoreIcon from "@mui/icons-material/Store"
+import InsertChartIcon from "@mui/icons-material/InsertChart"
+import ExitToAppIcon from "@mui/icons-material/ExitToApp"
+import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn'
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined"
+import SummarizeIcon from '@mui/icons-material/Summarize'
+import { Link } from "react-router-dom"
+import { DarkModeContext } from "../../context/darkModeContext"
+import { useContext } from "react"
+import { SessionValidate } from "../../middlewares/SessionValidate"
 
 const Sidebar = () => {
-  const { dispatch } = useContext(DarkModeContext);
+  const { dispatch } = useContext(DarkModeContext)
   return (
     <div className="sidebar">
       <div className="top">
@@ -53,7 +54,7 @@ const Sidebar = () => {
           </Link>
           <Link to={"/orders"} style={{ textDecoration: "none" }}>
             <li>
-              <AssignmentReturnIcon className="icon" />
+              <SummarizeIcon className="icon" />
               <span>Ordenes Compra</span>
             </li>
           </Link>
@@ -90,7 +91,7 @@ const Sidebar = () => {
         ></div> */}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

@@ -101,12 +101,12 @@ const Widget = ({ type, _value }) => {
         <span className="counter">
           {data.isMoney && "L."} {amount}
         </span>
-        <span className="link">{data.link}</span>
+        {/* <span className="link">{data.link}</span> */}
       </div>
       <div className="right">
         <div className="percentage positive">
           <KeyboardArrowUpIcon />
-          {diff} %
+          {diff}%
         </div>
         {data.icon}
       </div>

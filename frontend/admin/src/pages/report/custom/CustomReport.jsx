@@ -24,9 +24,12 @@ const CustomReport = () => {
         products: reportProducts,
         returns: reportReturns
     }
-    const filtersExclude = ['id', 'Fecha', 'Total',
-        'ID de Vendedor', 'Existencia Actual', 'Cantidad',
-        'No. Factura', 'Descripción', 'RTN Cliente']
+    const filtersExclude = [
+        'id', 'Fecha', 'Total', 'Monto Total', 'ISV',
+        'Descuento', 'SubTotal', 'ID de Vendedor',
+        'Existencia Actual', 'Cantidad',
+        'No. Factura', 'Descripción', 'RTN Cliente'
+    ]
     useEffect(() => { if (reports[title]) reports[title]() }, [])
     let filters = {}
     const handleFilter = () => {

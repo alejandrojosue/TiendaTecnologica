@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./newInvoice.scss";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { useFetchProducts } from "../../hooks/useFetchProducts";
+import useProduct from "../../hooks/useProduct";
 import { useFetchUsers } from "../../hooks/useFetchUsers";
 import { useFetchCompany } from "../../hooks/useFetchCompany";
-import { useFetchCorrelative } from "../../hooks/useFetchCorrelative";
+import useCorrelative from "../../hooks/useCorrelative";
 import LoadingModal from "../../components/modal/LoadingModal";
 import { beforeCreateInvoice, performInvoiceValidations } from '../../helpers/invoice-validation'
 import print from "../../helpers/print-invoice"
@@ -15,11 +15,11 @@ import User from "../../models/User";
 import useInvoice from "../../hooks/useInvoice";
 
 const New = () => {
-    const { data } = useFetchProducts()
+    const { data, handleGetAll } = useProduct()
     const [rtnCustomer, setRtnCustomer] = useState('')
     const { dataUser } = useFetchUsers(rtnCustomer)
     const { dataCompany } = useFetchCompany()
-    const { dataCorrelative } = useFetchCorrelative()
+    const correlativeHook = useCorrelative()
     const { handleCreate } = useInvoice()
 
     const [invoiceItems, setInvoiceItems] = useState([])
@@ -29,7 +29,13 @@ const New = () => {
     const [discountSummary, setDiscountSummary] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
 
-    performInvoiceValidations(dataCompany, dataCorrelative)
+    performInvoiceValidations(dataCompany, correlativeHook.data)
+
+    useEffect(() => {
+        handleGetAll()
+        correlativeHook.get()
+    }, [])
+
     const handleRTN = (value) => setRtnCustomer(value)
 
     const handleAddItem = () => {
@@ -61,7 +67,7 @@ const New = () => {
 
     const handleSkuChange = (index, value) => {
         // Buscar el producto en base al SKU
-        const product = data.find((product) => product.sku === value && product.status);
+        const product = data?.find((product) => product.sku === value && product.status);
         if (product) {
             const updatedItems = [...invoiceItems];
             updatedItems[index] = {
@@ -140,7 +146,7 @@ const New = () => {
 
             const dataNewInvoice = {
                 data: new Invoice(
-                    parseInt(dataCorrelative.nInvoice) + 1,
+                    parseInt(correlativeHook.data.nInvoice) + 1,
                     'Efectivo',
                     'Pagada',
                     new User(parseInt(sellerID)),
@@ -148,10 +154,14 @@ const New = () => {
                     detalleVentas
                 )
             }
-            await handleCreate(dataNewInvoice, invoiceItems)
-            printInvoice()
-            alert('Factura Creada Exitósamente!')
-            setTimeout(() => window.location.href = '/invoices', 1000)
+            try {
+                await handleCreate(dataNewInvoice, invoiceItems)
+                printInvoice()
+                alert('Factura Creada Exitósamente!')
+                setTimeout(() => window.location.href = '/invoices', 1000)
+            } catch (error) {
+                alert(error)
+            }
         } else if (actionType === "partialPayment") {
             // Lógica para guardar y hacer un pago parcial
         } else alert("Disponible Próximante");
@@ -164,7 +174,7 @@ const New = () => {
             customerName: dataUser ? dataUser.name : '',
             vendorId: sessionStorage.getItem('userID'),
             vendorName: sessionStorage.getItem('userName'),
-            creationDate: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`,
+            creationDate: new Date().toLocaleDateString(),
             subtotal: subtotalSummary.toFixed(2),
             taxTotal: taxSummary.toFixed(2),
             discountTotal: discountSummary.toFixed(2),
@@ -196,6 +206,7 @@ const New = () => {
                             <label>RTN:</label>
                             <input type="text"
                                 required
+                                maxLength={14}
                                 onChange={e => handleRTN(e.target.value)}
                                 placeholder="RTN del Cliente" />
                         </div>

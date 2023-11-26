@@ -3,10 +3,7 @@ module.exports = {
         {
             method: 'GET',
             path: '/ventas/report',
-            handler: 'venta.report',
-            // config: {
-            //     auth: true,
-            // }
+            handler: 'venta.report'
         }
     ]
 }

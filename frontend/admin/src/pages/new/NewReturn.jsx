@@ -12,10 +12,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-// import useInvoiceById from "../../hooks/useInvoiceById";
 import getIdUrl from "../../helpers/get-id-url";
 import { useEffect, useState } from "react";
-import useCreateReturn from "../../hooks/useCreateReturn";
+import useReturn from '../../hooks/useReturn';
 import ReturnDetail from "../../models/ReturnDetail";
 import Product from "../../models/Product";
 import Return from "../../models/Return";
@@ -26,7 +25,7 @@ const NewReturn = () => {
     const idInvoice = getIdUrl()
     const { data, handleId } = useInvoice()
     const [invoiceItems, setInvoiceItems] = useState([])
-    const createReturnHook = useCreateReturn()
+    const { handleCreate } = useReturn()
 
     useEffect(() => handleId(idInvoice), [])
     const rows = data && data.details ? [...data.details] : []
@@ -75,7 +74,7 @@ const NewReturn = () => {
             alert('No se puede crear la devolución sin todos los datos requeridos!')
             return
         }
-        createReturnHook.createReturn(data)
+        handleCreate(data)
         setTimeout(() => window.location.href = '/returns', 1000)
     }
 

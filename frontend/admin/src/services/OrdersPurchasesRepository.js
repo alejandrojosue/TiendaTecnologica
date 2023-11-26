@@ -84,7 +84,9 @@ export default class OrdersPurchasesRepository {
         }
     }
 
-    async getByDateRange(startDate, endDate) {
+    async getByDateRange(_startDate, _endDate) {
+        const startDate = new Date(_startDate).setHours(0, 0, 0)
+        const endDate = new Date(_endDate).setHours(23, 59, 59)
         try {
             const { data } = await fetchDataFromAPI(`/ordens?populate=encargado,Ordenes.producto,proveedor&filters[$and][0][createdAt][$gte]=${new Date(startDate).toISOString()}&filters[$and][1][createdAt][$lte]=${new Date(endDate).toISOString()}`,
                 'GET', sessionStorage.getItem('daiswadod'))

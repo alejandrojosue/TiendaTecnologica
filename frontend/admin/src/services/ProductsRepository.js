@@ -16,6 +16,7 @@ export default class ProductsRepository {
                 discount: product.attributes.descuento,
                 quantity: product.attributes.existencia,
                 price: product.attributes.precio_venta,
+                cost: product.attributes.precio_compra,
                 subcategory: product.attributes.subcategorias.data,
                 status: product.attributes.activo,
             }))
@@ -51,11 +52,13 @@ export default class ProductsRepository {
 
     async getByCodigo(sku) {
         try {
-            const data = await fetchDataFromAPI(`/productos?filters[activo]=true&filters[codigo][$eq]=${sku}`);
-            console.log(data[0].attributes)
+            const { data } = await fetchDataFromAPI(`/productos?filters[activo]=true&filters[codigo][$eq]=${sku}`);
+            console.log('data', data[0].attributes)
             return ({
+                id: data[0].id,
                 sku: data[0].attributes.codigo,
                 name: data[0].attributes.nombre,
+                quantity: data[0].attributes.existencia,
                 discount: data[0].attributes.descuento,
                 price: data[0].attributes.precio_venta,
                 cost: data[0].attributes.precio_compra,

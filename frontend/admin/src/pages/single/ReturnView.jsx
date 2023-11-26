@@ -2,21 +2,23 @@ import "./returnView.scss";
 import Navbar from "../../components/navbar/Navbar"
 import Sidebar from "../../components/sidebar/Sidebar"
 import getIdUrl from "../../helpers/get-id-url"
-import useFetchReturns from "../../hooks/useFetchReturns"
+import useReturn from "../../hooks/useReturn"
 import Table from '../../components/table/ReturnDetails'
-
+import IsLoading from "../../components/isLoading/IsLoading";
+import { useEffect } from "react";
 
 const ReturnView = () => {
     const id = getIdUrl()
-    const [data, loading, error, ...v] = useFetchReturns(id)
+    const { data, loading, error, handleId } = useReturn()
+    useEffect(() => handleId(id), [])
     const rows = data ? data.details : []
-    if (loading) return (<div>Cargando...</div>)
     if (error) return (<div>Error al cargar el producto...</div>)
     return (
         <div className="view">
             <Sidebar />
             <div className="viewContainer">
                 <Navbar />
+                {loading && <IsLoading />}
                 <div className="top">
                     <p>Devolución #{data ? data.id : ''}</p>
                 </div>

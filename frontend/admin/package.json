@@ -20,7 +20,10 @@
     "recharts": "^2.1.9",
     "rsuite": "^5.42.0",
     "sass": "^1.49.9",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.7.0",
+    "react-to-print": "^2.14.15"
   },
   "scripts": {
     "start": "react-scripts start",

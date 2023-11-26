@@ -1,5 +1,3 @@
-const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:1337/api';
-
 /**
  * Realiza una solicitud a la API y devuelve los datos.
  * @param {string} url - La ruta de la API a la que se realizará la solicitud.
@@ -9,8 +7,14 @@ const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:1337/api';
  * @returns {Promise} Una promesa que resuelve en los datos de la respuesta de la API.
  * @throws {Error} Si se produce un error en la solicitud.
  */
-export const fetchDataFromAPI = async (url, method = 'GET', token = null, data = null) => {
 
+const API_BASE_URL =
+    process.env.NODE_ENV === 'development'
+        ? process.env.REACT_APP_API_URL_DEV
+        : process.env.REACT_APP_API_URL_PROD
+
+
+export const fetchDataFromAPI = async (url, method = 'GET', token = null, data = null) => {
     try {
         if (!url || typeof url !== 'string') throw new Error('La URL no es válida.')
 

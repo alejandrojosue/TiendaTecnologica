@@ -1,24 +1,22 @@
 import './edit.scss'
-import { useState, useEffect } from "react";
-import "../new/newInvoice.scss";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { useFetchProducts } from "../../hooks/useFetchProducts";
-import LoadingModal from "../../components/modal/LoadingModal";
-import { beforeCreateInvoice, performInvoiceValidations } from '../../helpers/invoice-validation'
-import print from "../../helpers/print-invoice"
-import OrderDetail from "../../models/OrderDetail";
-import Product from "../../models/Product";
-import Order from "../../models/Order";
-import User from "../../models/User";
-import useOrder from "../../hooks/useOrder";
-import Supplier from "../../models/Supplier";
-import getIdUrl from '../../helpers/get-id-url';
-import useProvider from '../../hooks/useProvider';
+import "../new/newInvoice.scss"
+import { useState, useEffect } from "react"
+import useProduct from "../../hooks/useProduct"
+import useOrder from "../../hooks/useOrder"
+import useSupplier from '../../hooks/useSupplier'
+import LoadingModal from "../../components/modal/LoadingModal"
+import OrderDetail from "../../models/OrderDetail"
+import Order from "../../models/Order"
+import User from "../../models/User"
+import Supplier from "../../models/Supplier"
+import getIdUrl from '../../helpers/get-id-url'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 const EditOrder = () => {
     const id = getIdUrl()
-    const { data, loading, handleId, handleUpdate, handleLoading } = useOrder()
-    const productData = useFetchProducts()
+    const { data, loading, handleId, handleUpdate } = useOrder()
+    const productHook = useProduct()
+
 
     const [orderItems, setOrderItems] = useState([])
     const [totalSummary, setTotalSummary] = useState(0)
@@ -26,7 +24,7 @@ const EditOrder = () => {
     const [taxSummary, setTaxSummary] = useState(0)
     const [discountSummary, setDiscountSummary] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
-    const { providers } = useProvider();
+    const supplierHook = useSupplier()
     const [supplierID, setSupplierID] = useState(0)
     const [status, setStatus] = useState('')
     const [summaryText, setSummaryText] = useState('')
@@ -36,7 +34,7 @@ const EditOrder = () => {
     const handleSupplierID = (value) => setSupplierID(value)
 
     const handleProductList = () => {
-        if (Array.isArray(data)) return;
+        if (Array.isArray(data)) return
         setOrderItems([...data?.details?.map(
             ({ quantity, productID, sku, productName, unitPrice }) => ({
                 id: productID,
@@ -53,6 +51,8 @@ const EditOrder = () => {
     useEffect(() => {
         handleId(id)
         handleProductList()
+        supplierHook.getAll()
+        productHook.handleGetAll()
         handleStatus(data.status)
         handleSupplierID(data.supplierID)
         handleSummaryText(data.summary ? data.summary : '')
@@ -68,9 +68,9 @@ const EditOrder = () => {
             tax: 0.15,
             discount: 0,
             total: 0
-        };
-        setOrderItems([...orderItems, newItem]);
-    };
+        }
+        setOrderItems([...orderItems, newItem])
+    }
 
     const handleDeleteItem = (index) => {
         orderItems.splice(index, 1)
@@ -87,9 +87,9 @@ const EditOrder = () => {
 
     const handleSkuChange = (index, value) => {
         // Buscar el producto en base al SKU
-        const product = productData.data.find((product) => product.sku === value && product.status);
+        const product = productHook.data?.find((product) => product.sku === value && product.status)
         if (product) {
-            const updatedItems = [...orderItems];
+            const updatedItems = [...orderItems]
             updatedItems[index] = {
                 ...updatedItems[index],
                 id: product.id,
@@ -99,8 +99,8 @@ const EditOrder = () => {
                 quantity: 0,
                 discount: product.discount,
                 total: 0
-            };
-            setOrderItems(updatedItems);
+            }
+            setOrderItems(updatedItems)
         }
     }
 
@@ -123,11 +123,11 @@ const EditOrder = () => {
     const handleSaveAction = async () => {
         setIsLoading(true)
         const agentID = sessionStorage.getItem('userID')
-        // if (!dataUser) {
-        //     alert('No ha ingresado los datos de Proveedor!')
-        //     setIsLoading(false)
-        //     return
-        // }
+        if (supplierID) {
+            alert('No ha ingresado el Proveedor')
+            setIsLoading(false)
+            return
+        }
         if (!orderItems.length) {
             alert('No ha añadido ningún producto!')
             setIsLoading(false)
@@ -153,23 +153,10 @@ const EditOrder = () => {
             )
         }
         await handleUpdate(id, dataNewOrder)
-        // printInvoice()
         alert('Orden de Compra Modificada Exitósamente!')
         setTimeout(() => window.location.href = '/orders', 1000)
         // Lógica para guardar y hacer un pago parcial
         setIsLoading(false)
-    }
-
-    const printInvoice = () => {
-        const invoiceInfo = {
-            vendorId: sessionStorage.getItem('userID'),
-            vendorName: sessionStorage.getItem('userName'),
-            creationDate: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`,
-            subtotal: subtotalSummary.toFixed(2),
-            taxTotal: taxSummary.toFixed(2),
-            discountTotal: discountSummary.toFixed(2),
-            total: totalSummary.toFixed(2),
-        }
     }
 
     return (
@@ -192,9 +179,9 @@ const EditOrder = () => {
                             <select
                                 value={supplierID}
                                 onChange={e => handleSupplierID(parseInt(e.target.value))}>
-                                {providers?.map(provider => (
-                                    <option key={provider.id} value={provider.id}>
-                                        {provider.name}
+                                {supplierHook.data?.map(supplier => (
+                                    <option key={supplier.id} value={supplier.id}>
+                                        {supplier.name}
                                     </option>
                                 ))}
                             </select>
@@ -348,7 +335,7 @@ const EditOrder = () => {
                 </div>
             </form>
         </div >
-    );
-};
+    )
+}
 
-export default EditOrder;
+export default EditOrder

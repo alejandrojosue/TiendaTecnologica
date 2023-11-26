@@ -1,4 +1,4 @@
-export default class ReturnDetail {
+export default class OrderDetail {
     producto = null
     cantidad = 0
     constructor(productoID, cantidad) {
