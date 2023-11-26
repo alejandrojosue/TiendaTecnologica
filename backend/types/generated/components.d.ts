@@ -23,7 +23,6 @@ export interface DetallesDetalles extends Schema.Component {
       Attribute.Required &
       Attribute.SetMinMax<{
         min: 0;
-        max: 1;
       }>;
     isv: Attribute.Decimal &
       Attribute.Required &
@@ -35,8 +34,7 @@ export interface DetallesDetalles extends Schema.Component {
       'detalles.detalles',
       'oneToOne',
       'api::producto.producto'
-    > &
-      Attribute.Required;
+    >;
   };
 }
 
@@ -52,8 +50,7 @@ export interface DetallesDevoluciones extends Schema.Component {
       'detalles.devoluciones',
       'oneToOne',
       'api::producto.producto'
-    > &
-      Attribute.Required;
+    >;
     cantidad: Attribute.Integer &
       Attribute.Required &
       Attribute.SetMinMax<{
@@ -73,8 +70,7 @@ export interface DetallesOrdenes extends Schema.Component {
       'detalles.ordenes',
       'oneToOne',
       'api::producto.producto'
-    > &
-      Attribute.Required;
+    >;
     cantidad: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<1>;
   };
 }
