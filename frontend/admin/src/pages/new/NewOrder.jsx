@@ -8,6 +8,7 @@ import OrderDetail from "../../models/OrderDetail"
 import User from "../../models/User"
 import Supplier from "../../models/Supplier"
 import Order from "../../models/Order"
+import exportPDFReport from "../../helpers/exportPDFReport"
 
 const NewOrder = () => {
     const [orderItems, setorderItems] = useState([])
@@ -121,6 +122,7 @@ const NewOrder = () => {
         const nuevaOrden = { data: new Order(encargado, proveedor, detalleOrdenes, resumen, estado) }
         try {
             await handleCreate(nuevaOrden)
+            exportPDFReport(orderItems, 'Orden_Compra_' + new Date().toLocaleDateString())
             alert('Orden Creada Exitósamente!')
             setTimeout(() => window.location.href = '/orders', 1000)
         } catch (error) {
