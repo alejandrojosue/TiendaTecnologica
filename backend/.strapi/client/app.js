@@ -9,7 +9,10 @@ import importExportEntries from "strapi-plugin-import-export-entries/strapi-admi
 import restCache from "strapi-plugin-rest-cache/strapi-admin";
 import { renderAdmin } from "@strapi/strapi/admin";
 
+import customisations from "../../src/admin/app.js";
+
 renderAdmin(document.getElementById("strapi"), {
+  customisations,
   plugins: {
     documentation: documentation,
     i18n: i18N,

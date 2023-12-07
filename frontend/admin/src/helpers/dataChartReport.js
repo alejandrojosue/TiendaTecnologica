@@ -14,13 +14,13 @@ const dataChartReport = (data, key, field) => {
         .forEach(invoice => {
             const month = parseInt(('' + invoice.Fecha).split('/')[1])
             if (month === currentMonth)
-                currentMonthArr.push(parseFloat(invoice['Total'].replace(',', '.')))
+                currentMonthArr.push(parseFloat(invoice['Monto Total'].replace(',', '.')))
             else if (month === lastMonth)
-                lastMonthArr.push(parseFloat(invoice['Total'].replace(',', '.')))
+                lastMonthArr.push(parseFloat(invoice['Monto Total'].replace(',', '.')))
             else if (month === lastSecondMonth)
-                lastSecondMonthArr.push(parseFloat(invoice['Total'].replace(',', '.')))
+                lastSecondMonthArr.push(parseFloat(invoice['Monto Total'].replace(',', '.')))
             else if (month === lastThirdMonth)
-                lastThirdMonthArr.push(parseFloat(invoice['Total'].replace(',', '.')))
+                lastThirdMonthArr.push(parseFloat(invoice['Monto Total'].replace(',', '.')))
         })
 
     let dataChart = [
