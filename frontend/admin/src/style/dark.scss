@@ -32,6 +32,7 @@
         color: #999;
       }
     }
+
     hr {
       border-color: #333;
     }
@@ -63,7 +64,11 @@
     }
   }
 
-  input{
-      background-color: transparent;
+  input {
+    background-color: transparent;
+  }
+
+  label {
+    background-color: #111;
   }
 }

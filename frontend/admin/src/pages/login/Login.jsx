@@ -16,6 +16,10 @@ const Login = () => {
             if (err == 'Error: Bad Request') alert('Usuario y/o contraseña no váildos!')
           })
         if (response) {
+          if (!response.user.confirmed || response.user.blocked) {
+            alert('El usuario actual no se ha confirmado y/o está bloqueado!\nFavor contactarse con el administrador.')
+            return
+          }
           sessionStorage.setItem('daiswadod', response.jwt)
           sessionStorage.setItem('userID', response.user.id)
           sessionStorage.setItem('userName', response.user.nombre)

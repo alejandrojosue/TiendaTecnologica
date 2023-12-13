@@ -71,7 +71,10 @@ const Sidebar = () => {
               <AccountCircleOutlinedIcon className="icon" />
               <span>Perfil</span>
             </li></Link>
-          <Link to="/login" style={{ textDecoration: "none" }}>
+          <Link to="/login"
+            onClick={() => {
+              sessionStorage.clear()
+            }} style={{ textDecoration: "none" }}>
             <li>
               <ExitToAppIcon className="icon" />
               <span
