@@ -1,37 +1,49 @@
-import './login.scss'
-import { useState } from 'react'
-import { fetchDataFromAPI } from '../../services/api/context'
-import { useNavigate } from 'react-router-dom'
+import "./login.scss";
+import { useState } from "react";
+import { fetchDataFromAPI } from "../../services/api/context";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/darkModeContext";
 
 const Login = () => {
-  const [identifier, setIdentifier] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const navigate = useNavigate()
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { updateInitialMode } = useContext(DarkModeContext);
+
   const handleLogin = async () => {
+    console.log(process.env.NODE_ENV)
     try {
       if (identifier && password) {
-        const response = await fetchDataFromAPI('/auth/local', 'POST', null, { identifier, password })
-          .catch(err => {
-            if (err == 'Error: Bad Request') alert('Usuario y/o contraseña no váildos!')
-          })
-        if (response) {
-          if (!response.user.confirmed || response.user.blocked) {
-            alert('El usuario actual no se ha confirmado y/o está bloqueado!\nFavor contactarse con el administrador.')
-            return
-          }
-          sessionStorage.setItem('daiswadod', response.jwt)
-          sessionStorage.setItem('userID', response.user.id)
-          sessionStorage.setItem('userName', response.user.nombre)
-          sessionStorage.setItem('SESSION_TIME', new Date().getTime())
-          navigate('/dashboard')
-        }
-      } else alert("Debe llenar los campos!")
-    } catch (error) {
-      setError(error)
-    }
-  }
+        const response = await fetchDataFromAPI("/auth/local", "POST", null, {
+          identifier,
+          password,
+        }).catch((err) => {
+          if (err === "Error: Bad Request")
+            alert("Usuario y/o contraseña no válidos!");
+        });
 
+        if (response) {
+          sessionStorage.setItem("daiswadod", response.jwt);
+          sessionStorage.setItem("userID", response.user.id);
+          sessionStorage.setItem("userName", response.user.nombre);
+          sessionStorage.setItem("SESSION_TIME", new Date().getTime());
+          localStorage.setItem("currentUserId", response.user.id); // Guardar el ID del usuario
+          // Pasar el estado inicial del modo oscuro al actualizar el modo inicial
+          const userDarkMode = localStorage.getItem(
+            `userDarkMode_${response.user.id}`
+          );
+          const initialMode = userDarkMode === "true" || false;
+          updateInitialMode(initialMode);
+
+          navigate("/dashboard");
+        }
+      } else alert("Debe llenar los campos!");
+    } catch (error) {
+      setError(error);
+    }
+  };
 
   return (
     <div className="login-container">
@@ -39,7 +51,7 @@ const Login = () => {
       <div className="input-container">
         <input
           type="text"
-          placeholder='Usuario'
+          placeholder="Usuario"
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
           required
@@ -49,7 +61,7 @@ const Login = () => {
       <div className="input-container">
         <input
           type="password"
-          placeholder='contraseña'
+          placeholder="contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -59,6 +71,6 @@ const Login = () => {
       <button onClick={handleLogin}>Acceder</button>
       {error && <div className="error">{error}</div>}
     </div>
-  )
-}
+  );
+};
 export default Login

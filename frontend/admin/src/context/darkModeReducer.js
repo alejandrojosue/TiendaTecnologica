@@ -1,3 +1,4 @@
+// darkModeReducer.js
 const DarkModeReducer = (state, action) => {
   switch (action.type) {
     case "LIGHT": {
@@ -13,6 +14,11 @@ const DarkModeReducer = (state, action) => {
     case "TOGGLE": {
       return {
         darkMode: !state.darkMode,
+      };
+    }
+    case "SET_INITIAL_MODE": {
+      return {
+        darkMode: action.payload,
       };
     }
     default:

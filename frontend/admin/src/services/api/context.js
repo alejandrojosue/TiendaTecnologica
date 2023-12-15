@@ -8,10 +8,10 @@
  * @throws {Error} Si se produce un error en la solicitud.
  */
 
-const API_BASE_URL =
-    process.env.NODE_ENV === 'development'
-        ? process.env.REACT_APP_API_URL_DEV
-        : process.env.REACT_APP_API_URL_PROD
+const API_BASE_URL = 'https://vgrz5633-1337.use2.devtunnels.ms/api'
+// process.env.NODE_ENV === 'development'
+//     ? process.env.REACT_APP_API_URL_DEV
+//     : process.env.REACT_APP_API_URL_PROD
 
 
 export const fetchDataFromAPI = async (url, method = 'GET', token = null, data = null) => {
