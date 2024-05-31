@@ -10,26 +10,38 @@ export interface DetallesDetalles extends Schema.Component {
   attributes: {
     cantidad: Attribute.Integer &
       Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 1;
-      }> &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
       Attribute.DefaultTo<1>;
     precio: Attribute.Decimal &
       Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
-      }>;
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
     descuento: Attribute.Decimal &
       Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
-        max: 1;
-      }>;
+      Attribute.SetMinMax<
+        {
+          min: 0;
+          max: 1;
+        },
+        number
+      >;
     isv: Attribute.Decimal &
       Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
-      }> &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
       Attribute.DefaultTo<0.15>;
     producto: Attribute.Relation<
       'detalles.detalles',
@@ -56,9 +68,12 @@ export interface DetallesDevoluciones extends Schema.Component {
       Attribute.Required;
     cantidad: Attribute.Integer &
       Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 0;
-      }>;
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
     motivo: Attribute.Text & Attribute.Required;
   };
 }

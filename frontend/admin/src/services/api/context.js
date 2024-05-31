@@ -1,3 +1,4 @@
+import {API_BASE_URL} from '../../environments/env'
 /**
  * Realiza una solicitud a la API y devuelve los datos.
  * @param {string} url - La ruta de la API a la que se realizará la solicitud.
@@ -8,7 +9,7 @@
  * @throws {Error} Si se produce un error en la solicitud.
  */
 
-const API_BASE_URL = 'https://vgrz5633-1337.use2.devtunnels.ms/api'
+// const API_BASE_URL = 
 // process.env.NODE_ENV === 'development'
 //     ? process.env.REACT_APP_API_URL_DEV
 //     : process.env.REACT_APP_API_URL_PROD

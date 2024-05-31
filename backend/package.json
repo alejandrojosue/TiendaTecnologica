@@ -11,18 +11,18 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/plugin-documentation": "^4.15.4",
-    "@strapi/plugin-i18n": "4.15.5",
-    "@strapi/plugin-users-permissions": "4.15.5",
-    "@strapi/provider-upload-cloudinary": "^4.15.5",
-    "@strapi/strapi": "4.15.5",
+    "@strapi/plugin-documentation": "^4.24.1",
+    "@strapi/plugin-i18n": "4.24.1",
+    "@strapi/plugin-users-permissions": "4.24.1",
+    "@strapi/provider-upload-cloudinary": "^4.24.1",
+    "@strapi/strapi": "4.24.1",
     "mysql": "2.18.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-router-dom": "^5.2.0",
-    "strapi-plugin-import-export-entries": "^1.21.1",
-    "strapi-plugin-populate-deep": "^2.0.0",
-    "strapi-plugin-rest-cache": "^4.2.7",
+    "strapi-plugin-import-export-entries": "^1.23.1",
+    "strapi-plugin-populate-deep": "^3.0.1",
+    "strapi-plugin-rest-cache": "^4.2.9",
     "styled-components": "^5.2.1"
   },
   "author": {

@@ -13,6 +13,7 @@ import customisations from "../../src/admin/app.js";
 
 renderAdmin(document.getElementById("strapi"), {
   customisations,
+
   plugins: {
     documentation: documentation,
     i18n: i18N,

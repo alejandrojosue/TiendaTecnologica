@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom';
 import getIdUrl from "../../helpers/get-id-url";
 import { useEffect } from "react";
 import useProduct from "../../hooks/useProduct";
+import { URL_BASE } from "../../environments/env";
 
 const ProductView = () => {
     const id = getIdUrl()
     const { data, loading, error, handleProductId } = useProduct(id)
+    // eslint-disable-next-line
     useEffect(() => handleProductId(id), [])
     if (error) return (<div>Ha ocurrido un error al obtener el producto</div>)
     return (
@@ -53,7 +55,7 @@ const ProductView = () => {
                             <input className="input3" type="number" value={data && data.priceV ? data.priceV : ''} readOnly />
                         </div>
                         {data && data.img && (
-                            <img className="col-50" src={`http://localhost:1337${data.img}`} alt="Mi Imagen" />
+                            <img className="col-50" src={`${(data.img).includes('cloudinary') ? '' : URL_BASE}${data.img}`} alt="Mi Imagen" />
                         )}
                         <div className="detail-content">
                             <div className="form">
@@ -83,7 +85,6 @@ const ProductView = () => {
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     );

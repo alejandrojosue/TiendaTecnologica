@@ -13,12 +13,11 @@ const Login = () => {
   const { updateInitialMode } = useContext(DarkModeContext);
 
   const handleLogin = async () => {
-    console.log(process.env.NODE_ENV)
     try {
       if (identifier && password) {
         const response = await fetchDataFromAPI("/auth/local", "POST", null, {
-          identifier,
-          password,
+          identifier: identifier,
+          password: password,
         }).catch((err) => {
           if (err === "Error: Bad Request")
             alert("Usuario y/o contraseña no válidos!");
